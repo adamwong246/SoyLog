@@ -1,0 +1,4 @@
+h1
+  = "Editing #{member.class.to_s} #{member.identify}"
+= form
+= render :partial => "layouts/actions", :locals => { :object => @recipe, :actions => [:show, :destroy, :index]}
