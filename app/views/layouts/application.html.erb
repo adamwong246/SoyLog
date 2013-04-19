@@ -25,30 +25,45 @@
 </p>
 
 <p>
-  <%= BodyProfileNutrient.description %>
+  <%= link_to "All Body_Profile_Nutrients", body_profile_nutrients_path %>
   |
-  <%= link_to "All Body_Profile_Nutrients", body_profile_nutrients_path %></p>
+  <%= BodyProfileNutrient.description %>
+</p>
 <p>
+  <%= link_to "All Body_Profiles", body_profiles_path %>
+  |
   <%= BodyProfile.description %>
-  |<%= link_to "All Body_Profiles", body_profiles_path %></p>
+</p>
 <p>
+  <%= link_to "All Component_Nutrients", component_nutrients_path %>
+  |
   <%= ComponentNutrient.description %>
-  |<%= link_to "All Component_Nutrients", component_nutrients_path %></p>
+</p>
 <p>
+  <%= link_to "All Components", components_path %>
+  |
   <%= Component.description %>
-  |<%= link_to "All Components", components_path %></p>
+</p>
 <p>
+  <%= link_to "All Ingredients", ingredients_path %>
+  |
   <%= Ingredient.description %>
-  |<%= link_to "All Ingredients", ingredients_path %></p>
+</p>
 <p>
+  <%= link_to "All Nutrients", nutrients_path %>
+  |
   <%= Nutrient.description %>
-  |<%= link_to "All Nutrients", nutrients_path %></p>
+</p>
 <p>
+  <%= link_to "All Recipes", recipes_path %>
+  |
   <%= Recipe.description %>
-  |<%= link_to "All Recipes", recipes_path %></p>
+  </p>
 <p>
+  <%= link_to "All Users", users_path %>
+  |
   <%= User.description %>
-  |<%= link_to "All Users", users_path %></p>
+</p>
 
 
 <%= yield %>
