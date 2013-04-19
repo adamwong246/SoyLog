@@ -2,7 +2,7 @@
 = render :partial => "layouts/super_show", :locals => { columns: [:id, :user, :name, :ingredients], member: @recipe} 
 
 hr
-  - padded_columns = 7
+  - padded_columns = 8
   .table.table-condensed
     table
       tr
@@ -45,19 +45,19 @@ hr
               = raw ComponentNutrient.select { |cn| cn.component_id == ingredient.component.id && cn.nutrient_id == nutrient.id }.map{|cn| link_to "#{cn.amount} #{nutrient.units}", cn}.join('')
       tr
         th FDA RDA
-        | <td colspan=#{padded_columns}>
+        td colspan=padded_columns
         - Nutrient.all .each do |n|
           td
             = "#{n.fda_rda} #{n.units}"
       tr
         th Actual
-        | <td colspan=#{padded_columns}>
+        td colspan=padded_columns
         - Nutrient.all .each do |n|
           td
             | Actual
       tr
         th RDA %
-        | <td colspan=#{padded_columns} >
+        td colspan=padded_columns
         - Nutrient.all .each do |n|
           td
             | percent
