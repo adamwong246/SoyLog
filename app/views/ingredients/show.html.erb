@@ -1,0 +1,8 @@
+<%= render :partial => "layouts/super_show", 
+  :locals => 
+    { columns: 
+      [:id, :recipe, :component, [:component, :nutrients]], 
+      member: @ingredient
+    } 
+%>
+

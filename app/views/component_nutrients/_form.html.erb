@@ -1,0 +1,33 @@
+<%= form_for(@component_nutrient) do |f| %>
+  <% if @component_nutrient.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@component_nutrient.errors.count, "error") %> prohibited this component_nutrient from being saved:</h2>
+
+      <ul>
+      <% @component_nutrient.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :id %><br />
+    <%= f.number_field :id %>
+  </div>
+  <div class="field">
+    <%= f.label :component_id %><br />
+    <%= f.number_field :component_id %>
+  </div>
+  <div class="field">
+    <%= f.label :nutrient_id %><br />
+    <%= f.number_field :nutrient_id %>
+  </div>
+  <div class="field">
+    <%= f.label :amount %><br />
+    <%= f.text_field :amount %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

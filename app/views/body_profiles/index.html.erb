@@ -1,0 +1,33 @@
+<%= render :partial => "layouts/super_index", 
+  :locals => 
+    { columns: 
+      [:id, :name], 
+      collection: @body_profiles
+    } 
+%>
+
+<!-- <h1>Listing body_profiles</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Actions</th>
+
+  </tr>
+
+<% @body_profiles.each do |body_profile| %>
+  <tr>
+    <td><%= body_profile.id %></td>
+    <td><%= body_profile.name %></td>
+        <td>
+      <%= render :partial => "layouts/actions", :locals => { :object => body_profile, :actions => [:show, :edit, :destroy]} %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Body profile', new_body_profile_path %>
+ -->

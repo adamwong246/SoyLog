@@ -1,0 +1,14 @@
+<ul>
+  <% if actions.include? :show %>
+    <li><%= link_to "Show", object %></li>
+  <% end %>
+  <% if actions.include? :edit %>
+    <li><%= link_to 'Edit', [:edit, object] %></li>
+  <% end %>
+  <% if actions.include? :destroy %>
+    <li><%= link_to 'Destroy', object, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+  <% end %>
+  <% if actions.include? :index %>
+    <li><%= link_to "Index", try(params["controller"]+"_path") %></li>
+  <% end %>
+</ul>

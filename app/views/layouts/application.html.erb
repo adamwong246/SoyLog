@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SoyLog3</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+
+<p>
+  <%= BodyProfileNutrient.description %>
+  |
+  <%= link_to "All Body_Profile_Nutrients", body_profile_nutrients_path %></p>
+<p>
+  <%= BodyProfile.description %>
+  |<%= link_to "All Body_Profiles", body_profiles_path %></p>
+<p>
+  <%= ComponentNutrient.description %>
+  |<%= link_to "All Component_Nutrients", component_nutrients_path %></p>
+<p>
+  <%= Component.description %>
+  |<%= link_to "All Components", components_path %></p>
+<p>
+  <%= Ingredient.description %>
+  |<%= link_to "All Ingredients", ingredients_path %></p>
+<p>
+  <%= Nutrient.description %>
+  |<%= link_to "All Nutrients", nutrients_path %></p>
+<p>
+  <%= Recipe.description %>
+  |<%= link_to "All Recipes", recipes_path %></p>
+<p>
+  <%= User.description %>
+  |<%= link_to "All Users", users_path %></p>
+
+
+<%= yield %>
+
+</body>
+</html>

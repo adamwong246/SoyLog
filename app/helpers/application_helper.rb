@@ -1,0 +1,68 @@
+module ApplicationHelper
+
+  def h_link(object)
+    return link_to object.identify, object
+  end
+  
+  def apply_chain_link_or_print(functions, object)
+    # debugger
+    
+    e = recusive_function_chainer(functions, object)
+
+    puts "e: " + e.inspect
+    if [Numeric, String].any? {|c| c >= e.class} 
+      return e.to_s
+
+    elsif Array >= e.class
+      return e.map{|ee| 
+        if ee.nil?
+          "nil"
+        else
+          link_to ee.identify, ee
+        end
+      }.join('<br>')
+    else
+      begin
+        return link_to e.identify, e
+      rescue 
+        return "Cold not create a field for #{e.to_s}"
+      end
+    end
+  end
+
+  def recusive_function_chainer(chain, element)
+    puts "recusive_function_chainer: #{chain.inspect}, #{element}"
+
+    e = element
+
+    # for every operation in the chain
+    [*chain].each do |link|
+      puts "--link: #{link.inspect}"
+      puts "--e: #{e.inspect}"
+
+
+      if e.kind_of? Array
+        puts "e is array"
+        e = e.map{|ee| recusive_function_chainer(link, ee)}
+      else
+        puts "e is NOT array"
+        e = e.try(link)
+      end
+    end
+
+    return e
+  end
+
+  def link_to_add_fields(name, f, association)
+    puts "link_to_add_fields( #{name}, #{f}, #{association.inspect}"
+
+    new_object = f.object.send(association).klass.new
+    id = new_object.object_id
+    fields = f.fields_for(association, new_object, child_index: id) do |builder|
+      field_to_render = association.to_s.singularize + "_fields"
+      puts "FIELD TO RENDER: #{field_to_render}"
+      render(field_to_render, f: builder)
+    end
+    link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
+  end
+end

@@ -1,0 +1,33 @@
+<%= form_for(@body_profile_nutrient) do |f| %>
+  <% if @body_profile_nutrient.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@body_profile_nutrient.errors.count, "error") %> prohibited this body_profile_nutrient from being saved:</h2>
+
+      <ul>
+      <% @body_profile_nutrient.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :id %><br />
+    <%= f.number_field :id %>
+  </div>
+  <div class="field">
+    <%= f.label :body_profile_id %><br />
+    <%= f.number_field :body_profile_id %>
+  </div>
+  <div class="field">
+    <%= f.label :nutrient_id %><br />
+    <%= f.number_field :nutrient_id %>
+  </div>
+  <div class="field">
+    <%= f.label :daily_requirement %><br />
+    <%= f.text_field :daily_requirement %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

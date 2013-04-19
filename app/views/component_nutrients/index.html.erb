@@ -1,0 +1,7 @@
+<%= render :partial => "layouts/super_index", 
+  :locals => 
+    { columns: 
+      [:id, :component, :nutrient, :amount], 
+      collection: @component_nutrients
+    } 
+%>
