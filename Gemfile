@@ -17,6 +17,10 @@ end
 
 gem 'slim', "~> 1.3.8"
 
+group :development, :test do
+    gem 'railroady'
+end
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

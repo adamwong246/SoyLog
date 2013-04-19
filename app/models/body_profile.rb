@@ -1,7 +1,7 @@
 class BodyProfile < ActiveRecord::Base
   attr_accessible :id, :name, :user_id
 
-  has_many :nutrients
+  # has_many :nutrients
 
   def identify
     self.name
