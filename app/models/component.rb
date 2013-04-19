@@ -15,4 +15,19 @@ class Component < ActiveRecord::Base
   def self.description
     "A Component is something you can purchase from a store, or online, such as protein powder."
   end
+
+  def units
+    case self.unit
+    when 'g'
+      "grams"
+    when 'mg'
+      "milligrams"
+    when 'ug'
+      'micrograms'
+    else
+      self.unit 
+    end
+  end
+
+
 end

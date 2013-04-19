@@ -10,10 +10,17 @@ module ApplicationHelper
     e = recusive_function_chainer(functions, object)
 
     puts "e: " + e.inspect
-    if [Numeric, String].any? {|c| c >= e.class} 
+    if e.nil?
+      return "nil"
+    elsif String >= e.class
       return e.to_s
-
+    elsif Numeric >= e.class
+      return e
     elsif Array >= e.class
+      if e.empty?
+        return "none"
+      end
+
       return e.map{|ee| 
         if ee.nil?
           "nil"

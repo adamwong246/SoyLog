@@ -1,0 +1,14 @@
+= grid.inspect
+table.table.table-condensed
+  - grid.each do |i|
+    / - i.flatten!
+    tr
+    - i.each do |j|
+      td= j
+        
+      / - if j.has_key?(:th)
+      /   th
+      /     = j[:th]
+      / - elsif j.has_key?(:td)
+      /   td
+      /     = j[:td]

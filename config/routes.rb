@@ -6,12 +6,11 @@ SoyLog3::Application.routes.draw do
   resources :component_nutrients
   resources :components
   resources :ingredients
-  resources :body_profiles
   resources :nutrients
-  resources :body_profile_nutrients
   resources :recipes
   resources :users
 
-  root to: 'users#index'
+  match '/about' => 'high_voltage/pages#show', id: 'about', as: :about
+  root :to => 'high_voltage/pages#show', :id => 'home'
   
 end

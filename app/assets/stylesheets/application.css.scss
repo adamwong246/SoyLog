@@ -12,10 +12,5 @@
  *= require_tree .
  */
 
-.wide_table_container{
-  overflow: scroll;
-}
-table, th, td
-{
-border: 1px solid black;
-}
+@import "bootstrap";
+
