@@ -1,7 +1,10 @@
 class RecipesController < ApplicationController
+  load_and_authorize_resource
+  
   # GET /recipes
   # GET /recipes.json
   def index
+
     @recipes = Recipe.all
 
     respond_to do |format|

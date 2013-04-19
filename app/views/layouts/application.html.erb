@@ -8,6 +8,20 @@
 </head>
 <body>
 
+<p>
+  <% flash.each do |name, msg| %>
+    <%= "#{name}: #{msg}"%>
+  <% end %>
+</p>
+<p>
+  
+  <% if current_user %>
+    Logged in as 
+    <%= current_user.name %>
+  <% else %>
+    <%= link_to "Login/Signup", new_user_session_path %>
+  <% end %>
+</p>
 
 <p>
   <%= BodyProfileNutrient.description %>

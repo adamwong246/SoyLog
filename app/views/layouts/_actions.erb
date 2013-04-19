@@ -8,7 +8,7 @@
   <% if actions.include? :destroy %>
     <li><%= link_to 'Destroy', object, method: :delete, data: { confirm: 'Are you sure?' } %></li>
   <% end %>
-  <% if actions.include? :index %>
+  <% if (actions.include? :index ) && (can? :index, params["controller"])%>
     <li><%= link_to "Index", try(params["controller"]+"_path") %></li>
   <% end %>
 </ul>

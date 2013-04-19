@@ -65,4 +65,8 @@ module ApplicationHelper
     end
     link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
   end
+
+  # def current_user
+  #   @current_user ||= user_from_remember_token
+  # end
 end

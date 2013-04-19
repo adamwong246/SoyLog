@@ -1,4 +1,6 @@
 class ComponentsController < ApplicationController
+  load_and_authorize_resource
+  
   # GET /components
   # GET /components.json
   def index
