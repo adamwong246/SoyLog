@@ -32,15 +32,15 @@ module ApplicationHelper
         if ee.nil?
           "nil"
         else
-          link_to ee.identify, ee
+           link_to ee.identify, ee
         end
       }
 
       if can? :write, e.first.class.to_s.tableize
-        r << (link_to "Create a new #{e.first.class}", action: :new, controller: e.first.class.to_s.tableize)
+        r << ( link_to "Create a new #{e.first.class}", action: :new, controller: e.first.class.to_s.tableize)
       end
-      # r.join('<br>')
-      return r
+      
+      return r.join('<br>')
     else
       begin
         return link_to e.identify, e

@@ -1,3 +1,5 @@
+/ # = params
+
 = form_for(@component_nutrient) do |f|
   - if @component_nutrient.errors.any?
     #error_explanation
@@ -9,21 +11,27 @@
           li= msg
 
   .field
-    = f.label :nutrient_id
-    - ComponentNutrient.reflect_on_all_associations.each do |a|
-      p= a.inspect
-   
-
-
-
-  .field
-    = f.collection_select(:nutrient_id, Nutrient.all, :id, :identify)
-
+    = f.label "#{:nutrient_id}:"
+    - if params["nutrient_id"]
+      = h_link Nutrient.find(params[:nutrient_id])
+      = f.hidden_field :nutrient_id, value: params[:nutrient_id]
+    - else
+      .field
+        = f.collection_select(:nutrient_id, Nutrient.all, :id, :identify)
 
   .field
-    = f.label :component_id
-  .field
-    = f.collection_select(:component_id, Component.all, :id, :identify)
+    = f.label "#{:component_id}:"
+    - if params["component_id"]
+      = h_link Component.find(params[:component_id])
+      = f.hidden_field :component_id, value: params[:component_id]
+    - else      
+        = f.collection_select(:component_id, Component.all, :id, :identify)
+
+
+  / .field
+  /   = f.label :component_id
+  / .field
+  /   = f.collection_select(:component_id, Component.all, :id, :identify)
 
   .field
     = f.label :amount

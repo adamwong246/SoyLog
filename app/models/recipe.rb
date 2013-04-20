@@ -18,5 +18,9 @@ class Recipe < ActiveRecord::Base
   def self.description
     "A Recipe describes the Ingredients needed to make a specific SoyLent mix."
   end
+
+  def all_nutrients_provided
+    self.ingredients.map{|ingredient| ingredient.component.component_nutrients.map{|component_nutrient| component_nutrient.nutrient}}.flatten.uniq
+  end
   
 end

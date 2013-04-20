@@ -17,6 +17,9 @@ class RecipesController < ApplicationController
   # GET /recipes/1.json
   def show
     @recipe = Recipe.find(params[:id])
+    nutrient_provided = @recipe.all_nutrients_provided
+
+    @nutrients = Nutrient.all.group_by { |n| nutrient_provided.include?(n) }   #=> {0=>[3, 6], 1=>[1, 4], 2=>[2, 5]}
 
     respond_to do |format|
       format.html # show.html.erb

@@ -14,3 +14,26 @@
 
 @import "bootstrap";
 
+
+.error {
+  color: $errorText;
+  background-color: $errorBackground;
+  border: $errorBorder;
+}
+
+.success {
+  color: $successText;
+  background-color: $successBackground;
+  border: $successBorder;
+}
+.warning {
+  color: $warningText;
+  background-color: $warningBackground;
+  border: $warningBorder;
+}
+
+.info{
+  color: $infoText;
+  background-color: $infoBackground;
+  border: $infoBorder;
+}
