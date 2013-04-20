@@ -1,4 +1,6 @@
 - padded_columns = 3
+- ingredients = @recipe.ingredients
+
 table.table.table-condensed.table-bordered
   caption Recipe table
   thead
@@ -9,33 +11,48 @@ table.table.table-condensed.table-bordered
       th FDA % 
 
       - ingredients.each do |ingredient|
-        td= ingredient.component.name
+        td= link_to ingredient.component.name, ingredient.component
     tr
       th URL
       td colspan=padded_columns      
       - ingredients.each do |ingredient|
-        td= link_to ingredient.component.url[0..20], ingredient.component.url
+        td= link_to get_host_without_www(ingredient.component.url)[0..20], ingredient.component.url
     tr
       th Purchase amount
       td colspan=padded_columns
       - ingredients.each do |ingredient|
-        td= "#{ingredient.component.total_amount} #{ingredient.component.units}"
+        td= ingredient.purchase_amount_string
     tr
       th Serving size
       td colspan=padded_columns
       - ingredients.each do |ingredient|
-        td= "#{(ingredient.component.total_amount/ingredient.amount).round(2)} #{ingredient.component.units}"
+        td = ingredient.serving_size_string
+    tr
+      th Total cost
+      td
+      td = @recipe.cost_string
+      td
+      - ingredients.each do |ingredient|
+        td= ingredient.cost_string
     tr
       th Cost per day
-      td colspan=padded_columns
+      td
+      td = @recipe.cost_per_day_string
+      td
       - ingredients.each do |ingredient|
-        td= "$#{(ingredient.component.price/(ingredient.component.total_amount/ingredient.amount)).round(2)}"
+        td= ingredient.cost_per_day_string
+        
     tr
       th Combined
       td colspan=padded_columns
       - ingredients.each do |ingredient|
-        td= raw "#{ingredient.component.component_nutrients.map{|cn| h_link cn}.join('<br>')}"
+        td
+          ul
+            - ingredient.component_nutrients.each do |cn| 
+              li= link_to cn.identify_short, cn
 
+    / Loop over all Ingredients
+    /////////////////////////////
     - [true, false].each do |in_recipe|
       - @nutrients[in_recipe].each do |nutrient|
 
@@ -44,12 +61,17 @@ table.table.table-condensed.table-bordered
         tr class=row_class
           td
             = link_to nutrient.name, nutrient
-            - if !in_recipe
-              p= link_to "add!", "asd"
-              
-          td= "#{nutrient.fda_rda} #{nutrient.unit}"
-          td= "#{nutrient.component_nutrients.sum{|cn| cn.amount}} #{nutrient.units}"
+
+            - if can? :edit, @recipe
+              p= link_to "Edit", edit_recipe_path(@recipe, {nutrient: nutrient})
+
+          td= nutrient.fda_rda_string
+          
+          / td= "#{nutrient.component_nutrients.sum{|cn| cn.amount}} #{nutrient.units}"
+          td = "#{@recipe.amount_of(nutrient)} #{nutrient.units}" 
+
           - percent_rda = ((nutrient.component_nutrients.sum{|cn| cn.amount} / nutrient.fda_rda) * 100  ).round(2)
+          - percent_rda = recipe.percent_fda_rda_of(nutrient)
  
           - percent_diff = (percent_rda-100).abs
 
@@ -66,9 +88,12 @@ table.table.table-condensed.table-bordered
               p= "#{percent_rda} %"
 
           - @recipe.ingredients.each do |ingredient|
-            - cn = ComponentNutrient.select { |cn| cn.component_id == ingredient.component.id && cn.nutrient_id == nutrient.id }.map{|cn| link_to "#{cn.amount} #{nutrient.unit}", cn}.join('')
-            - if !cn.empty?
-              td.info= raw cn
+            - comp_nuts = ComponentNutrient.which_joins(ingredient.component, nutrient)
+            
+            - if !comp_nuts.empty?
+              td.info
+                - comp_nuts.each do |cn|
+                  = link_to cn.identify_short, cn
             - else
               td
               / td= link_to "Create", new_component_nutrient_path(params: {component_id: ingredient.component.id, nutrient_id: nutrient.id} )

@@ -1,0 +1,9 @@
+.container
+  h1 Editing recipe
+  = params
+
+  - if params[:nutrient]
+    p Edit Ingredients which provides #{Nutrient.find(params[:nutrient]).name}
+    
+  = render 'form'
+  = render :partial => "layouts/actions", :locals => { :object => @recipe, :actions => [:show, :destroy, :index]}

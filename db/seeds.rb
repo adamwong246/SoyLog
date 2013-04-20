@@ -1,8 +1,12 @@
+puts "mark0"
 eustace = User.create!(:name => 'Eustace User', :email => 'EustaceUser@email.com', :password => "eustace_user_123", :password_confirmation => 'eustace_user_123')
-User.create!(:name => 'Andy Admin', :email => 'AndyAdmin@email.com', :password => "andy_admin_123", :password_confirmation => 'andy_admin_123')
+
+# User.create!(:name => 'Andy Admin', :email => 'AndyAdmin@email.com', :password => "andy_admin_123", :password_confirmation => 'andy_admin_123')
+puts "mark1"
 
 recipe = eustace.recipes.create!({id: 1, user_id: 1, name: 'soylent v 1'})
 
+puts "mark2"
 nu_biotin            = Nutrient.create!({name: "Biotin",            fda_rda: 300,   unit: :ug})
 nu_calcium           = Nutrient.create!({name: "Calcium",           fda_rda: 1,     unit: :g})
 nu_carbohydrates     = Nutrient.create!({name: "Carbohydrates",     fda_rda: 200,   unit: :g})
@@ -43,6 +47,8 @@ comp_maltodextrin   = Component.create!({name: 'Maltodextrin',                un
 comp_olive_oil      = Component.create!({name: 'Extra Light Olive Oil',       unit: :l,  total_amount:1.5, price: 13.45,       url: "http://www.amazon.com/Bertolli-Extra-Light-Olive-Oil/dp/B008ELNF0Y_1_4?ie=UTF8&qid=1365725469&sr=8-4&keywords=bertolli+extra+light+olive+oil"})
 comp_whey           = Component.create!({name: 'Whey Protein Isolate (100%)', unit: :g,  total_amount:2267.96, price: 62.64,   url: "Whey Protein Isolate (100%)  "})
 comp_salt           = Component.create!({name: 'Iodized Salt',                unit: :g,  total_amount:737, price: 1.98,        url: "http://www.amazon.com/Hain-Pure-Foods-Salt-Iodized/dp/B000MDACSK/ref=sr_1_cc_1?s=aps&ie=UTF8&qid=1365725608&sr=1-1-catcorr&keywords=hain+iodized+salt" })
+comp_calcium_pantothenate   = Component.create!(name: 'Calcium Pantothenate', unit: :g, total_amount: 250, price: 13.50, url: 'http://purebulk.com/pantothenic-acid-powder-vitamin-b5-calcium-pantothenate.html')
+
 
 ComponentNutrient.create!({amount: 0.9, component: comp_biotin,        nutrient: nu_biotin})
 ComponentNutrient.create!({amount: 0.9, component: comp_c_carbonate,   nutrient: nu_calcium})
@@ -52,6 +58,7 @@ ComponentNutrient.create!({amount: 0.9, component: comp_olive_oil,     nutrient:
 ComponentNutrient.create!({amount: 0.9, component: comp_whey,          nutrient: nu_protein})
 ComponentNutrient.create!({amount: 0.9, component: comp_salt,          nutrient: nu_chloride})
 ComponentNutrient.create!({amount: 0.9, component: comp_salt,          nutrient: nu_potassium})
+ComponentNutrient.create!({amount: 0.9, component: comp_calcium_pantothenate,          nutrient: nu_panthothenic_acid})
 
 recipe.ingredients.create!({amount: 4, component: comp_c_carbonate})
 recipe.ingredients.create!({amount: 4, component: comp_biotin})
@@ -61,8 +68,9 @@ recipe.ingredients.create!({amount: 4, component: comp_maltodextrin})
 recipe.ingredients.create!({amount: 4, component: comp_olive_oil})
 recipe.ingredients.create!({amount: 4, component: comp_whey})
 recipe.ingredients.create!({amount: 4, component: comp_salt})
+recipe.ingredients.create!({amount: 10.12, component: comp_calcium_pantothenate})
 
-recipe.save!
+# recipe.save!
 
 # ComponentNutrient.create!({id: 1, component_id: 1, nutrient_id: 1, amount: 0.9})
 # ComponentNutrient.create!({id: 2, component_id: 2, nutrient_id: 2, amount: 3.3})

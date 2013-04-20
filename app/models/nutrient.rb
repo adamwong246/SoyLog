@@ -1,4 +1,6 @@
 class Nutrient < ActiveRecord::Base
+  include NutrientsHelper
+
   attr_accessible :id, :unit, :name, :fda_rda
 
   has_many :component_nutrients,                         :autosave => true
@@ -6,11 +8,6 @@ class Nutrient < ActiveRecord::Base
   has_many :ingredients,  through: :components,          :autosave => true
   has_many :recipes,      through: :ingredients,         :autosave => true
   
-
-  def identify
-    "#{fda_rda} #{self.units} of #{self.name}"
-  end
-
   def self.description
     "A Nutrient is the FDA recommended amount of a certain substance."
   end

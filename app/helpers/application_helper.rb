@@ -1,5 +1,16 @@
 module ApplicationHelper
 
+  def get_host_without_www(url)
+    begin
+      uri = URI.parse(url)
+      uri = URI.parse("http://#{url}") if uri.scheme.nil?
+      host = uri.host.downcase
+      host.start_with?('www.') ? host[4..-1] : host
+    rescue
+      "Invalid url"
+    end
+  end
+
   def h_link(object)
     return link_to object.identify, object
   end

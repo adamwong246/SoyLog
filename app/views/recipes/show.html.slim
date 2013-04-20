@@ -2,6 +2,6 @@
 
 
 /= render :partial => "spreadsheet_a", :locals => {ingredients: @recipe.ingredients, nutrient: @nutrients}
-= render :partial => "spreadsheet_b", :locals => {ingredients: @recipe.ingredients, nutrient: @nutrients}
+= render :partial => "spreadsheet_b", :locals => {recipe: @recipe, nutrient: @nutrients}
 
 

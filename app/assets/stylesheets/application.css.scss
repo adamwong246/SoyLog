@@ -16,24 +16,24 @@
 
 
 .error {
-  color: $errorText;
-  background-color: $errorBackground;
-  border: $errorBorder;
+  color: $errorText !important;
+  background-color: $errorBackground !important;
+  border: $errorBorder !important;
 }
 
 .success {
-  color: $successText;
-  background-color: $successBackground;
-  border: $successBorder;
+  color: $successText !important;
+  background-color: $successBackground !important;
+  border: $successBorder !important;
 }
 .warning {
-  color: $warningText;
-  background-color: $warningBackground;
-  border: $warningBorder;
+  color: $warningText !important;
+  background-color: $warningBackground !important;
+  border: $warningBorder !important;
 }
 
 .info{
-  color: $infoText;
-  background-color: $infoBackground;
-  border: $infoBorder;
+  color: $infoText !important;
+  background-color: $infoBackground !important;
+  border: $infoBorder !important;
 }
