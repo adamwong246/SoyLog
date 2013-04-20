@@ -1,10 +1,13 @@
 .container
-  h1
-    = "Indexing " + collection.first.class.to_s.pluralize
   h3
+    = collection.first.class.to_s.pluralize
+  h5
     = collection.first.class.description
   = link_to "Create a new #{collection.first.class}", :controller => params[:controller], :action => :new
+
   table.table.table-condensed
+    / tr
+      / th= collection.first.class.to_s.pluralize
     tr
       td
       - columns.each do |column|
@@ -12,7 +15,9 @@
           = column.to_s
     - collection.each do |element|
       tr
-        td= render :partial => "layouts/actions", :locals => { :object => element, :actions => [:show, :edit, :destroy]}
+        td= render :partial => "layouts/actions", :locals => { :object => element, :actions => [:edit, :destroy]}
         - columns.each do |column|
+
           td
+            
             = apply_chain_link_or_print([*column], element)

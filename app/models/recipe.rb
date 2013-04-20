@@ -7,7 +7,7 @@ class Recipe < ActiveRecord::Base
   accepts_nested_attributes_for :ingredients
 
   def identify
-    self.class.to_s + ": " + self.name
+    "#{self.name}, by #{self.user.name}"
   end
 
   def self.description

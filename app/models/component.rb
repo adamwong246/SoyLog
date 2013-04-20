@@ -9,7 +9,7 @@ class Component < ActiveRecord::Base
   has_many :nutrients, through: :component_nutrients  # each of the nutrients
 
   def identify
-    "#{self.class.to_s}::(#{self.name})"
+    "#{self.total_amount} #{self.units} of #{self.name} which costs $#{self.price}"
   end
 
   def self.description
@@ -24,6 +24,8 @@ class Component < ActiveRecord::Base
       "milligrams"
     when 'ug'
       'micrograms'
+    when 'l'
+      'liters'
     else
       self.unit 
     end

@@ -9,7 +9,14 @@ module ApplicationHelper
     
     e = recusive_function_chainer(functions, object)
 
-    puts "e: " + e.inspect
+    puts "e: #{e}"
+    puts "functions: #{functions}"
+    puts "object: #{object}"
+
+    if functions == [:identify]
+      return link_to e, object
+    end
+
     if e.nil?
       return "nil"
     elsif String >= e.class
@@ -44,10 +51,6 @@ module ApplicationHelper
 
     # for every operation in the chain
     [*chain].each do |link|
-      puts "--link: #{link.inspect}"
-      puts "--e: #{e.inspect}"
-
-
       if e.kind_of? Array
         puts "e is array"
         e = e.map{|ee| recusive_function_chainer(link, ee)}

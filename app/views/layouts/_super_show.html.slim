@@ -1,11 +1,17 @@
 .container
-  h1
-    = "Showing #{member.class}:  '#{member.identify}'"
-  h3
-    = member.class.description
   = link_to "Back to all #{params[:controller]}", "/"+params[:controller]
-  - columns.each do |column|
-    p
-      b= column.to_s
-      = raw apply_chain_link_or_print([*column], member)
+  
+  h3
+    = "#{member.class}:  '#{member.identify}'"
+  h5
+    = member.class.description
+  
+
+  table.table.table-condensed
+
+    - columns.each do |column|
+      tr
+        th= column.to_s
+        td= raw apply_chain_link_or_print([*column], member)
+  hr
   = render :partial => "layouts/actions", :locals => { :object => member, :actions => [:edit, :destroy]}

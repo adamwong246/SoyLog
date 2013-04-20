@@ -7,7 +7,7 @@ class Ingredient < ActiveRecord::Base
   accepts_nested_attributes_for :component
 
   def identify
-    "#{self.class.to_s}::#{self.amount.round(2)} #{self.component.unit.pluralize} of #{self.component.name}"
+    "#{self.amount.round(2)} #{self.component.units} of #{self.component.name}"
   end
 
   def self.description

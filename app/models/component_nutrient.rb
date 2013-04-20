@@ -5,7 +5,7 @@ class ComponentNutrient < ActiveRecord::Base
   belongs_to :nutrient   # nutrient_id
 
   def identify
-    "#{self.class.to_s}::(#{self.component.identify} which provides #{self.amount} of #{self.nutrient.identify})"
+    "#{self.component.identify} and which provides #{self.amount} of #{self.nutrient.identify}"
   end
 
   def self.description

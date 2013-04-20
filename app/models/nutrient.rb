@@ -10,7 +10,7 @@ class Nutrient < ActiveRecord::Base
   # can be found in many body_profiles
 
   def identify
-    "#{self.class.to_s}::(#{self.units} of #{self.name})"
+    "#{fda_rda} #{self.units} of #{self.name}"
   end
 
   def self.description

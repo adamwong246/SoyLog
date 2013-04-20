@@ -25,7 +25,7 @@ hr
               = link_to n.name, n
       - @recipe.ingredients.each do |ingredient|
         tr
-          td= link_to "#{ingredient.amount.round(2)} #{ingredient.component.units} of #{ingredient.component.name}"
+          td= link_to "#{ingredient.amount.round(2)} #{ingredient.component.units} of #{ingredient.component.name}", ingredient
           td= link_to ingredient.component.name, ingredient.component
           td= link_to "#{ingredient.component.url[0..10]}"
           td
@@ -38,7 +38,7 @@ hr
             = "#{ingredient.amount.round(2)} #{ingredient.component.units}"
           td
             = "#{(ingredient.component.total_amount/ingredient.amount).round(2)}"
-          td= raw (ingredient.component.component_nutrients.map{|cn| link_to "#{cn.amount.to_s}  #{cn.nutrient.units} of #{cn.nutrient.name}", cn})
+          td= raw (ingredient.component.component_nutrients.map{|cn| link_to "#{cn.amount.to_s}  #{cn.nutrient.units} of #{cn.nutrient.name}", cn}.join('<br> '))
 
           - Nutrient.all.each do |nutrient|
             td

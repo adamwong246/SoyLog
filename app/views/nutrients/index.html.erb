@@ -1,36 +1,7 @@
 <%= render :partial => "layouts/super_index", 
   :locals => 
     { columns: 
-      [:id, :unit, :name], 
+      [:identify], 
       collection: @nutrients
     } 
 %>
-
-<!-- <h1>Listing nutrients</h1>
-
-<table>
-  <tr>
-    <th>Id</th>
-    <th>Unit</th>
-    <th>Name</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @nutrients.each do |nutrient| %>
-  <tr>
-    <td><%= nutrient.id %></td>
-    <td><%= nutrient.unit %></td>
-    <td><%= nutrient.name %></td>
-    <td><%= link_to 'Show', nutrient %></td>
-    <td><%= link_to 'Edit', edit_nutrient_path(nutrient) %></td>
-    <td><%= link_to 'Destroy', nutrient, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Nutrient', new_nutrient_path %>
- -->
