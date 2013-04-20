@@ -1,0 +1,10 @@
+fieldset.well
+  b= f.label :amount, "Amount"
+  = f.number_field :amount
+
+  = f.fields_for :component do |builder|
+    = render 'component_field', f: builder
+  
+  .field
+    = f.label :_destroy, "Remove Ingredient"
+    = f.check_box :_destroy

@@ -32,25 +32,7 @@
       - else
         = form.label field
         = form.text_field field
-        / - if member.class.columns_hash[field.to_s].type >= Numeric
-        /   | It's numeric
-
-        / p= member.class.columns_hash[field.to_s]
-        / p= member.class.columns_hash[field.to_s].type.to_s.camelize.constantize
-
-      / when 
-    
-     
-      
-      / - attempt = nil
-      / - if attempt.nil?
-      /   = "nil"
-      / - elsif Numeric >= attempt.class
-      /   = form.number_field field
-      / - elsif Array >= e.class
-      /   = form.text_field field
-      / - else
-      /   = form.text_field field
+       
 
   .actions
     = form.submit

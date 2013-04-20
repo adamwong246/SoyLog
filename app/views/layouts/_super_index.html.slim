@@ -3,7 +3,9 @@
     = collection.first.class.to_s.pluralize
   h5
     = collection.first.class.description
-  = link_to "Create a new #{collection.first.class}", :controller => params[:controller], :action => :new
+  
+  - if can? :write, params["controller"]
+    = link_to "Create a new #{collection.first.class}", :controller => params[:controller], :action => :new
 
   table.table.table-condensed
     / tr

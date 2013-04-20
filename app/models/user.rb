@@ -22,4 +22,7 @@ class User < ActiveRecord::Base
     ""
   end
 
+  def admin?
+    self.email == "andyadmin@email.com"
+  end
 end

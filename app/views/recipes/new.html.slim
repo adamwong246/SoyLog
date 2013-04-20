@@ -1,7 +1,5 @@
 .container
-  = render :partial => "layouts/super_new", :locals => { columns: [:name], member: @recipe} 
-
-/ .container
-/   h1 New recipe
-/   = render 'form'
-/   = link_to 'Back', recipes_path
+  = link_to 'Back', recipes_path
+  h3 New Recipe
+  = render 'form'
+  

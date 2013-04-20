@@ -1,9 +1,9 @@
 ul
-  - if actions.include? :show
-    li= link_to "Show", object
-  - if actions.include? :edit
-    li= link_to 'Edit', [:edit, object]
-  - if actions.include? :destroy
-    li= link_to 'Destroy', object, method: :delete, data: {confirm: 'Are you sure?'}
-  - if (actions.include? :index ) && (can? :index, params["controller"])
+  - if actions.include? :index 
     li= link_to "Index", try(params["controller"]+"_path")
+  - if actions.include? :show 
+    li= link_to "Show", object
+  - if actions.include? :edit and can? :write, params["controller"]
+    li= link_to 'Edit', [:edit, object]
+  - if actions.include? :destroy and can? :write, params["controller"]
+    li= link_to 'Destroy', object, method: :delete, data: {confirm: 'Are you sure?'}

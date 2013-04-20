@@ -6,6 +6,11 @@ class Recipe < ActiveRecord::Base
 
   accepts_nested_attributes_for :ingredients
 
+  validate :check_user
+  def check_user
+    errors.add(:user, "You can't create a Recipe as somebody beside yourself.") if check_user != user
+  end
+
   def identify
     "#{self.name}"
   end

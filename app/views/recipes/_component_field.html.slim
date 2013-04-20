@@ -1,0 +1,6 @@
+p Testing
+fieldset.well
+  b
+    = f.label :component
+    br
+    = collection_select :componenet, :id, Component.all, :id, :name
