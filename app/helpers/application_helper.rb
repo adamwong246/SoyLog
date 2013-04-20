@@ -28,13 +28,13 @@ module ApplicationHelper
         return "none"
       end
 
-      return e.map{|ee| 
+      return (e.map{|ee| 
         if ee.nil?
           "nil"
         else
           link_to ee.identify, ee
         end
-      }.join('<br>')
+      } << (link_to "Create a new #{e.first.class}", action: :new, controller: e.first.class.to_s.tableize)).join('<br>')
     else
       begin
         return link_to e.identify, e

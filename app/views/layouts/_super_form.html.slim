@@ -1,0 +1,56 @@
+/ p= member.class.reflect_on_all_associations.map{|a| a.inspect}
+/ br
+/ p= member.class.columns_hash
+
+= form_for(member) do |form|
+  - if member.errors.any?
+    #error_explanation
+      h2
+        = pluralize(member.errors.count, "error")
+        | prohibited this {member.class} from being saved:
+      ul
+        - member.errors.full_messages.each do |msg|
+          li= msg
+  - fields.each do |field|
+    .field
+      
+
+      - association = member.class.reflect_on_all_associations.select{|a| a.name == field}[0]
+
+      - if association
+        / | Association!
+        -case association.macro
+        -when :belongs_to
+          = "which belongs_to #{association.klass.name}"
+          .field
+            = form.collection_select(association.foreign_key.to_sym, association.klass.all, :id, :identify)
+        -when :has_one
+          = "which has_one #{association.klass.name}"
+          .field
+            = form.collection_select(association.foreign_key.to_sym, association.klass.all, :id, :identify)
+
+      - else
+        = form.label field
+        = form.text_field field
+        / - if member.class.columns_hash[field.to_s].type >= Numeric
+        /   | It's numeric
+
+        / p= member.class.columns_hash[field.to_s]
+        / p= member.class.columns_hash[field.to_s].type.to_s.camelize.constantize
+
+      / when 
+    
+     
+      
+      / - attempt = nil
+      / - if attempt.nil?
+      /   = "nil"
+      / - elsif Numeric >= attempt.class
+      /   = form.number_field field
+      / - elsif Array >= e.class
+      /   = form.text_field field
+      / - else
+      /   = form.text_field field
+
+  .actions
+    = form.submit

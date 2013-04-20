@@ -15,7 +15,7 @@
           = column.to_s
     - collection.each do |element|
       tr
-        td= render :partial => "layouts/actions", :locals => { :object => element, :actions => [:edit, :destroy]}
+        th= render :partial => "layouts/actions", :locals => { :object => element, :actions => [:edit, :destroy]}
         - columns.each do |column|
 
           td

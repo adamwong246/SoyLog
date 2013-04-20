@@ -1,8 +1,8 @@
 .container
   = link_to "Back to all #{params[:controller]}", "/"+params[:controller]
-  
-  h3
-    = "#{member.class}:  '#{member.identify}'"
+
+  h3= "#{member.class}:"
+  h4=member.identify
   h5
     = member.class.description
   
@@ -14,4 +14,4 @@
         th= column.to_s
         td= raw apply_chain_link_or_print([*column], member)
   hr
-  = render :partial => "layouts/actions", :locals => { :object => member, :actions => [:edit, :destroy]}
+  h2= render :partial => "layouts/actions", :locals => { :object => member, :actions => [:edit, :destroy]}

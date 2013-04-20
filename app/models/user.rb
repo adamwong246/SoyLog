@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :id, :name
 
-  has_many :recipes
+  has_many :recipes, :autosave => true
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   end
 
   def self.description
-    "A User is the object representing the user."
+    ""
   end
 
 end

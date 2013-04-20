@@ -1,0 +1,33 @@
+= form_for(@component_nutrient) do |f|
+  - if @component_nutrient.errors.any?
+    #error_explanation
+      h2
+        = pluralize(@component_nutrient.errors.count, "error")
+        | prohibited this component_nutrient from being saved:
+      ul
+        - @component_nutrient.errors.full_messages.each do |msg|
+          li= msg
+
+  .field
+    = f.label :nutrient_id
+    - ComponentNutrient.reflect_on_all_associations.each do |a|
+      p= a.inspect
+   
+
+
+
+  .field
+    = f.collection_select(:nutrient_id, Nutrient.all, :id, :identify)
+
+
+  .field
+    = f.label :component_id
+  .field
+    = f.collection_select(:component_id, Component.all, :id, :identify)
+
+  .field
+    = f.label :amount
+    br/
+    = f.text_field :amount
+  .actions
+    = f.submit

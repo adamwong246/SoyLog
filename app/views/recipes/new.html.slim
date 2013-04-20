@@ -1,4 +1,7 @@
 .container
-  h1 New recipe
-  = render 'form'
-  = link_to 'Back', recipes_path
+  = render :partial => "layouts/super_new", :locals => { columns: [:name], member: @recipe} 
+
+/ .container
+/   h1 New recipe
+/   = render 'form'
+/   = link_to 'Back', recipes_path

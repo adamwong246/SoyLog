@@ -4,9 +4,9 @@ class Component < ActiveRecord::Base
 
   attr_accessible :id, :name, :unit, :url, :total_amount, :price
 
-  has_many :ingredients         # used in many recipes
-  has_many :component_nutrients       # nutrient breakdown
-  has_many :nutrients, through: :component_nutrients  # each of the nutrients
+  has_many :ingredients,                              :autosave => true         
+  has_many :component_nutrients,                      :autosave => true 
+  has_many :nutrients, through: :component_nutrients, :autosave => true
 
   def identify
     "#{self.total_amount} #{self.units} of #{self.name} which costs $#{self.price}"
