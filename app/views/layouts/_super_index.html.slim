@@ -11,10 +11,10 @@
     / tr
       / th= collection.first.class.to_s.pluralize
     tr
-      td
+      td 
       - columns.each do |column|
         th
-          = column.to_s
+          = column.to_s unless column == :identify
     - collection.each do |element|
       tr
         th= render :partial => "layouts/actions", :locals => { :object => element, :actions => [:edit, :destroy]}

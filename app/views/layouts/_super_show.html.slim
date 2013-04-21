@@ -1,7 +1,7 @@
 .container
   = link_to "Back to all #{params[:controller]}", "/"+params[:controller]
 
-  h3= "#{member.class}:"
+  h3= "#{member.class}:"  
   h4=member.identify
   h5
     = member.class.description
@@ -12,5 +12,7 @@
 
     - columns.each do |column|
       tr
-        th= column.to_s
+        th
+          / # =column.inspect
+          = column.to_s unless column == :identify
         td= raw apply_chain_link_or_print([*column], member)
