@@ -1,4 +1,5 @@
-= form_for(@recipe) do |f|
+.well= nested_form_for(@recipe) do |recipe_form|
+  
   - if @recipe.errors.any?
     #error_explanation
       h2
@@ -7,27 +8,24 @@
       ul
         - @recipe.errors.full_messages.each do |msg|
           li= msg
-  / .field
-  /   b
-  /     = f.label :id
-  /     br/
-  /     = f.number_field :id
-  / .field
-  /   b
-  /     = f.label :user_id
-  /     br/
-  = f.hidden_field :user_id, value: current_user.id
-  .field
-    b
-      = f.label :name
-      br/
-      = f.text_field :name
-  .well
-    b
-      = f.label :ingredients
-    br
-      = f.fields_for :ingredients do |builder|
-        = render 'ingredient_fields', f: builder
-      = link_to_add_fields "Add Ingredient", f, :ingredients
+  
+  = recipe_form.hidden_field :user_id, value: current_user.id    
+  = recipe_form.label :name
+  = recipe_form.text_field :name
+  / = recipe_form.label :ingredients
+  
+  / = recipe_form.fields_for :ingredients do |ingredients_form|
+  /   .well
+  /     = ingredients_form.label :amount, "Amount"
+  /     = ingredients_form.text_field :amount
+      
+  /     = recipe_form.fields_for :component do |component_field|
+  /       .well
+  /         = component_field.label: :component, "Component"
+
+        
+  /     = ingredients_form.link_to_remove "Remove this Ingredient"
+       
+  / =recipe_form.link_to_add "Add Ingredient", :ingredients
   .actions
-    = f.submit
+    = recipe_form.submit

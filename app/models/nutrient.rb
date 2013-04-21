@@ -8,6 +8,11 @@ class Nutrient < ActiveRecord::Base
   has_many :ingredients,  through: :components,          :autosave => true
   has_many :recipes,      through: :ingredients,         :autosave => true
   
+  accepts_nested_attributes_for :component_nutrients
+  accepts_nested_attributes_for :components
+  accepts_nested_attributes_for :ingredients
+  accepts_nested_attributes_for :recipes
+
   def self.description
     "A Nutrient is the FDA recommended amount of a certain substance."
   end

@@ -18,7 +18,7 @@
               th FDA % 
        
           
-            - @nutrients[in_recipe].each do |nutrient|
+            - [*@nutrients[in_recipe]].each do |nutrient|
 
               - row_class = 'error' if !in_recipe
 
@@ -27,7 +27,7 @@
                   = link_to nutrient.name, nutrient
 
                   - if can? :edit, @recipe
-                    p= link_to "Edit", edit_recipe_path(@recipe, {nutrient: nutrient})
+                    p= link_to "New Ingredient", edit_recipe_path(@recipe, {add_ingredient_for: nutrient})
 
                 td= nutrient.fda_rda_string
                 

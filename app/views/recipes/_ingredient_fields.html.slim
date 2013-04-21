@@ -1,12 +1,11 @@
-p= params
-p= f.inspect
+/ p= params
+/ p= f.inspect
 fieldset.well
   b= f.label :amount, "Amount"
-  = f.number_field :amount
+  = f.text_field :amount
 
   = f.fields_for :component do |builder|
     = render 'component_field', f: builder
-  / = link_to_add_fields "Add Component", f, :component/
   
   .field
     = f.label :_destroy, "Remove Ingredient"

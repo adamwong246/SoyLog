@@ -6,7 +6,8 @@ class ComponentNutrient < ActiveRecord::Base
   belongs_to :component, :autosave => true
   belongs_to :nutrient,  :autosave => true
 
-
+  accepts_nested_attributes_for :component
+  accepts_nested_attributes_for :nutrient
 
   def self.description
     "A ComponentNutrient relates a store-bought Component to the Nutrients found in it. "

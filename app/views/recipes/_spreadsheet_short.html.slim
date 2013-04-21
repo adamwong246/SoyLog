@@ -6,7 +6,7 @@ table.table.table-condensed
     tr
       th
         | Ingredient
-        th Component
+        / th Component
         th Url
         th Price
         th Price per Servings
@@ -19,7 +19,7 @@ table.table.table-condensed
     - @recipe.ingredients.each do |ingredient|
       tr
         td= link_to "#{ingredient.amount.round(2)} #{ingredient.component.units} of #{ingredient.component.name}", ingredient
-        td= link_to ingredient.component.name, ingredient.component
+        / td= link_to ingredient.component.name, ingredient.component
         td= link_to "#{ingredient.component.url[0..10]}"
         td
           = "$#{ingredient.component.price}"
@@ -47,7 +47,7 @@ table.table.table-condensed
     
     tr      
       td= link_to "Create new Ingredient", new_ingredient_path
-      td= link_to "Create new Component", new_component_path
+      / td= link_to "Create new Component", new_component_path
       td
         | $ #{@recipe.ingredients.sum{|ingredient| ingredient.component.price }}
       td

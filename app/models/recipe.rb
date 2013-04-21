@@ -5,7 +5,8 @@ class Recipe < ActiveRecord::Base
   belongs_to :user,      :autosave => true
   has_many :ingredients, :autosave => true
 
-  accepts_nested_attributes_for :ingredients
+  accepts_nested_attributes_for :ingredients, allow_destroy: true
+  accepts_nested_attributes_for :user, allow_destroy: true
 
   # validate :check_user
   # def check_user

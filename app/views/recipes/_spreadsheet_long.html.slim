@@ -60,9 +60,8 @@ table.table.table-condensed
               li= link_to cn.identify_short, cn
 
     / Loop over all Ingredients
-    /////////////////////////////
     - [true, false].each do |in_recipe|
-      - @nutrients[in_recipe].each do |nutrient|
+      - [*@nutrients[in_recipe]].each do |nutrient|
 
         - row_class = 'error' if !in_recipe
 

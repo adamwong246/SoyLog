@@ -1,12 +1,15 @@
-# A Component is something you can purchase from a store, or online, such as protein powder.
-
 class Component < ActiveRecord::Base
+  include ComponentsHelper
 
   attr_accessible :id, :name, :unit, :url, :total_amount, :price
 
   has_many :ingredients,                              :autosave => true         
   has_many :component_nutrients,                      :autosave => true 
   has_many :nutrients, through: :component_nutrients, :autosave => true
+
+  accepts_nested_attributes_for :ingredients, allow_destroy: true
+  accepts_nested_attributes_for :component_nutrients, allow_destroy: true
+  accepts_nested_attributes_for :nutrients, allow_destroy: true
 
   def identify
     "#{self.total_amount} #{self.units} of #{self.name} which costs $#{self.price}"
@@ -29,6 +32,12 @@ class Component < ActiveRecord::Base
     else
       self.unit 
     end
+  end
+
+  def self.find_all_which_provide(nutrient)
+    Component.find(:all,
+      conditions: ['component_nutrient.nutrients_id = ?', nutrient.id]
+    )
   end
 
 

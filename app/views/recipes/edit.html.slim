@@ -1,9 +1,18 @@
 .container
-  h1 Editing recipe
-  = params
-
-  - if params[:nutrient]
-    p Edit Ingredients which provides #{Nutrient.find(params[:nutrient]).name}
+  page-header
+    h1 
+      | Editing
+      small= @recipe.identify
     
-  = render 'form'
+    = params
+
+  - if params[:add_ingredient_for ]
+    - nutrient_to_find = Nutrient.find(params[:add_ingredient_for])
+    h3 Edit Ingredients which provides #{nutrient_to_find.name}
+
+    = nested_form_for(@recipe) do |recipe_form|
+      - if @recipe.errors.any?
+        = render :partial => "layouts/form_error", :locals => { :errors => @recipe.errors}
+      = recipe_form.collection_select(:id, Component.find_all_which_provide(nutrient_to_find), :id, :identify)
+
   = render :partial => "layouts/actions", :locals => { :object => @recipe, :actions => [:show, :destroy, :index]}
