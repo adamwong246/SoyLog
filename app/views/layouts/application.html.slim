@@ -5,7 +5,8 @@ html
     = stylesheet_link_tag    "application", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
-  body
+  
+  body class="#{controller_name} #{action_name}"
     .navbar
       nav.navbar-inner
         .container
@@ -44,13 +45,12 @@ html
                 =link_to "Nutrients", nutrients_path
 
           ul.nav.pull-right
-            li= link_to "About", about_path
-    
-    
-    - flash.each do |name, msg|
-      - if msg.is_a?(String)
-        div class="alert alert-#{name == :notice ? "success" : "error"}"
-          a.close data-dismiss="alert"
-          = content_tag :div, raw(msg), :id => "flash_#{name}"
+            li= link_to "About", about_path        
 
-    = yield
+    #main role="main"
+      - flash.each do |name, msg|
+        - if msg.is_a?(String)
+          div class="alert alert-#{name == :notice ? "success" : "error"}"
+            a.close data-dismiss="alert"
+            = content_tag :div, raw(msg), :id => "flash_#{name}"      
+      = yield

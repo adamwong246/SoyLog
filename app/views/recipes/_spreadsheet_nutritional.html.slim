@@ -1,0 +1,52 @@
+- padded_columns = 4
+- ingredients = @recipe.ingredients
+
+.container
+  .row
+    - [true, false].each do |in_recipe|
+      .span6
+        table#nutritional_form.table.table-condensed.table-bordered
+          - if in_recipe
+            caption "#{@recipe.name}, nutritional form"
+          - else
+            caption "#{@recipe.name}, nutritional form, missing Components"
+          thead
+            tr
+              td
+              th FDA RDA
+              th Actual
+              th FDA % 
+       
+          
+            - @nutrients[in_recipe].each do |nutrient|
+
+              - row_class = 'error' if !in_recipe
+
+              tr class=row_class
+                td
+                  = link_to nutrient.name, nutrient
+
+                  - if can? :edit, @recipe
+                    p= link_to "Edit", edit_recipe_path(@recipe, {nutrient: nutrient})
+
+                td= nutrient.fda_rda_string
+                
+
+                td = "#{@recipe.amount_of(nutrient)} #{nutrient.units}" 
+
+                - percent_rda = ((nutrient.component_nutrients.sum{|cn| cn.amount} / nutrient.fda_rda) * 100  ).round(2)
+                - percent_rda = recipe.percent_fda_rda_of(nutrient)
+       
+                - percent_diff = (percent_rda-100).abs
+
+                - if (percent_diff < 1)
+                  td.success
+                    p= "#{percent_rda} %"
+
+                - elsif percent_diff > 10
+                  td.error
+                    p= "#{percent_rda} %"
+
+                -else
+                  td.warning
+                    p= "#{percent_rda} %"

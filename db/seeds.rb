@@ -1,7 +1,7 @@
 puts "mark0"
 eustace = User.create!(:name => 'Eustace User', :email => 'EustaceUser@email.com', :password => "eustace_user_123", :password_confirmation => 'eustace_user_123')
 
-# User.create!(:name => 'Andy Admin', :email => 'AndyAdmin@email.com', :password => "andy_admin_123", :password_confirmation => 'andy_admin_123')
+User.create!(:name => 'Andy Admin', :email => 'AndyAdmin@email.com', :password => "andy_admin_123", :password_confirmation => 'andy_admin_123')
 puts "mark1"
 
 recipe = eustace.recipes.create!({id: 1, user_id: 1, name: 'soylent v 1'})

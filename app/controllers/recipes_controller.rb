@@ -1,6 +1,19 @@
 class RecipesController < ApplicationController
   load_and_authorize_resource
   
+  def long
+    
+    
+    @recipes = Recipe.all
+    nutrient_provided = @recipe.all_nutrients_provided
+    @nutrients = Nutrient.all.group_by { |n| nutrient_provided.include?(n) }
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @recipes }
+    end
+  end
+
   # GET /recipes
   # GET /recipes.json
   def index

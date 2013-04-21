@@ -10,6 +10,7 @@ class Ability
         can :manage, :all
     else
         can :read, :all 
+        can :long, Recipe
         cannot :write, :all
     end
     #   if user.admin?

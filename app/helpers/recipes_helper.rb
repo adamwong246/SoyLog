@@ -25,6 +25,8 @@ module RecipesHelper
     ((self.amount_of(nutrient) / nutrient.fda_rda) * 100).round(2)
   end
 
-
+  def all_component_nutrients_which_supply(nutrient)
+    self.ingredients.map{|i| i.component.component_nutrients.select{ |cn| cn.nutrient == nutrient }}.flatten
+  end
 
 end

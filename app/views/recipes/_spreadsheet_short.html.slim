@@ -1,0 +1,56 @@
+- padded_columns = 8
+table.table.table-condensed.table-bordered
+  caption "#{@recipe.name}, short form"
+  thead
+
+    tr
+      th
+        | Ingredient
+        th Component
+        th Url
+        th Price
+        th Price per Servings
+        / th Total Amount
+        th Serving size
+        / th # of Servings
+        th Combined Nutrients
+
+  tbody
+    - @recipe.ingredients.each do |ingredient|
+      tr
+        td= link_to "#{ingredient.amount.round(2)} #{ingredient.component.units} of #{ingredient.component.name}", ingredient
+        td= link_to ingredient.component.name, ingredient.component
+        td= link_to "#{ingredient.component.url[0..10]}"
+        td
+          = "$#{ingredient.component.price}"
+        td
+          = "$#{(ingredient.component.price/(ingredient.component.total_amount/ingredient.amount)).round(2)}"
+        / td= "#{ingredient.component.total_amount} #{ingredient.component.units}"
+        td
+          = "#{ingredient.amount.round(2)} #{ingredient.component.units}"
+        / td
+        / = "#{(ingredient.component.total_amount/ingredient.amount).round(2)}"
+        
+        - comp_nuts = (ingredient.component.component_nutrients.map{|cn| link_to "#{cn.amount.to_s}  #{cn.nutrient.units} of #{cn.nutrient.name}", cn}.join('<br> '))
+        - if comp_nuts.empty?
+          td.error Error! ComponentNutrients should not be empty!
+        - else 
+          td= raw comp_nuts 
+
+        / - @nutrients.each do |nutrient|
+          
+        / - cn = ComponentNutrient.select { |cn| cn.component_id == ingredient.component.id && cn.nutrient_id == nutrient.id }.map{|cn| link_to "#{cn.amount} #{nutrient.unit}", cn}.join('')
+        / - if !cn.empty?
+        /   td.info= raw cn
+        / - else
+        /   td= link_to "Create", new_component_nutrient_path(params: {component_id: ingredient.component.id, nutrient_id: nutrient.id} )
+    
+    tr      
+      td= link_to "Create new Ingredient", new_ingredient_path
+      td= link_to "Create new Component", new_component_path
+      td
+        | $ #{@recipe.ingredients.sum{|ingredient| ingredient.component.price }}
+      td
+        | $ #{@recipe.ingredients.sum{|ingredient| (ingredient.component.price/(ingredient.component.total_amount/ingredient.amount)) }.round(2)}
+      td colspan=2
+      td= link_to "Create new ComponentNutrient", new_component_nutrient_path

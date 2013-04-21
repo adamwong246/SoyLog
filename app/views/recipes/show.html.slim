@@ -1,7 +1,23 @@
-= render :partial => "layouts/super_show", :locals => { columns: [:id, :user, :name, :ingredients], member: @recipe} 
+.container
+  = render :partial => "layouts/super_show", :locals => { columns: [:id, :user, :name, :ingredients], member: @recipe} 
+
+  ul#myTab.nav.nav-tabs
+    li.active
+      a data-toggle="tab" href="#nutritional"
+        | Nutrition
+    li
+      a data-toggle="tab" href="#short"
+        | Shopping List
+    li
+      a data-toggle="none" href="/recipes/#{@recipe.id}/long"
+        | Full Formula
+
+  #myTabContent.tab-content
+    #nutritional.tab-pane.fade.active.in
+      = render :partial => "spreadsheet_nutritional", :locals => {recipe: @recipe, nutrient: @nutrients}
+    #short.tab-pane.fade
+      = render :partial => "spreadsheet_short", :locals => {recipe: @recipe, nutrient: @nutrients}
 
 
-/= render :partial => "spreadsheet_a", :locals => {ingredients: @recipe.ingredients, nutrient: @nutrients}
-= render :partial => "spreadsheet_b", :locals => {recipe: @recipe, nutrient: @nutrients}
 
 

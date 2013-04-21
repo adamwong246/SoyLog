@@ -1,0 +1,27 @@
+h2 Sign in
+
+.well
+  h4 Temporary sign in shortcuts
+  = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+    = f.hidden_field :email, :autofocus => true, :value => 'EustaceUser@email.com'
+    = f.hidden_field :password, :value => 'eustace_user_123'
+    div= f.submit "Sign in as Eustace the User"
+  = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+    = f.hidden_field :email, :autofocus => true, :value => 'AndyAdmin@email.com'
+    = f.hidden_field :password, :value => 'andy_admin_123'
+    div= f.submit "Sign in as Andy the Admin"
+= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+  div
+    = f.label :email
+    br/
+    = f.email_field :email, :autofocus => true
+  div
+    = f.label :password
+    br/
+    = f.password_field :password
+  - if devise_mapping.rememberable?
+    div
+      = f.check_box :remember_me
+      = f.label :remember_me
+  div= f.submit "Sign in"
+= render "devise/shared/links"

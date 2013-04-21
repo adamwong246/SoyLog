@@ -5,7 +5,8 @@
   h4=member.identify
   h5
     = member.class.description
-  
+
+  h2= render :partial => "layouts/actions", :locals => { :object => member, :actions => [:edit, :destroy]}
 
   table.table.table-condensed
 
@@ -13,5 +14,3 @@
       tr
         th= column.to_s
         td= raw apply_chain_link_or_print([*column], member)
-  hr
-  h2= render :partial => "layouts/actions", :locals => { :object => member, :actions => [:edit, :destroy]}

@@ -7,7 +7,13 @@ SoyLog3::Application.routes.draw do
   resources :components
   resources :ingredients
   resources :nutrients
-  resources :recipes
+  
+  resources :recipes do
+    member do
+      get :long
+    end
+  end
+
   resources :users
 
   match '/about' => 'high_voltage/pages#show', id: 'about', as: :about

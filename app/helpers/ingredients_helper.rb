@@ -11,7 +11,7 @@ module IngredientsHelper
 
 
   def purchase_amount_string
-    "$#{self.component.total_amount} #{self.component.units}"
+    "#{self.component.total_amount} #{self.component.units}"
   end
 
   def serving_size_string

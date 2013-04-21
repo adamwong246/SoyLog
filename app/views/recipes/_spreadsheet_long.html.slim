@@ -1,17 +1,20 @@
-- padded_columns = 3
+- padded_columns = 4
 - ingredients = @recipe.ingredients
 
 table.table.table-condensed.table-bordered
-  caption Recipe table
+  caption "#{@recipe.name}, long form"
   thead
     tr
       td
       th FDA RDA
       th Actual
       th FDA % 
+      th Combined
 
       - ingredients.each do |ingredient|
         td= link_to ingredient.component.name, ingredient.component
+      
+
     tr
       th URL
       td colspan=padded_columns      
@@ -30,15 +33,20 @@ table.table.table-condensed.table-bordered
     tr
       th Total cost
       td
-      td = @recipe.cost_string
+      td = @recipe.cost_string      
       td
+      td 
       - ingredients.each do |ingredient|
         td= ingredient.cost_string
+      
+
     tr
       th Cost per day
       td
       td = @recipe.cost_per_day_string
       td
+      td
+
       - ingredients.each do |ingredient|
         td= ingredient.cost_per_day_string
         
@@ -87,6 +95,11 @@ table.table.table-condensed.table-bordered
             td.warning
               p= "#{percent_rda} %"
 
+          td 
+            ul              
+              - @recipe.all_component_nutrients_which_supply(nutrient).each do |cn|
+                li= link_to cn.identify_short, cn
+
           - @recipe.ingredients.each do |ingredient|
             - comp_nuts = ComponentNutrient.which_joins(ingredient.component, nutrient)
             
@@ -95,6 +108,9 @@ table.table.table-condensed.table-bordered
                 - comp_nuts.each do |cn|
                   = link_to cn.identify_short, cn
             - else
-              td
-              / td= link_to "Create", new_component_nutrient_path(params: {component_id: ingredient.component.id, nutrient_id: nutrient.id} )
+              td         
+                - if can? :edit, @recipe     
+                  = link_to "Create", new_component_nutrient_path(params: {component_id: ingredient.component.id, nutrient_id: nutrient.id} )
+              
+              
           
