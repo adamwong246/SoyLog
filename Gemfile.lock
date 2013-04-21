@@ -179,6 +179,7 @@ DEPENDENCIES
   compass-rails
   debugger
   devise
+  font-awesome-sass-rails (~> 3.0.2.2)
   high_voltage
   jquery-rails
   pg

@@ -22,7 +22,8 @@ html
                         li role="presentation"
                           = link_to 'Admin', rails_admin_path
 
-                    li= link_to 'My Profile', current_user                   
+                    li                      
+                      = link_to 'My Profile', current_user                   
                     / li= link_to "My Recipes", recipes_path(current_user)
                     / / li= link_to "My Records", user_records_path(current_user)
                     / / li= link_to "My Logs", user_logs_path(current_user)

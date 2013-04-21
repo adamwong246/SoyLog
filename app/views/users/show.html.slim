@@ -1,0 +1,14 @@
+-if @user == current_user
+  .container
+    .row
+      .span6
+        h1 This is your home page
+      .span6
+        = render :partial => "layouts/super_show", :locals => { columns: [:name, :email, :recipes], member: @user} 
+    .row
+      .span10
+        h2 Someday, you will see your Records and logs
+- else
+  .container
+    = render :partial => "layouts/super_show", :locals => { columns: [:id, :name, :email, :recipes], member: @user} 
+

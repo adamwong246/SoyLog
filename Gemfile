@@ -38,7 +38,7 @@ end
 gem 'sass-rails'
 gem "compass-rails"
 gem 'bootstrap-sass'
-
+gem "font-awesome-sass-rails", "~> 3.0.2.2"
 gem 'jquery-rails'
 gem 'cancan'
 gem 'rails_admin'

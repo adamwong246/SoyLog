@@ -1,9 +1,20 @@
-ul
-  - if actions.include? :index 
-    li= link_to "Index", try(params["controller"]+"_path")
-  - if actions.include? :show 
-    li= link_to "Show", object
-  - if actions.include? :edit and can? :write, params["controller"]
-    li= link_to 'Edit', [:edit, object]
-  - if actions.include? :destroy and can? :write, params["controller"]
-    li= link_to 'Destroy', object, method: :delete, data: {confirm: 'Are you sure?'}
+btn-toolbar      
+  .btn-group.pull-right
+    - if actions.include? :index 
+      button.btn Index
+      /= link_to "Index", try(params["controller"]+"_path")
+    - if actions.include? :show 
+      button.btn        
+        = link_to object do
+          i.icon-info-sign.icon-2x
+        
+
+    - if actions.include? :edit and can? :write, params["controller"]
+      button.btn
+        = link_to [:edit, object] do 
+          i.icon-wrench.icon-2x  
+    
+    - if actions.include? :destroy and can? :write, params["controller"]
+      button.btn
+        = link_to object, method: :delete, data: {confirm: 'Are you sure?'} do
+          i.icon-trash.icon-2x

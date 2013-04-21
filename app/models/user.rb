@@ -25,4 +25,8 @@ class User < ActiveRecord::Base
   def admin?
     self.email == "andyadmin@email.com"
   end
+
+  def self.awesome_icon
+    'icon-user'
+  end
 end

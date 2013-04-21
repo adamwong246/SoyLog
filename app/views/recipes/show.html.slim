@@ -1,5 +1,5 @@
 .container
-  = render :partial => "layouts/super_show", :locals => { columns: [:id, :user, :name, :ingredients], member: @recipe} 
+  = render :partial => "layouts/super_show", :locals => { columns: [:user, :name, :ingredients], member: @recipe} 
 
   ul#myTab.nav.nav-tabs
     li.active

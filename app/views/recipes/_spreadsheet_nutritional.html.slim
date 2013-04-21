@@ -5,7 +5,7 @@
   .row
     - [true, false].each do |in_recipe|
       .span6
-        table#nutritional_form.table.table-condensed.table-bordered
+        table#nutritional_form.table.table-condensed
           - if in_recipe
             caption "#{@recipe.name}, nutritional form"
           - else

@@ -1,12 +1,16 @@
-.container
-  = link_to "Back to all #{params[:controller]}", "/"+params[:controller]
+.super-show
 
-  h3= "#{member.class}:"  
-  h4=member.identify
-  h5
-    = member.class.description
+  = link_to "/"+params[:controller] do
+    button.btn
+      i.icon-double-angle-left.icon-2x
 
-  h2= render :partial => "layouts/actions", :locals => { :object => member, :actions => [:edit, :destroy]}
+  .page-header          
+    h1      
+      = "#{member.class} "  
+      small= member.identify
+      = render :partial => "layouts/actions", :locals => { :object => member, :actions => [:edit, :destroy]}
+
+  h5= member.class.description
 
   table.table.table-condensed
 
