@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    self.email == "andyadmin@email.com"
+    true # self.email == "andyadmin@email.com"
   end
 
   def self.awesome_icon
