@@ -10,7 +10,7 @@ SoyLog3::Application.routes.draw do
   
   resources :recipes do
     member do
-      get :long
+      get :full_formula
     end
   end
 

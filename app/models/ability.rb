@@ -13,7 +13,7 @@ class Ability
         can :login, :admin
     else
         can :read, :all 
-        can :long, Recipe
+        can [:full_formula, :clone, :create], Recipe
         can :write, User, :user_id => user.id
     end
     #   if user.admin?

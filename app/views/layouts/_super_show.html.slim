@@ -1,14 +1,13 @@
+- assciation_map_array = member.class.reflect_on_all_associations.map{|a| {a.name => a.macro}}
+
 .super-show
 
-  = link_to "/"+params[:controller] do
-    button.btn
-      i.icon-double-angle-left.icon-2x
-
-  .page-header          
-    h1      
+  .page-header
+              
+    h1            
       = "#{member.class} "  
       small= member.identify
-      = render :partial => "layouts/actions", :locals => { :object => member, :actions => [:edit, :destroy]}
+    = render :partial => "layouts/actions", :locals => { :object => member, :actions => actions ||= [:index, :new, :edit, :destroy]}
 
   h5= member.class.description
 
@@ -19,4 +18,21 @@
         th
           / # =column.inspect
           = column.to_s unless column == :identify
-        td= raw apply_chain_link_or_print([*column], member)
+          - td_class = "info" if column == :identify
+        td class=td_class
+          - arr = [*apply_chain_link_or_print([*column], member)]
+          - arr.each do |element|
+            - if String >= element.class ||  Numeric >= element.class
+              = element
+            - else
+              = h_link element
+            br
+
+          
+          - hash = assciation_map_array.select{|hash| hash.keys[0] == column }.first
+
+          - if hash && (can? :edit, member)
+            - if hash[column] == :has_many              
+                = link_to [:edit, member], params: {message: :new_ingredient}, class: 'hinted', rel:'popover', 'data-content' => "Add a #{column.to_s.singularize} to this #{member.class.to_s}", 'data-placement' => "right" do
+                  button class=button_class_lookup(:new)
+                    i class=icon_class_lookup(:new)

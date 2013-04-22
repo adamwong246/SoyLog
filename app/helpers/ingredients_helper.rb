@@ -22,13 +22,9 @@ module IngredientsHelper
     "$#{self.component.price.round(2)}"
   end
 
-  def cost_per_day_string
+  def cost_per_serving_string
     "$#{(self.component.price/(self.component.total_amount/self.amount)).round(2)}"
   end
-
-  # def combined_component_nutrients_string 
-  #   raw "#{self.component.component_nutrients.map{|cn| link_to "#{cn.amount} #{cn.nutrient.units}", cn}.join('<br>')}"
-  # end
 
   def component_nutrients
     self.component.component_nutrients

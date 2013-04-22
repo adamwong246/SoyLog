@@ -3,8 +3,13 @@
 
 .container
   .row
-    - [true, false].each do |in_recipe|
+    - [false, true].each do |in_recipe|
       .span6
+        - if in_recipe
+          h3.success Components in this Recipe
+        - else
+          h3.error Components NOT in this Recipe
+
         table#nutritional_form.table.table-condensed
           - if in_recipe
             caption "#{@recipe.name}, nutritional form"
@@ -16,37 +21,34 @@
               th FDA RDA
               th Actual
               th FDA % 
+              td
        
-          
-            - [*@nutrients[in_recipe]].each do |nutrient|
-
               - row_class = 'error' if !in_recipe
+              - nutrients = [*@nutrients[in_recipe]]
 
-              tr class=row_class
-                td
-                  = link_to nutrient.name, nutrient
+              - if !nutrients.empty?
+                - nutrients.each do |nutrient|                  
+                  tr class=row_class
+                  th
+                    = link_to nutrient.name, nutrient
 
-                  - if can? :edit, @recipe
-                    p= link_to "New Ingredient", edit_recipe_path(@recipe, {add_ingredient_for: nutrient})
+                    / # - if can? :edit, @recipe
+                    / #   p= link_to "New Ingredient", edit_recipe_path(@recipe, {add_ingredient_for: nutrient})
 
-                td= nutrient.fda_rda_string
-                
+                  td= nutrient.fda_rda_string              
+                  td = "#{@recipe.amount_of(nutrient)} #{nutrient.units}" 
 
-                td = "#{@recipe.amount_of(nutrient)} #{nutrient.units}" 
+                  - percent_rda = recipe.percent_fda_rda_of(nutrient)              
+                  
+                  td class=percent_rda_to_status(percent_rda)
+                    = "#{percent_rda} %"                
 
-                - percent_rda = ((nutrient.component_nutrients.sum{|cn| cn.amount} / nutrient.fda_rda) * 100  ).round(2)
-                - percent_rda = recipe.percent_fda_rda_of(nutrient)
-       
-                - percent_diff = (percent_rda-100).abs
-
-                - if (percent_diff < 1)
-                  td.success
-                    p= "#{percent_rda} %"
-
-                - elsif percent_diff > 10
-                  td.error
-                    p= "#{percent_rda} %"
-
-                -else
-                  td.warning
-                    p= "#{percent_rda} %"
+                  td
+                    - if (can? :edit, @recipe)
+                      = link_to [:edit, @recipe], class: 'hinted', rel:'popover', 'data-content' => "Edit the amount of #{nutrient.name}", 'data-placement' => "right" do
+                          button class=button_class_lookup(:edit)
+                            i class=icon_class_lookup(:edit)
+              - else
+                tr.warning
+                  td colspan=4
+                    h3 None

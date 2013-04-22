@@ -1,30 +1,32 @@
 .container
   .pageheader
     h1 
-      | Listing
-      small= collection.first.class.to_s.pluralize  
-      - if can? :write, params["controller"]
-        button.btn.add        
-          = link_to :controller => params[:controller], :action => :new do
-            i.icon-plus.icon-2x
+      | Listing 
+      small= collection.first.class.to_s.pluralize 
+      = render :partial => "layouts/actions", :locals => { :object => collection.first, :actions => [:new]} 
+
 
     h5= collection.first.class.description
 
   table.table.table-condensed
-    / tr
-      / th= collection.first.class.to_s.pluralize
     tr      
       - columns.each do |column|
-        th
-          = column.to_s unless column == :identify
+        th= column.to_s unless column == :identify
       td
+
     - collection.each do |element|
       tr
         - columns.each do |column|
-          - if column == :identify
-            td.info
-              = apply_chain_link_or_print([*column], element)
-          - else
-            td
-              = apply_chain_link_or_print([*column], element)
+          - arr = apply_chain_link_or_print([*column], element)
+
+          -td_class = "info" if column == :identify
+
+          td class=td_class
+            - [*arr].each do |element|
+              - if String >= element.class ||  Numeric >= element.class
+                = element
+              - else
+                = h_link element
+
+                  
         th= render :partial => "layouts/actions", :locals => { :object => element, :actions => [:show, :edit, :destroy]}

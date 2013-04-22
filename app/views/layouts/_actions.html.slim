@@ -1,20 +1,45 @@
-btn-toolbar      
-  .btn-group.pull-right
+- icon_size = 'icon-2x'
+
+btn-toolbar 
+  .btn-group.pull-left     
     - if actions.include? :index 
-      button.btn Index
-      /= link_to "Index", try(params["controller"]+"_path")
+        = link_to try(params["controller"]+"_path"), class: 'hinted', rel:'popover', 'data-content' => "Back to all #{params["controller"]}", 'data-placement' => "bottom" do
+
+          button class=button_class_lookup(:index)
+            i class=icon_class_lookup(:index)
+
+  
+  .btn-group.pull-right
+    - if actions.include? :new 
+      = link_to :controller => params[:controller], :action => :new, class: 'hinted', rel:'popover', 'data-content' => "Add a new #{object.class}", 'data-placement' => "bottom" do
+
+        / = icon_button_lookup(:create)
+        button class=button_class_lookup(:new)
+          i class=icon_class_lookup(:new)
+
+    - if actions.include? :clone and can? :write, params["controller"]
+      = link_to object, :action => :new, class: 'hinted', rel:'popover', 'data-content' => "Clone this recipe", 'data-placement' => "bottom",data: {confirm: 'Are you sure?'} do
+
+        /= icon_button_lookup(:clone)
+        button class=button_class_lookup(:clone)
+          i class=icon_class_lookup(:clone)
+    
+
     - if actions.include? :show 
-      button.btn        
-        = link_to object do
-          i.icon-info-sign.icon-2x
+      = link_to object, class: 'hinted' do
+        button class=button_class_lookup(:show)
+          i class=icon_class_lookup(:show)
         
 
+    / , class: 'hinted', rel:'popover', 'data-content' => "Edit this #{params["controller"]}", 'data-placement' => "bottom"
     - if actions.include? :edit and can? :write, params["controller"]
-      button.btn
-        = link_to [:edit, object] do 
-          i.icon-wrench.icon-2x  
+      = link_to [:edit, object] do 
+        /= icon_button_lookup(:edit)
+        button class=button_class_lookup(:edit)
+          i class=icon_class_lookup(:edit)  
     
     - if actions.include? :destroy and can? :write, params["controller"]
-      button.btn
-        = link_to object, method: :delete, data: {confirm: 'Are you sure?'} do
-          i.icon-trash.icon-2x
+      = link_to object, method: :delete, data: {confirm: 'Are you sure?'} do
+        /= icon_button_lookup(:destroy)
+        button class=button_class_lookup(:destroy)
+          i class=icon_class_lookup(:destroy)

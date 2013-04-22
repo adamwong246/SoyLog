@@ -15,3 +15,6 @@
 #= require bootstrap
 #= require jquery_nested_form
 #= require_tree .
+
+$ ->
+  $(".hinted").popover({trigger: 'hover'})

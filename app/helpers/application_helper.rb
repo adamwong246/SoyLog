@@ -1,5 +1,49 @@
 module ApplicationHelper
 
+  def button_class_lookup(action)
+    case action
+    when :index
+      'btn'
+    when :show
+      'btn btn-success'
+    when :new
+      'btn btn-info'
+    when :edit
+      'btn btn-warning'
+    when :clone
+      'btn btn-success'
+    when :destroy
+      'btn btn-danger'
+    end
+  end
+  def icon_class_lookup(action)
+    case action
+    when :index
+      'icon-chevron-left'
+    when :show
+      'icon-info-sign'
+    when :new
+      'icon-plus'
+    when :edit
+      'icon-wrench'
+    when :clone
+      'icon-beaker'
+    when :destroy
+      'icon-trash'
+    end
+  end
+
+  def percent_rda_to_status(percent)
+    percent_diff = (percent-100).abs
+    if (percent_diff < 1)
+      :success
+    elsif percent_diff > 10
+      :error
+    else
+      :warning
+    end
+  end
+
   def get_host_without_www(url)
     begin
       uri = URI.parse(url)
@@ -25,13 +69,13 @@ module ApplicationHelper
     puts "object: #{object}"
 
     if functions == [:identify]
-      return link_to e, object
+      return e
     end
 
     if e.nil?
       return "nil"
     elsif String >= e.class
-      return e.to_s
+      return e
     elsif Numeric >= e.class
       return e
     elsif Array >= e.class
@@ -39,22 +83,17 @@ module ApplicationHelper
         return "none"
       end
 
-      r = e.map{|ee| 
+      e.map{|ee| 
         if ee.nil?
           "nil"
         else
-           link_to ee.identify, ee
+          ee
         end
       }
 
-      if can? :write, e.first.class.to_s.tableize
-        r << ( link_to "Create a new #{e.first.class}", action: :new, controller: e.first.class.to_s.tableize)
-      end
-      
-      return r.join('<br>')
     else
       begin
-        return link_to e.identify, e
+        return e
       rescue 
         return "Cold not create a field for #{e.to_s}"
       end
@@ -72,8 +111,11 @@ module ApplicationHelper
         puts "e is array"
         e = e.map{|ee| recusive_function_chainer(link, ee)}
       else
-        puts "e is NOT array"
-        e = e.try(link)
+        if link == :identify
+          return e
+        else
+          e = e.try(link)
+        end
       end
     end
 

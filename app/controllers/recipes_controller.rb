@@ -1,7 +1,7 @@
 class RecipesController < ApplicationController
   load_and_authorize_resource
   
-  def long
+  def full_formula
     
     
     @recipes = Recipe.all

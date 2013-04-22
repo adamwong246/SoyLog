@@ -1,22 +1,22 @@
 .container
-  = render :partial => "layouts/super_show", :locals => { columns: [:user, :name, :ingredients], member: @recipe} 
+  = render :partial => "layouts/super_show", :locals => { columns: [:user, :name, :ingredients], member: @recipe, actions: [:index, :create, :clone, :edit]} 
 
   ul#myTab.nav.nav-tabs
     li.active
       a data-toggle="tab" href="#nutritional"
         | Nutrition
     li
-      a data-toggle="tab" href="#short"
+      a data-toggle="tab" href="#shopping"
         | Shopping List
     li
-      a data-toggle="none" href="/recipes/#{@recipe.id}/long"
+      a href="/recipes/#{@recipe.id}/full_formula"
         | Full Formula
 
   #myTabContent.tab-content
     #nutritional.tab-pane.fade.active.in
       = render :partial => "spreadsheet_nutritional", :locals => {recipe: @recipe, nutrient: @nutrients}
-    #short.tab-pane.fade
-      = render :partial => "spreadsheet_short", :locals => {recipe: @recipe, nutrient: @nutrients}
+    #shopping.tab-pane.fade
+      = render :partial => "spreadsheet_shopping_list", :locals => {recipe: @recipe, nutrient: @nutrients}
 
 
 

@@ -2,7 +2,7 @@
 - ingredients = @recipe.ingredients
 
 table.table.table-condensed
-  caption "#{@recipe.name}, long form"
+  caption "#{@recipe.name}, full formula"
   thead
     tr
       td
@@ -21,7 +21,7 @@ table.table.table-condensed
       - ingredients.each do |ingredient|
         td= link_to get_host_without_www(ingredient.component.url)[0..20], ingredient.component.url
     tr
-      th Purchase amount
+      th Cost
       td colspan=padded_columns
       - ingredients.each do |ingredient|
         td= ingredient.purchase_amount_string
@@ -41,14 +41,14 @@ table.table.table-condensed
       
 
     tr
-      th Cost per day
+      th Cost per serving
       td
       td = @recipe.cost_per_day_string
       td
       td
 
       - ingredients.each do |ingredient|
-        td= ingredient.cost_per_day_string
+        td= ingredient.cost_per_serving_string
         
     tr
       th Combined

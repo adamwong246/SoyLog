@@ -16,10 +16,10 @@
 @import "bootstrap";
 
 
-a:hover{
-   background-color: lightgray !important;
-   color:black !important;
-}
+// a:hover{
+//    background-color: lightgray !important;
+//    color:black !important;
+// }
 
 .info{
   color: $infoText !important;
@@ -41,30 +41,37 @@ a:hover{
   background-color: $errorBackground !important;
   border: $errorBorder !important;
 }
-i.icon-trash{
-  color: $errorText !important;
-}
-i.icon-wrench{
-  color: $warningText !important;
-}
-i.icon-plus{
-  color: $infoText;
-}
-i.icon-info-sign{
-  color: $successText;
-}
-.titles{
-  h1, h2, h3, h4, h5{
-    display: inline !important;
-  }
-}
-td.info a{display: block; width: 100%; height: 100%; }
-td.info a:hover{background-color:white !important; }
 
-.actions a:hover{
-  background-color: transparent !important;
-  text-decoration: none !important;
+// td  a  button{
+//   float:right !important;
+// }
+// i.icon-trash{
+//   color: $errorText !important;
+// }
+// i.icon-wrench{
+//   color: $warningText !important;
+// }
+// i.icon-plus{
+//   color: $infoText;
+// }
+// i.icon-info-sign{
+//   color: $successText;
+// }
+// .titles{
+//   h1, h2, h3, h4, h5{
+//     display: inline !important;
+//   }
+// }
+// td.info a{display: block; width: 100%; height: 100%; }
+td.info a:hover{
+  color:gray;
+  background-color:white !important; 
 }
+
+// .actions a:hover{
+//   background-color: transparent !important;
+//   text-decoration: none !important;
+// }
 i{
   text-shadow: none !important;
   background-image: none !important;
@@ -80,14 +87,14 @@ button.btn.add{
 //     right: 0;
 //   }
 // }
-ul.actions { 
-  list-style-type:none !important;
-  float:right;
+// ul.actions { 
+//   list-style-type:none !important;
+//   float:right;
 
-  li {
-    float: left;
-  }
-}
+//   li {
+//     float: left;
+//   }
+// }
 
 // .dropdown-menu li{
 //   i, a{
