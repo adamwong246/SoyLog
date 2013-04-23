@@ -1,12 +1,16 @@
-puts "mark0"
-eustace = User.create!(:name => 'Eustace User', :email => 'EustaceUser@email.com', :password => "eustace_user_123", :password_confirmation => 'eustace_user_123')
+admin_role = Role.create!(:title=>"admin")
 
-User.create!(:name => 'Andy Admin', :email => 'AndyAdmin@email.com', :password => "andy_admin_123", :password_confirmation => 'andy_admin_123')
-puts "mark1"
+eustace = User.create!(:name => 'Eustace User', :email => 'EustaceUser@email.com', :password => "eustace_user_123", :password_confirmation => 'eustace_user_123')
+andy    = User.create!(:name => 'Andy Admin',   :email => 'AndyAdmin@email.com',   :password => "andy_admin_123",   :password_confirmation => 'andy_admin_123')
+
+role_user = RoleUser.create!
+role_user.role = admin_role
+andy.roles << admin_role
+
+andy.roles << Role.create!(:title=>"super_admin")
 
 recipe = eustace.recipes.create!({id: 1, user_id: 1, name: 'soylent v 1'})
 
-puts "mark2"
 nu_biotin            = Nutrient.create!({name: "Biotin",            fda_rda: 300,   unit: :ug})
 nu_calcium           = Nutrient.create!({name: "Calcium",           fda_rda: 1,     unit: :g})
 nu_carbohydrates     = Nutrient.create!({name: "Carbohydrates",     fda_rda: 200,   unit: :g})

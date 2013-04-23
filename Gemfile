@@ -41,7 +41,10 @@ gem 'bootstrap-sass'
 gem "font-awesome-sass-rails", "~> 3.0.2.2"
 gem 'jquery-rails'
 gem 'cancan'
-gem 'rails_admin'
+# gem 'rails_admin'
+
+gem 'refinerycms'
+gem 'refinerycms-dashboard'
 
 gem "high_voltage"
 
