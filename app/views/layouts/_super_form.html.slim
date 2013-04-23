@@ -1,7 +1,5 @@
 / p= member.class.reflect_on_all_associations.map{|a| a.inspect}
 / br
-/ p= member.class.columns_hash
-
 = form_for(member) do |form|
   - if member.errors.any?
     #error_explanation
@@ -13,7 +11,9 @@
           li= msg
   - fields.each do |field|
     .field
+
       
+      = form.label field
 
       - association = member.class.reflect_on_all_associations.select{|a| a.name == field}[0]
 
@@ -21,7 +21,7 @@
         / | Association!
         -case association.macro
         -when :belongs_to
-          = "which belongs_to #{association.klass.name}"
+          = "which belongs_to #{member.class.to_s}"
           .field
             = form.collection_select(association.foreign_key.to_sym, association.klass.all, :id, :identify)
         -when :has_one
@@ -30,8 +30,18 @@
             = form.collection_select(association.foreign_key.to_sym, association.klass.all, :id, :identify)
 
       - else
-        = form.label field
-        = form.text_field field
+        / = member.class.columns_hash[field.to_s].inspect
+        
+        - if !member.class.columns_hash[field.to_s].nil?
+          - case member.class.columns_hash[field.to_s].type
+          - when :boolean
+            = form.check_box field
+          - when :integer
+            = form.number_field field
+          - else        
+            = form.text_field field
+        - else
+          = raise "#{field} is not an editable field."
        
 
   .actions

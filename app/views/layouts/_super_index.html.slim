@@ -2,11 +2,11 @@
   .pageheader
     h1 
       | Listing 
-      small= collection.first.class.to_s.pluralize 
+      small= params[:controller] 
       = render :partial => "layouts/actions", :locals => { :object => collection.first, :actions => [:new]} 
 
 
-    h5= collection.first.class.description
+    h5= params[:controller].classify.constantize.description
 
   table.table.table-condensed
     tr      
@@ -23,10 +23,17 @@
 
           td class=td_class
             - [*arr].each do |element|
-              - if String >= element.class ||  Numeric >= element.class
+              / h5= element.inspect.inspect
+              - if TrueClass >= element.class
+                i.icon-ok
+              - elsif FalseClass >= element.class
+                i.icon-remove
+              - elsif element.nil?
+                i.icon-remove
+              - elsif [String, Numeric].any?{|c| c >= element.class}
                 = element
               - else
                 = h_link element
 
                   
-        th= render :partial => "layouts/actions", :locals => { :object => element, :actions => [:show, :edit, :destroy]}
+        th= render :partial => "layouts/actions", :locals => { :object => element, :actions => [:flag, :show, :edit, :destroy]}

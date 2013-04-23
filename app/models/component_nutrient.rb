@@ -1,10 +1,12 @@
 class ComponentNutrient < ActiveRecord::Base
   include ComponentNutrientsHelper
 
-  attr_accessible :amount, :component_id, :id, :component, :nutrient, :nutrient_id
+  has_many :flags, as: :flagable
 
-  belongs_to :component, :autosave => true
-  belongs_to :nutrient,  :autosave => true
+  belongs_to :component, autosave: true
+  belongs_to :nutrient,  autosave: true
+
+  attr_accessible :amount, :component_id, :id, :component, :nutrient, :nutrient_id
 
   accepts_nested_attributes_for :component
   accepts_nested_attributes_for :nutrient

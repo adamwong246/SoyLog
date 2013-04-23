@@ -1,8 +1,7 @@
 .container
-  h1 Editing component
-  = render :partial => "layouts/super_edit", locals: { columns: [:identify, :name, :unit, :component_nutrients, :components, :ingredients, :recipes], member: @component} 
+  = render :partial => "layouts/super_edit", locals: { columns: [:name, :unit, :url, :total_amount, :price, :serving_size], member: @component} 
 
-  = render 'form'
-  = link_to 'Show', @component
-  | \
-  | \#{link_to 'Back', components_path}
+  / = render 'form'
+  / = link_to 'Show', @component
+  / | \
+  / | \#{link_to 'Back', components_path}

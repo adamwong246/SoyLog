@@ -1,22 +1,30 @@
 .container
-  h1 Welcome to SoyLog 0.3
+  .page-header            
+    h1            
+      = "SoyLog "  
+      small SoyLog lets you track you Soylent consumption and your health. Try a new recipe and then input your health records. Take control of you diet. And best of all, your records help researchers improve Soylent.
+  
+    .row.well
+      .span5
+        .well
+          h3 
+            | What is 
+            a href="http://soylent.me" Soylent? 
+            small 
+              | Soylent is the brainchild of  
+              a href="http://robrhinehart.com/" 
+                | Rob Rhinehart,
+              |  a combination of raw ingredients that satisfies all of your entire nutrional requirements. You can live off Soylent for about a dollar day and can be made economically and ethicaly sound. 
+      .span6
+        .well
+          h3.text-warning
+            | SoyLog is still in development. 
+            small 
+              | Lots of stuff doesn't work right now but you can 
+              = link_to 'signup', new_user_registration_path
+              |  and we will send you email updates as SoyLog improves. 
+          h4 =link_to "View a recipe!", 'recipes/1'
 
-  .well
-    h2 What is Soylent?
-    h3
-      a href="soylent.me"
-        | Soylent.me
-    h4 Soylent is the brainchild of Rob Rhinehart. Soylent is a combination of raw ingredients that satisfies all of your entire nutrional requirements. You can live off Soylent for about a dollar day and can be made economically and ethicaly sound. 
-
-    h2 What is SoyLog?
-    h4 SoyLog lets you track you Soylent consumption and your health. Try a new recipe and then input your health records. Take control of you diet. And best of all, your records help researchers improve Soylent.
-
-  hr
-  h4 =link_to "Check out this demo!", 'recipes/1'
-  hr
-  h4 Do not put anything important on the staging server. It will be cleared periodicaly and you will lose your data. 
-  hr 
-  h4 
-    | Lots of stuff doesn't work right now but you can 
-    = link_to 'signup', new_user_registration_path
-    |  and we will send you email updates as SoyLog improves. 
+  h4.text-error Do not put anything important on the staging server. It will be cleared periodicaly and you will lose your data. 
+   
+  

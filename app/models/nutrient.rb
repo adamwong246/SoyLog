@@ -1,13 +1,15 @@
 class Nutrient < ActiveRecord::Base
   include NutrientsHelper
 
+  has_many :flags, as: :flagable
+
+  has_many :component_nutrients,                                autosave: true
+  has_many :components,          through: :component_nutrients, autosave: true
+  has_many :ingredients,         through: :components,          autosave: true
+  has_many :recipes,             through: :ingredients,         autosave: true
+
   attr_accessible :id, :unit, :name, :fda_rda
 
-  has_many :component_nutrients,                         :autosave => true
-  has_many :components,   through: :component_nutrients, :autosave => true
-  has_many :ingredients,  through: :components,          :autosave => true
-  has_many :recipes,      through: :ingredients,         :autosave => true
-  
   accepts_nested_attributes_for :component_nutrients
   accepts_nested_attributes_for :components
   accepts_nested_attributes_for :ingredients

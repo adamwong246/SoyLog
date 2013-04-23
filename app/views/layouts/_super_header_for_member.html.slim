@@ -1,0 +1,6 @@
+.super-page-header
+            
+  h1            
+    = "#{member.class} "  
+    small= member.identify
+  = render :partial => "layouts/actions", :locals => { :object => member, :actions => actions ||= [:index, :flag, :new, :edit, :destroy]}

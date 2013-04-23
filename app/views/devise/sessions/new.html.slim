@@ -7,10 +7,13 @@
       = f.hidden_field :email, :autofocus => true, :value => 'EustaceUser@email.com'
       = f.hidden_field :password, :value => 'eustace_user_123'
       div= f.submit "Sign in as Eustace the User"
+
     = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
       = f.hidden_field :email, :autofocus => true, :value => 'AndyAdmin@email.com'
       = f.hidden_field :password, :value => 'andy_admin_123'
       div= f.submit "Sign in as Andy the Admin"
+
+      
   = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
     div
       = f.label :email

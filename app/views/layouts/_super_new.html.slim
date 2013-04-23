@@ -1,6 +1,11 @@
-.container
-  = link_to "Back to all #{member.class.to_s.pluralize}", "/"+params[:controller]
-  h3 New #{member.class.to_s}
+.super-show
+  .page-header
+    h1 
+      | New
+      small= member.class
+    = render :partial => "layouts/actions", :locals => { :object => member, :actions => [:index]}
 
-  = render :partial => "layouts/super_form", :locals => { fields: columns, member: member}
+/ # = link_to "Back to all #{member.class.to_s.pluralize}", "/"+params[:controller]
+
+= render :partial => "layouts/super_form", :locals => { fields: columns, member: member}
 

@@ -36,7 +36,7 @@
                     / #   p= link_to "New Ingredient", edit_recipe_path(@recipe, {add_ingredient_for: nutrient})
 
                   td= nutrient.fda_rda_string              
-                  td = "#{@recipe.amount_of(nutrient)} #{nutrient.units}" 
+                  td = "#{@recipe.amount_of(nutrient)} #{nutrient.unit}" 
 
                   - percent_rda = recipe.percent_fda_rda_of(nutrient)              
                   
@@ -45,7 +45,7 @@
 
                   td
                     - if (can? :edit, @recipe)
-                      = link_to [:edit, @recipe], class: 'hinted', rel:'popover', 'data-content' => "Edit the amount of #{nutrient.name}", 'data-placement' => "right" do
+                      = link_to edit_recipe_path(@recipe, nutrient_id: nutrient.id), class: 'hinted', rel:'popover', 'data-content' => "Edit the amount of #{nutrient.name}", 'data-placement' => "right" do
                           button class=button_class_lookup(:edit)
                             i class=icon_class_lookup(:edit)
               - else

@@ -10,6 +10,11 @@ btn-toolbar
 
   
   .btn-group.pull-right
+    - if actions.include? :flag and (can? :flag, params["controller"])
+      = link_to controller: :flags, :action => :new, class: 'hinted', rel:'popover', 'data-content' => "Test", 'data-placement' => "bottom" do
+        button class=button_class_lookup(:flag)
+          i class=icon_class_lookup(:flag)
+
     - if actions.include? :new 
       = link_to :controller => params[:controller], :action => :new, class: 'hinted', rel:'popover', 'data-content' => "Add a new #{object.class}", 'data-placement' => "bottom" do
 

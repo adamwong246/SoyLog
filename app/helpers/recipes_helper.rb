@@ -16,9 +16,7 @@ module RecipesHelper
   end
 
   def amount_of(nutrient)
-    # debugger
-
-    self.ingredients.map{|i| i.component.component_nutrients.select{ |cn| cn.nutrient == nutrient }}.flatten.map{|cn| cn.amount }.sum#i.component.component_nutrients.select {|cn| cn.nutrient}.include?(nutrient)}#.map{ |i| i.component_nutrient}
+    self.ingredients.map{|i| i.component.component_nutrients.select{ |cn| cn.nutrient == nutrient }}.flatten.map{|cn| cn.amount }.sum#i.component.
   end
 
   def percent_fda_rda_of(nutrient)

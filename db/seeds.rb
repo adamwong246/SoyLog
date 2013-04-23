@@ -39,16 +39,16 @@ nu_vitamin_e         = Nutrient.create!({name: "Vitamin E",         fda_rda: 30,
 nu_vitamin_k         = Nutrient.create!({name: "Vitamin K",         fda_rda: 80,    unit: :ug})
 nu_zinc              = Nutrient.create!({name: "Zinc",              fda_rda: 15,    unit: :mg})
 
-comp_biotin         = Component.create!({name: 'Biotin (1%)',                 unit: :g,  total_amount: 100, price: 9.50,       url: "http://purebulk.com/biotin-1-vitamin-b7-vitamin-h.html"})
-comp_c_carbonate    = Component.create!({name: 'Calcium Carbonate',           unit: :g,  total_amount: 100, price: 17.50,      url: "http://purebulk.com/calcium-carbonate-powder-usa.html"})
-comp_p_gluconate    = Component.create!({name: 'Potassium Gluconate',         unit: :g,  total_amount: 300, price: 15.50,      url: "amazon.com2"})
-comp_ascorbic_acid  = Component.create!({name: 'Ascorbic Acid',               unit: :g,  total_amount: 100, price: 5.56,       url: "http://purebulk.com/vitamin-c-ascorbic-acid-powder.html"})
-comp_maltodextrin   = Component.create!({name: 'Maltodextrin',                unit: :g,  total_amount: 22679.60, price: 60.99, url: "http://store.honeyvillegrain.com/maltodextrin50lb.aspx"                                 })
-comp_olive_oil      = Component.create!({name: 'Extra Light Olive Oil',       unit: :l,  total_amount:1.5, price: 13.45,       url: "http://www.amazon.com/Bertolli-Extra-Light-Olive-Oil/dp/B008ELNF0Y_1_4?ie=UTF8&qid=1365725469&sr=8-4&keywords=bertolli+extra+light+olive+oil"})
-comp_whey           = Component.create!({name: 'Whey Protein Isolate (100%)', unit: :g,  total_amount:2267.96, price: 62.64,   url: "Whey Protein Isolate (100%)  "})
-comp_salt           = Component.create!({name: 'Iodized Salt',                unit: :g,  total_amount:737, price: 1.98,        url: "http://www.amazon.com/Hain-Pure-Foods-Salt-Iodized/dp/B000MDACSK/ref=sr_1_cc_1?s=aps&ie=UTF8&qid=1365725608&sr=1-1-catcorr&keywords=hain+iodized+salt" })
-comp_calcium_pantothenate   = Component.create!(name: 'Calcium Pantothenate', unit: :g, total_amount: 250, price: 13.50, url: 'http://purebulk.com/pantothenic-acid-powder-vitamin-b5-calcium-pantothenate.html')
+comp_biotin         = Component.create!({unit: :g, serving_size: 77, total_amount: 100,      price: 9.50,  name: 'Biotin (1%)',url: "http://purebulk.com/biotin-1-vitamin-b7-vitamin-h.html"})
+comp_c_carbonate    = Component.create!({unit: :g, serving_size: 77, total_amount: 100,      price: 17.50, name: 'Calcium Carbonate', url: "http://purebulk.com/calcium-carbonate-powder-usa.html"})
+comp_p_gluconate    = Component.create!({unit: :g, serving_size: 77, total_amount: 300,      price: 15.50, name: 'Potassium Gluconate', url: "amazon.com2"})
+comp_ascorbic_acid  = Component.create!({unit: :g, serving_size: 77, total_amount: 100,      price: 5.56,  name: 'Ascorbic Acid', url: "http://purebulk.com/vitamin-c-ascorbic-acid-powder.html"})
+comp_maltodextrin   = Component.create!({unit: :g, serving_size: 77, total_amount: 22679.60, price: 60.99, name: 'Maltodextrin',  url: "http://store.honeyvillegrain.com/maltodextrin50lb.aspx"})
 
+comp_olive_oil            = Component.create!({unit: :l, total_amount:1.5,     price: 13.45, name: 'Extra Light Olive Oil',       url: "http://www.amazon.com/Bertolli-Extra-Light-Olive-Oil/dp/B008ELNF0Y_1_4?ie=UTF8&qid=1365725469&sr=8-4&keywords=bertolli+extra+light+olive+oil"})
+comp_whey                 = Component.create!({unit: :g, total_amount:2267.96, price: 62.64, name: 'Whey Protein Isolate (100%)', url: "Whey Protein Isolate (100%)  "})
+comp_salt                 = Component.create!({unit: :g, total_amount:737,     price: 1.98,  name: 'Iodized Salt',                url: "http://www.amazon.com/Hain-Pure-Foods-Salt-Iodized/dp/B000MDACSK/ref=sr_1_cc_1?s=aps&ie=UTF8&qid=1365725608&sr=1-1-catcorr&keywords=hain+iodized+salt" })
+comp_calcium_pantothenate = Component.create!({unit: :g, total_amount: 250,    price: 13.50, name: 'Calcium Pantothenate',        url: 'http://purebulk.com/pantothenic-acid-powder-vitamin-b5-calcium-pantothenate.html'})
 
 ComponentNutrient.create!({amount: 0.9, component: comp_biotin,        nutrient: nu_biotin})
 ComponentNutrient.create!({amount: 0.9, component: comp_c_carbonate,   nutrient: nu_calcium})
@@ -69,6 +69,8 @@ recipe.ingredients.create!({amount: 4, component: comp_olive_oil})
 recipe.ingredients.create!({amount: 4, component: comp_whey})
 recipe.ingredients.create!({amount: 4, component: comp_salt})
 recipe.ingredients.create!({amount: 10.12, component: comp_calcium_pantothenate})
+
+Flag.create!({spam: true})
 
 # recipe.save!
 

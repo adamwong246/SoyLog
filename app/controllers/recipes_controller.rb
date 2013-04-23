@@ -30,9 +30,7 @@ class RecipesController < ApplicationController
   # GET /recipes/1.json
   def show
     @recipe = Recipe.find(params[:id])
-    nutrient_provided = @recipe.all_nutrients_provided
-
-    @nutrients = Nutrient.all.group_by { |n| nutrient_provided.include?(n) }   #=> {0=>[3, 6], 1=>[1, 4], 2=>[2, 5]}
+    @nutrients = Nutrient.all.group_by { |n| @recipe.all_nutrients_provided.include?(n) }   #=> {0=>[3, 6], 1=>[1, 4], 2=>[2, 5]}
 
     respond_to do |format|
       format.html # show.html.erb
@@ -54,6 +52,11 @@ class RecipesController < ApplicationController
   # GET /recipes/1/edit
   def edit
     @recipe = Recipe.find(params[:id])
+    if params[:nutrient_id]
+      @nutrient = Nutrient.find(params[:nutrient_id])
+      @component_nutrients = @recipe.all_component_nutrients_which_supply(@nutrient)
+      @percentage = @recipe.percent_fda_rda_of(@nutrient)
+    end
   end
 
   # POST /recipes

@@ -1,18 +1,58 @@
 .container
   page-header
     h1 
-      | Editing
+      | Editing 
       small= @recipe.identify
-    
-    = params
+    = render :partial => "layouts/actions", :locals => { :object => @recipe, :actions => [:show, :destroy, :index]}
+  br
 
-  - if params[:add_ingredient_for ]
-    - nutrient_to_find = Nutrient.find(params[:add_ingredient_for])
-    h3 Edit Ingredients which provides #{nutrient_to_find.name}
+  - if params[:nutrient_id]
+    h3= "Edit the amount of #{@nutrient.name}"
 
-    = nested_form_for(@recipe) do |recipe_form|
-      - if @recipe.errors.any?
-        = render :partial => "layouts/form_error", :locals => { :errors => @recipe.errors}
-      = recipe_form.collection_select(:id, Component.find_all_which_provide(nutrient_to_find), :id, :identify)
+    table#edit_ingredients_nutrient.table.table-condensed class=@nutrient.name
+      tr
+        th Components
+        th Amount of #{@nutrient.name}
+        th Total #{}
 
-  = render :partial => "layouts/actions", :locals => { :object => @recipe, :actions => [:show, :destroy, :index]}
+      - @component_nutrients.each do |cn|
+        tr
+          th = link_to cn.component.name, cn.component
+          td = "#{cn.amount} #{cn.nutrient.unit}"
+          td
+      tr
+        td 
+        td
+        th class=percent_rda_to_status(@percentage) 
+          = "#{@recipe.amount_of(@nutrient)} / #{@nutrient.fda_rda} #{@nutrient.unit} = %#{@percentage}"
+
+    / .row.well
+    /   .span8.well
+    /     - @component_nutrients.each do |cn|
+    /       .row.well
+    /         .span3.well
+    /           = link_to cn.component.name, cn.component
+    /         .span3.well
+    /           = link_to cn.identify_short, cn
+
+    /   .span2.well class=percent_rda_to_status(percentage)
+
+    /     h5= "#{@recipe.amount_of(@nutrient)} of #{@nutrient.identify}"
+    /     h3= "#{percentage}%"
+
+
+      
+
+
+
+
+  / - if params[:add_ingredient_for ]
+  /   - nutrient_to_find = Nutrient.find(params[:add_ingredient_for])
+  /   h3 Edit Ingredients which provides #{nutrient_to_find.name}
+
+  /   = nested_form_for(@recipe) do |recipe_form|
+  /     - if @recipe.errors.any?
+  /       = render :partial => "layouts/form_error", :locals => { :errors => @recipe.errors}
+  /     = recipe_form.collection_select(:id, Component.find_all_which_provide(nutrient_to_find), :id, :identify)
+
+  / 

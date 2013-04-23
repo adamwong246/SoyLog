@@ -3,17 +3,19 @@ module ApplicationHelper
   def button_class_lookup(action)
     case action
     when :index
-      'btn'
+      'btn  btn-mini'
     when :show
-      'btn btn-success'
+      'btn btn-success  btn-mini'
     when :new
-      'btn btn-info'
+      'btn btn-info  btn-mini'
     when :edit
-      'btn btn-warning'
+      'btn btn-warning  btn-mini'
     when :clone
-      'btn btn-success'
+      'btn btn-success  btn-mini'
     when :destroy
-      'btn btn-danger'
+      'btn btn-danger  btn-mini'
+    when :flag
+      'btn btn-primary btn-mini'
     end
   end
   def icon_class_lookup(action)
@@ -30,6 +32,8 @@ module ApplicationHelper
       'icon-beaker'
     when :destroy
       'icon-trash'
+    when :flag
+      'icon-flag'
     end
   end
 
@@ -73,10 +77,12 @@ module ApplicationHelper
     end
 
     if e.nil?
-      return "nil"
+      return nil
     elsif String >= e.class
       return e
     elsif Numeric >= e.class
+      return e
+    elsif (TrueClass >= e.class) || (FalseClass >= e.class)
       return e
     elsif Array >= e.class
       if e.empty?

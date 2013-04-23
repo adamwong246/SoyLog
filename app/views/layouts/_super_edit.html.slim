@@ -1,4 +1,44 @@
-h1
-  = "Editing #{member.class.to_s} #{member.identify}"
-/ = form
-= render :partial => "layouts/actions", :locals => { :object => @recipe, :actions => [:show, :destroy, :index]}
+/ h1
+/   = "Editing #{member.class.to_s} #{member.identify}"
+/ / = form
+/ = render :partial => "layouts/actions", :locals => { :object => @recipe, :actions => [:show, :destroy, :index]}
+
+/ - assciation_map_array = member.class.reflect_on_all_associations.map{|a| {a.name => a.macro}}
+
+.super-edit
+  = render :partial => "layouts/super_header", :locals => { :member => member, :actions => actions ||= [:index, :flag, :new, :edit, :destroy]}
+  br
+  = render :partial => "layouts/super_form",   :locals => { :member => member, :fields => columns }
+
+  / table.table.table-condensed
+
+  /   - columns.each do |column|
+  /     tr
+  /       th
+  /         / # =column.inspect
+  /         = column.to_s unless column == :identify
+  /         - td_class = "info" if column == :identify
+  /       td class=td_class
+  /         - arr = [*apply_chain_link_or_print([*column], member)]
+
+  /         - arr.each do |element|
+  /           - if TrueClass >= element.class
+  /             i.icon-ok
+  /           - elsif FalseClass >= element.class
+  /             i.icon-remove
+  /           - elsif element.nil?
+  /             i.icon-remove
+  /           - elsif [String, Numeric].any?{|c| c >= element.class}
+  /             = element
+  /           - else
+  /             = h_link element
+  /           br
+
+          
+  /         - hash = assciation_map_array.select{|hash| hash.keys[0] == column }.first
+
+  /         - if hash && (can? :edit, member)
+  /           - if hash[column] == :has_many              
+  /               = link_to [:edit, member], params: {message: :new_ingredient}, class: 'hinted', rel:'popover', 'data-content' => "Add a #{column.to_s.singularize} to this #{member.class.to_s}", 'data-placement' => "right" do
+  /                 button class=button_class_lookup(:new)
+  /                   i class=icon_class_lookup(:new)

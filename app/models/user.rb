@@ -1,16 +1,14 @@
 class User < ActiveRecord::Base
+
+  has_many :flags, as: :flagable
+
+  has_many :recipes, autosave: true
+
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :id, :name
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
-
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
-  attr_accessible :id, :name
-
-  has_many :recipes, :autosave => true
-
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
          
@@ -28,5 +26,9 @@ class User < ActiveRecord::Base
 
   def self.awesome_icon
     'icon-user'
+  end
+
+  def flag_it(params, member)
+    Flag.c
   end
 end

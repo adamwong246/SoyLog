@@ -2,7 +2,7 @@
   .container
     .row      
       .span6
-        = render :partial => "layouts/super_show", :locals => { columns: [:name, :email, :recipes], member: @user, actions: [:edit]} 
+        = render :partial => "layouts/super_show", :locals => { columns: [:name, :email, :recipes, :flags], member: @user, actions: [:edit]} 
       .span6
         h1 This is your home page
     .row
@@ -10,5 +10,5 @@
         h2 Someday, you will see your Records and logs
 - else
   .container
-    = render :partial => "layouts/super_show", :locals => { columns: [:id, :name, :email, :recipes], member: @user} 
+    = render :partial => "layouts/super_show", :locals => { columns: [:id, :name, :email, :recipes, :flags], member: @user} 
 
