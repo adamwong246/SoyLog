@@ -12,9 +12,14 @@
 #
 #= require jquery
 #= require jquery_ujs
-#= require bootstrap
 #= require jquery_nested_form
+#= require_tree ./underscore/
+#= require_tree ./angularjs/
+#= require_tree ./bootstrap/
+#= require ng-grid-2.0.4.debug.js
 #= require_tree .
+
+
 
 $ ->
   $(".hinted").popover({trigger: 'hover'})

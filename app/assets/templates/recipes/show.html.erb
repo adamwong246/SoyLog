@@ -1,0 +1,25 @@
+<h1>Recipe</h1>
+
+<p>
+  <b>User</b><br>
+  {{recipe.user_id}}
+</p>
+
+<p>
+  <b>Name</b><br>
+  {{recipe.name}}
+</p>
+
+<div class="form-actions">
+  <a href="/recipes/{{recipe.id}}/edit"
+    class="btn btn-primary"><i class="icon-edit"></i>
+    Edit Recipe
+  </a>
+  <button ng-click="destroy()" class="btn btn-danger">
+    <i class="icon-trash"></i> Delete
+  </button>
+  <a href="/recipes" class="btn">
+    Back to recipes
+  </a>
+</div>
+

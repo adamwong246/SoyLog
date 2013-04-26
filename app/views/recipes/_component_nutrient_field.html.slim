@@ -1,0 +1,9 @@
+p Testing
+fieldset.well
+  b
+    = f.label :component_nutrient
+    br
+    / = collection_select :componenet_nutrient, :id, ComponentNutrient.all, :id, :name
+
+    / = f.fields_for :component_nutrient do |builder|
+    /   = render 'component_nutrient_field', f: builder

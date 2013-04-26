@@ -7,6 +7,8 @@ fieldset.well
   = f.fields_for :component do |builder|
     = render 'component_field', f: builder
   
+  = f.link_to_add "Add Component", :component
+
   .field
     = f.label :_destroy, "Remove Ingredient"
     = f.check_box :_destroy

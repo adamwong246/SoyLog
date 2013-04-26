@@ -1,14 +1,14 @@
 doctype html
-html
+html lang="en" ng-app="myApp"
   head
     title SoyLog3
     = stylesheet_link_tag    "application", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
   
-  body class="#{controller_name} #{action_name}"
+  body class="#{controller_name} #{action_name}" 
     .navbar
-      nav.navbar-inner
+      nav.navbar-fixed-top
         .container-fluid
           = link_to "SoyLog", root_path, :class => 'brand'
           ul.nav

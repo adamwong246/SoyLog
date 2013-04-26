@@ -61,14 +61,14 @@ ComponentNutrient.create!({amount: 0.9, component: comp_salt,          nutrient:
 ComponentNutrient.create!({amount: 0.9, component: comp_calcium_pantothenate,          nutrient: nu_panthothenic_acid})
 
 recipe.ingredients.create!({amount: 4, component: comp_c_carbonate})
-recipe.ingredients.create!({amount: 4, component: comp_biotin})
-recipe.ingredients.create!({amount: 4, component: comp_p_gluconate})
-recipe.ingredients.create!({amount: 4, component: comp_ascorbic_acid})
-recipe.ingredients.create!({amount: 4, component: comp_maltodextrin})
-recipe.ingredients.create!({amount: 4, component: comp_olive_oil})
-recipe.ingredients.create!({amount: 4, component: comp_whey})
-recipe.ingredients.create!({amount: 4, component: comp_salt})
-recipe.ingredients.create!({amount: 10.12, component: comp_calcium_pantothenate})
+# recipe.ingredients.create!({amount: 4, component: comp_biotin})
+# recipe.ingredients.create!({amount: 4, component: comp_p_gluconate})
+# recipe.ingredients.create!({amount: 4, component: comp_ascorbic_acid})
+# recipe.ingredients.create!({amount: 4, component: comp_maltodextrin})
+# recipe.ingredients.create!({amount: 4, component: comp_olive_oil})
+# recipe.ingredients.create!({amount: 4, component: comp_whey})
+# recipe.ingredients.create!({amount: 4, component: comp_salt})
+# recipe.ingredients.create!({amount: 10.12, component: comp_calcium_pantothenate})
 
 Flag.create!({spam: true})
 

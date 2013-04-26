@@ -1,8 +1,12 @@
 source 'https://rubygems.org'
 
+# gem 'best_in_place'
+gem "simple_form"
 gem 'debugger'
 gem 'rails', '3.2.13'
-
+gem 'angularjs_scaffold'
+# gem "angular-rails"
+# gem "nested_form", :git => "git://github.com/madebydna/nested_form.git"
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 

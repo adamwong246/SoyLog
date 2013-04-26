@@ -1,0 +1,52 @@
+<form name="newRecipe">
+  <fieldset>
+    <legend>
+      New Recipe
+    </legend>
+      <div class="control-group">
+        <label class="control-label">
+          User
+        </label>
+        <div class="controls">
+            <input type="number"
+                   name="recipe[user_id]"
+                   ng-model="recipe.user_id"
+                   class="number_field"
+                   required>
+          <span ng-show="newRecipe.user_id.$error.required"
+                class="help-inline">
+            Required
+          </span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">
+          Name
+        </label>
+        <div class="controls">
+            <input type="text"
+                   name="recipe[name]"
+                   ng-model="recipe.name"
+                   class="text_field"
+                   required>
+          <span ng-show="newRecipe.name.$error.required"
+                class="help-inline">
+            Required
+          </span>
+        </div>
+      </div>
+    <div class="form-actions">
+      <button class="btn btn-success" ng-click="save()"
+        ng-disabled="isClean() || newRecipe.$invalid">
+        <i class="icon-save"></i> Save
+      </button>
+      <button ng-click="destroy()"
+              ng-show="recipe.id"
+              class="btn btn-danger">
+              <i class="icon-trash"></i> Delete
+      </button>
+      <a href="/recipes" class="btn">Back to recipes</a>
+    </div>
+  </fieldset>
+</form>
+

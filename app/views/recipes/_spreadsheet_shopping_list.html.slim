@@ -4,7 +4,7 @@ table.table.table-condensed
   thead
 
     tr
-      th Ingredient
+      th Component
       th Url
       th Price
       th Cost per serving
@@ -14,7 +14,7 @@ table.table.table-condensed
   tbody
     - @recipe.ingredients.each do |ingredient|
       tr
-        td= link_to "#{ingredient.amount.round(2)} #{ingredient.component.units} of #{ingredient.component.name}", ingredient
+        td= link_to "#{ingredient.component.name}", ingredient
         td= link_to "#{ingredient.component.url[0..10]}"
         td= "$#{ingredient.component.price}"
         td= ingredient.cost_per_serving_string
@@ -50,7 +50,7 @@ table.table.table-condensed
       td= "$ #{@recipe.ingredients.sum{|ingredient| (ingredient.component.price/(ingredient.component.total_amount/ingredient.amount)) }.round(2)}"
       td colspan=1
       td
-        - if can? :edit, @recipe
-          = link_to edit_recipe_path, class: 'hinted', rel:'popover', 'data-content' => "Add an ComponentNutrient", 'data-placement' => "top" do
-            button class=button_class_lookup(:new)
-              i class=icon_class_lookup(:new)
+        / - if can? :edit, @recipe
+        /   = link_to edit_recipe_path, class: 'hinted', rel:'popover', 'data-content' => "Add an ComponentNutrient", 'data-placement' => "top" do
+        /     button class=button_class_lookup(:new)
+        /       i class=icon_class_lookup(:new)

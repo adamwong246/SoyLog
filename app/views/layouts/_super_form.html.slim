@@ -28,10 +28,19 @@
           = "which has_one #{association.klass.name}"
           .field
             = form.collection_select(association.foreign_key.to_sym, association.klass.all, :id, :identify)
+        -when :has_many
+          p= "has_many" 
+          p= "association.foreign_key.to_sym #{association.foreign_key.to_sym}"
+          p= "association.klass.all #{association.klass.all.inspect}"
+          
+          - association.klass.all.each do |i|
+            = i.identify
+
+          .field
+           
+            / = form.collection_select(:id, association.klass.all, :id, :identify)
 
       - else
-        / = member.class.columns_hash[field.to_s].inspect
-        
         - if !member.class.columns_hash[field.to_s].nil?
           - case member.class.columns_hash[field.to_s].type
           - when :boolean

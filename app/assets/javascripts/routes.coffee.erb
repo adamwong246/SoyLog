@@ -1,0 +1,27 @@
+root = global ? window
+angular = root.angular
+
+thisApp = angular.module("SoyLog3Client", ['ngCookies', 'recipes']).config(['$routeProvider', '$locationProvider' , 
+($routeProvider, $locationProvider) ->
+  #$locationProvider.hashPrefix('');
+  $locationProvider.html5Mode true
+  $routeProvider.when("/",
+    controller: "WelcomeCtrl"
+    templateUrl: "<%= asset_path('welcome/index.html') %>"
+  ).when("/recipes", 
+    controller: RecipesIndexCtrl
+    templateUrl: '<%= asset_path("recipes/index.html") %>'
+  ).when("/recipes/new",
+    controller: RecipesCreateCtrl
+    templateUrl: '<%= asset_path("recipes/new.html") %>'
+  ).when("/recipes/:id",
+    controller: RecipesShowCtrl
+    templateUrl: '<%= asset_path("recipes/show.html") %>'
+  ).when("/recipes/:id/edit",
+    controller: RecipesEditCtrl
+    templateUrl: '<%= asset_path("recipes/edit.html") %>'
+  ).otherwise redirectTo: "/"
+])
+
+root.thisApp = thisApp
+

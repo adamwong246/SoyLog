@@ -1,58 +1,66 @@
 .container
-  page-header
-    h1 
-      | Editing 
-      small= @recipe.identify
-    = render :partial => "layouts/actions", :locals => { :object => @recipe, :actions => [:show, :destroy, :index]}
-  br
+  h1
+    | Edit 
+    = @recipe.name
 
-  - if params[:nutrient_id]
-    h3= "Edit the amount of #{@nutrient.name}"
+  = render 'form'
 
-    table#edit_ingredients_nutrient.table.table-condensed class=@nutrient.name
-      tr
-        th Components
-        th Amount of #{@nutrient.name}
-        th Total #{}
+  = link_to 'Show', @recipe 
+  = link_to 'Back', recipes_path
 
-      - @component_nutrients.each do |cn|
-        tr
-          th = link_to cn.component.name, cn.component
-          td = "#{cn.amount} #{cn.nutrient.unit}"
-          td
-      tr
-        td 
-        td
-        th class=percent_rda_to_status(@percentage) 
-          = "#{@recipe.amount_of(@nutrient)} / #{@nutrient.fda_rda} #{@nutrient.unit} = %#{@percentage}"
+/ .container
+/   = simple_form_for @recipe do |r|
+/     = r.input :name, label: 'Name'
 
-    / .row.well
-    /   .span8.well
-    /     - @component_nutrients.each do |cn|
-    /       .row.well
-    /         .span3.well
-    /           = link_to cn.component.name, cn.component
-    /         .span3.well
-    /           = link_to cn.identify_short, cn
+/     = r.simple_fields_for :ingredients do |ingredients_form|
+/       .well.duplicatable_nested_form
+/         h3            
+/           | Component  
+/           small= ingredients_form.object.component.name
+/         / = ingredients_form.inspect
 
-    /   .span2.well class=percent_rda_to_status(percentage)
+/         / h3 = ingredients_form.label :component 
+/         / # p= (ingredients_form.association :component).inspect
+        
+/         = ingredients_form.input :amount, :input_html => { min: 0 }
 
-    /     h5= "#{@recipe.amount_of(@nutrient)} of #{@nutrient.identify}"
-    /     h3= "#{percentage}%"
+/         - if ingredients_form.object.new_record?
+/           = link_to 'Remove', '', :remote => true, :class => 'destroy_duplicate_nested_form'
+/         - else
+/           = link_to 'Remove', recipe_ingredient_path(@recipe, ingredients_form.object), :method => :delete, :remote => true, :class => 'destroy_duplicate_nested_form'
+/           = ingredients_form.input :id, as: :hidden
 
+/     = link_to 'Add Another Ingredient', '', :class => 'duplicate_nested_form'
+/     = r.submit
 
-      
+/ .container
+/   = render :partial => "layouts/super_edit", locals: { columns: [:name, :ingredients], member: @recipe} 
 
+/ Editing an ammount of an Nutrient
+/ .container
+/   page-header
+/     h1 
+/       | Editing 
+/       small= @recipe.identify
+/     = render :partial => "layouts/actions", :locals => { :object => @recipe, :actions => [:show, :destroy, :index]}
+/   br
 
+/   - if params[:nutrient_id]
+/     h3= "Edit the amount of #{@nutrient.name}"
 
+/     table#edit_ingredients_nutrient.table.table-condensed class=@nutrient.name
+/       tr
+/         th Components
+/         th Amount of #{@nutrient.name}
+/         th Total #{}
 
-  / - if params[:add_ingredient_for ]
-  /   - nutrient_to_find = Nutrient.find(params[:add_ingredient_for])
-  /   h3 Edit Ingredients which provides #{nutrient_to_find.name}
-
-  /   = nested_form_for(@recipe) do |recipe_form|
-  /     - if @recipe.errors.any?
-  /       = render :partial => "layouts/form_error", :locals => { :errors => @recipe.errors}
-  /     = recipe_form.collection_select(:id, Component.find_all_which_provide(nutrient_to_find), :id, :identify)
-
-  / 
+/       - @component_nutrients.each do |cn|
+/         tr
+/           th = link_to cn.component.name, cn.component
+/           td = "#{cn.amount} #{cn.nutrient.unit}"
+/           td
+/       tr
+/         td 
+/         td
+/         th class=percent_rda_to_status(@percentage) 
+/           = "#{@recipe.amount_of(@nutrient)} / #{@nutrient.fda_rda} #{@nutrient.unit} = %#{@percentage}"

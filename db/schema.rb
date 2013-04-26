@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130422072635) do
+ActiveRecord::Schema.define(:version => 20130425014629) do
 
   create_table "body_profile_nutrients", :force => true do |t|
     t.integer  "body_profile_id"
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(:version => 20130422072635) do
   add_index "flags", ["flagable_id", "flagable_type"], :name => "index_flags_on_flagable_id_and_flagable_type"
 
   create_table "ingredients", :force => true do |t|
-    t.integer  "recipe_id"
+    t.integer  "recipe_id",    :null => false
     t.integer  "component_id"
     t.decimal  "amount"
     t.datetime "created_at",   :null => false

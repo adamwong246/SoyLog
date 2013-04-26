@@ -1,9 +1,13 @@
 SoyLog3::Application.routes.draw do
 
+  get "welcome/index"
+
   resources :flags
 
   # RailsAdmin::Engine.routes.draw do
-  RailsAdmin::Engine => '/admin', :as => 'rails_admin'
+  get "welcome/index"
+
+  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
   devise_for :users
   
@@ -13,8 +17,10 @@ SoyLog3::Application.routes.draw do
   resources :nutrients
   
   resources :recipes do
+    resources :ingredients
     member do
       get :full_formula
+
     end
   end
 

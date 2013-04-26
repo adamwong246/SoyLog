@@ -1,6 +1,19 @@
-p Testing
 fieldset.well
   b
-    = f.label :component
+    / # = f.label :component
     br
-    = collection_select :componenet, :id, Component.all, :id, :name
+    = collection_select :component, :id, Component.all, :id, :name
+
+
+
+    
+
+    / = f.fields_for :component_nutrient do |cn_f|
+    /   fieldset.well
+    /     b
+    /       = cn_f.label :component_nutrient
+    /       br
+    /       = cn_f.fields_for :nutrient do |n_f|
+    /         .well
+    /           = n_f.label :nutrient
+    /       / = cn_f.fields_for :nutrient do |n_f|

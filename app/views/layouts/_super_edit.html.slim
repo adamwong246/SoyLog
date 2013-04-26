@@ -6,7 +6,7 @@
 / - assciation_map_array = member.class.reflect_on_all_associations.map{|a| {a.name => a.macro}}
 
 .super-edit
-  = render :partial => "layouts/super_header", :locals => { :member => member, :actions => actions ||= [:index, :flag, :new, :edit, :destroy]}
+  = render :partial => "layouts/super_header", :locals => { big_title: "Editing #{member.class}: ", little_title: member.identify}
   br
   = render :partial => "layouts/super_form",   :locals => { :member => member, :fields => columns }
 
