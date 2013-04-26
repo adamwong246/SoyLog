@@ -3,20 +3,27 @@
 
   ul#myTab.nav.nav-tabs
     li.active
-      a data-toggle="tab" href="#nutritional"
-        | Nutrition
+      a data-toggle="tab" href="#ingredients-perspective"
+        | Recipe (Ingredients)
     li
-      a data-toggle="tab" href="#shopping"
-        | Shopping List
+      a data-toggle="tab" href="#ingredients-nutrients-perspective"
+        | Nutritional (Nutrients)
+    li
+      a data-toggle="tab" href="#ingredients-components-perspective"
+        | Shopping List (Components)
     li
       a href="/recipes/#{@recipe.id}/full_formula"
-        | Full Formula
+        | Full Formula (ComponentsNutrients)
 
   #myTabContent.tab-content
-    #nutritional.tab-pane.fade.active.in
-      = render :partial => "spreadsheet_nutritional", :locals => {recipe: @recipe, nutrient: @nutrients}
-    #shopping.tab-pane.fade
-      = render :partial => "spreadsheet_shopping_list", :locals => {recipe: @recipe, nutrient: @nutrients}
+    #ingredients-perspective.tab-pane.fade.active.in
+      = render :partial => "ingredients_perspective", :locals => {recipe: @recipe}
+    #ingredients-nutrients-perspective.tab-pane.fade
+      = render :partial => "ingredients_nutrients_perspective", :locals => {recipe: @recipe}
+    #ingredients-components-perspective.tab-pane.fade
+      = render :partial => "ingredients_components_perspective", :locals => {recipe: @recipe}
+    #recipe.tab-pane.fade
+      = render :partial => "ingredients_componentsnutrients_perspective", :locals => {recipe: @recipe}
 
 
 

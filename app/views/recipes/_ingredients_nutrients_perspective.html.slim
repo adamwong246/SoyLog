@@ -1,0 +1,55 @@
+- padded_columns = 4
+- ingredients = @recipe.ingredients
+
+.container
+  .row
+    - [false, true].each do |in_recipe|
+      .span6
+        - if in_recipe
+          h3.success Components in this Recipe
+        - else
+          h3.error Components NOT in this Recipe
+
+        table#nutritional_form.table.table-condensed
+          / - if in_recipe
+          /   caption "#{@recipe.name}, nutritional form"
+          / - else
+          /   caption "#{@recipe.name}, nutritional form, missing Components"
+          thead
+            tr
+              td
+              th FDA RDA
+              th Actual
+              th FDA % 
+              td
+       
+              - row_class = 'error' if !in_recipe
+              - nutrients = [*@nutrients[in_recipe]]
+
+              - if !nutrients.empty?
+                - nutrients.each do |nutrient|                  
+                  tr class=row_class
+                  th
+                    = link_to nutrient.name, nutrient
+
+                    / # - if can? :edit, @recipe
+                    / #   p= link_to "New Ingredient", edit_recipe_path(@recipe, {add_ingredient_for: nutrient})
+
+                  td= nutrient.fda_rda            
+                  td= @recipe.amount_of(nutrient)
+                  td= number_to_percentage(@recipe.percent_fda_rda_of(nutrient))
+
+              /     - percent_rda = recipe.percent_fda_rda_of(nutrient)              
+                  
+              /     td class=percent_rda_to_status(@recipe.percent_fda_rda_of(nutrient))
+              /       = "#{percent_rda} %"                
+
+              /     td
+              /       - if (can? :edit, @recipe)
+              /         = link_to edit_recipe_path(@recipe, nutrient_id: nutrient.id), class: 'hinted', rel:'popover', 'data-content' => "Edit the amount of #{nutrient.name}", 'data-placement' => "right" do
+              /             button class=button_class_lookup(:edit)
+              /               i class=icon_class_lookup(:edit)
+              / - else
+              /   tr.warning
+              /     td colspan=4
+              /       h3 None

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130422072635) do
+ActiveRecord::Schema.define(:version => 20130426175805) do
 
   create_table "body_profile_nutrients", :force => true do |t|
     t.integer  "body_profile_id"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(:version => 20130422072635) do
   create_table "component_nutrients", :force => true do |t|
     t.integer  "component_id"
     t.integer  "nutrient_id"
-    t.decimal  "amount"
+    t.string   "amount"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
@@ -41,9 +41,9 @@ ActiveRecord::Schema.define(:version => 20130422072635) do
     t.string   "unit"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
-    t.decimal  "total_amount"
-    t.decimal  "price"
-    t.integer  "serving_size"
+    t.string   "total_amount"
+    t.string   "price"
+    t.string   "serving_size"
   end
 
   create_table "flags", :force => true do |t|
@@ -64,17 +64,16 @@ ActiveRecord::Schema.define(:version => 20130422072635) do
   create_table "ingredients", :force => true do |t|
     t.integer  "recipe_id"
     t.integer  "component_id"
-    t.decimal  "amount"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.decimal  "servings"
   end
 
   create_table "nutrients", :force => true do |t|
-    t.string   "unit"
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.decimal  "fda_rda"
+    t.string   "fda_rda"
   end
 
   create_table "rails_admin_histories", :force => true do |t|

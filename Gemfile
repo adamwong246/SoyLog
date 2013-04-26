@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'debugger'
 gem 'rails', '3.2.13'
-
+gem 'ruby-units'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -42,8 +42,8 @@ gem "font-awesome-sass-rails", "~> 3.0.2.2"
 gem 'jquery-rails'
 gem 'cancan'
 gem 'rails_admin'
-
 gem "high_voltage"
+gem "nested_form"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

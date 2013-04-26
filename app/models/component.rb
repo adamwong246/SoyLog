@@ -14,7 +14,7 @@ class Component < ActiveRecord::Base
   attr_accessible :id, :name, :unit, :url, :total_amount, :price, :serving_size
 
   def identify
-    "#{self.total_amount} #{self.units} of #{self.name} which costs $#{self.price}"
+    "#{self.total_amount} #{self.units} of #{self.name} which costs #{self.price}"
   end
 
   def self.description

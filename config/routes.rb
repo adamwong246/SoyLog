@@ -3,7 +3,7 @@ SoyLog3::Application.routes.draw do
   resources :flags
 
   # RailsAdmin::Engine.routes.draw do
-  RailsAdmin::Engine => '/admin', :as => 'rails_admin'
+  # RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
   devise_for :users
   

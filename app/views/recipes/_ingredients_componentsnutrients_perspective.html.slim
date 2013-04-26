@@ -2,17 +2,17 @@
 - ingredients = @recipe.ingredients
 
 table.table.table-condensed
-  caption "#{@recipe.name}, full formula"
+  / caption "#{@recipe.name}, full formula"
   thead
     tr
       td
       th FDA RDA
       th Actual
       th FDA % 
-      th Combined
+      th ComponentNutrients
 
       - ingredients.each do |ingredient|
-        td= link_to ingredient.component.name, ingredient.component
+        th= link_to ingredient.component.name, ingredient.component
       
 
     tr
@@ -29,32 +29,32 @@ table.table.table-condensed
       th Serving size
       td colspan=padded_columns
       - ingredients.each do |ingredient|
-        td = ingredient.serving_size_string
+        td = ingredient.servings
     tr
       th Total cost
       td
-      td = @recipe.cost_string      
+      td = @recipe.full_cost      
       td
       td 
       - ingredients.each do |ingredient|
-        td= ingredient.cost_string
+        td= Unit.new(ingredient.price)
       
 
     tr
       th Cost per serving
       td
-      td = @recipe.cost_per_day_string
+      td = @recipe.cost_per_serving_string
       td
       td
 
-      - ingredients.each do |ingredient|
-        td= ingredient.cost_per_serving_string
+      / - ingredients.each do |ingredient|
+      /   td= number_to_currency(ingredient.cost_per_serving)
         
     tr
       th Combined
       td colspan=padded_columns
       - ingredients.each do |ingredient|
-        td
+        th
           ul
             - ingredient.component_nutrients.each do |cn| 
               li= link_to cn.identify_short, cn
@@ -66,35 +66,36 @@ table.table.table-condensed
         - row_class = 'error' if !in_recipe
 
         tr class=row_class
-          td
+          th
             = link_to nutrient.name, nutrient
 
             - if can? :edit, @recipe
               p= link_to "Edit", edit_recipe_path(@recipe, {nutrient: nutrient})
 
-          td= nutrient.fda_rda_string
+          td= nutrient.fda_rda
           
           / td= "#{nutrient.component_nutrients.sum{|cn| cn.amount}} #{nutrient.units}"
-          td = "#{@recipe.amount_of(nutrient)} #{nutrient.units}" 
+          td = @recipe.amount_of(nutrient)
 
-          - percent_rda = ((nutrient.component_nutrients.sum{|cn| cn.amount} / nutrient.fda_rda) * 100  ).round(2)
-          - percent_rda = recipe.percent_fda_rda_of(nutrient)
+          / # - percent_rda = ((nutrient.component_nutrients.sum{|cn| cn.amount} / nutrient.fda_rda) * 100  ).round(2)
+          td= number_to_percentage(recipe.percent_fda_rda_of(nutrient))
+
  
-          - percent_diff = (percent_rda-100).abs
+          / - percent_diff = (percent_rda-100).abs
 
-          - if (percent_diff < 1)
-            td.success
-              p= "#{percent_rda} %"
+          / - if (percent_diff < 1)
+          /   td.success
+          /     p= percent_rda
 
-          - elsif percent_diff > 10
-            td.error
-              p= "#{percent_rda} %"
+          / - elsif percent_diff > 10
+          /   td.error
+          /     p= percent_rda
 
-          -else
-            td.warning
-              p= "#{percent_rda} %"
+          / -else
+          /   td.warning
+          /     p= "#{percent_rda} %"
 
-          td 
+          th 
             ul              
               - @recipe.all_component_nutrients_which_supply(nutrient).each do |cn|
                 li= link_to cn.identify_short, cn
@@ -108,8 +109,8 @@ table.table.table-condensed
                   = link_to cn.identify_short, cn
             - else
               td         
-                - if can? :edit, @recipe     
-                  = link_to "Create", new_component_nutrient_path(params: {component_id: ingredient.component.id, nutrient_id: nutrient.id} )
+                / - if can? :edit, @recipe     
+                /   = link_to "Create", new_component_nutrient_path(params: {component_id: ingredient.component.id, nutrient_id: nutrient.id} )
               
               
           

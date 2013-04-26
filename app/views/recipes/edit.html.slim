@@ -5,26 +5,40 @@
       small= @recipe.identify
     = render :partial => "layouts/actions", :locals => { :object => @recipe, :actions => [:show, :destroy, :index]}
   br
+  .well = nested_form_for @recipe do |recipe_form| 
+    .well = recipe_form.fields_for :ingredients do |ingredients_form| 
+      = ingredients_form.text_field :amount
 
-  - if params[:nutrient_id]
-    h3= "Edit the amount of #{@nutrient.name}"
+      / # = ingredients_form.object.component.screate
+      / = ingredients_form.fields_for :component, ingredients_form.object.component.create do |component_form|
+      /   = component_form.object.units
+      /   = component_form.collection_select(:id, Component.all, :id, :name)
 
-    table#edit_ingredients_nutrient.table.table-condensed class=@nutrient.name
-      tr
-        th Components
-        th Amount of #{@nutrient.name}
-        th Total #{}
+      p= ingredients_form.link_to_remove "Remove this ingredient" 
+    
+    = recipe_form.link_to_add "Add a ingredient", :ingredients 
+    br
+    = recipe_form.submit("Search")
 
-      - @component_nutrients.each do |cn|
-        tr
-          th = link_to cn.component.name, cn.component
-          td = "#{cn.amount} #{cn.nutrient.unit}"
-          td
-      tr
-        td 
-        td
-        th class=percent_rda_to_status(@percentage) 
-          = "#{@recipe.amount_of(@nutrient)} / #{@nutrient.fda_rda} #{@nutrient.unit} = %#{@percentage}"
+  / - if params[:nutrient_id]
+  /   h3= "Edit the amount of #{@nutrient.name}"
+
+  /   table#edit_ingredients_nutrient.table.table-condensed class=@nutrient.name
+  /     tr
+  /       th Components
+  /       th Amount of #{@nutrient.name}
+  /       th Total #{}
+
+  /     - @component_nutrients.each do |cn|
+  /       tr
+  /         th = link_to cn.component.name, cn.component
+  /         td = "#{cn.amount} #{cn.nutrient.unit}"
+  /         td
+  /     tr
+  /       td 
+  /       td
+  /       th class=percent_rda_to_status(@percentage) 
+  /         = "#{@recipe.amount_of(@nutrient)} / #{@nutrient.fda_rda} #{@nutrient.unit} = %#{@percentage}"
 
     / .row.well
     /   .span8.well

@@ -2,13 +2,23 @@ module IngredientsHelper
 
   def identify
     begin
-      "#{self.amount.round(2)} #{self.component.units} of #{self.component.name}"
+      "#{self.servings} servings of #{self.component.name}"
     rescue
       "Something's wrong with this record"
     end
   end
 
+  def ingredient_fda_percentage
+    begin
+      self.servings/self.measured_amount
+    rescue => e
+      puts e.message
+    end
+  end
 
+  def measured_amount
+    self.servings * Unit.new(self.component.serving_size)  
+  end
 
   def purchase_amount_string
     "#{self.component.total_amount} #{self.component.units}"
@@ -18,16 +28,22 @@ module IngredientsHelper
     "#{(self.component.total_amount/self.amount).round(2)} #{self.component.units}"
   end
 
-  def cost_string
-    "$#{self.component.price.round(2)}"
+  def price
+    self.component.price
   end
 
-  def cost_per_serving_string
-    "$#{(self.component.price/(self.component.total_amount/self.amount)).round(2)}"
+  def cost_per_serving
+    # split = self.split_amounts_and_units
+    (Unit.new(self.component.price)/(self.servings/self.servings)).round(2)
   end
 
   def component_nutrients
     self.component.component_nutrients
   end
+
+  def number_of_servings
+    self.component.number_of_servings
+  end
+
 
 end

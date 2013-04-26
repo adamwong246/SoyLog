@@ -138,6 +138,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     remotipart (1.0.5)
+    ruby-units (1.4.2)
     safe_yaml (0.9.0)
     sass (3.2.7)
     sass-rails (3.2.6)
@@ -181,9 +182,11 @@ DEPENDENCIES
   font-awesome-sass-rails (~> 3.0.2.2)
   high_voltage
   jquery-rails
+  nested_form
   pg
   rails (= 3.2.13)
   rails_admin
+  ruby-units
   sass-rails
   slim (~> 1.3.8)
   sqlite3-ruby (~> 1.3.0)
