@@ -17,7 +17,12 @@ module IngredientsHelper
   end
 
   def measured_amount
-    self.servings * Unit.new(self.component.serving_size)  
+    puts self.component.inspect
+    puts self.servings.inspect
+    puts self.component.serving_size.inspect
+
+    Unit.new(self.component.serving_size)  * self.servings
+
   end
 
   def purchase_amount_string
@@ -32,9 +37,13 @@ module IngredientsHelper
     self.component.price
   end
 
-  def cost_per_serving
-    # split = self.split_amounts_and_units
-    (Unit.new(self.component.price)/(self.servings/self.servings)).round(2)
+  def cost_per_daily_serving
+    begin
+      (Unit( self.price ) / (self.number_of_servings)).round(4)
+    rescue 
+      return "error"
+    end
+
   end
 
   def component_nutrients
@@ -42,7 +51,8 @@ module IngredientsHelper
   end
 
   def number_of_servings
-    self.component.number_of_servings
+    u_total_amount = Unit(self.component.total_amount)
+    return u_total_amount / self.measured_amount.convert_to(u_total_amount)
   end
 
 

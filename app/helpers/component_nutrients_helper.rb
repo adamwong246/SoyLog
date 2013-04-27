@@ -1,7 +1,7 @@
 module ComponentNutrientsHelper
   
   def identify
-    "#{self.component.identify} and which provides #{self.component.serving_size} out of #{self.nutrient.identify} per serving"
+    "#{self.component.identify} and which provides #{self.component.serving_size} out of #{self.nutrient.identify} per day"
   end
   def identify_short
     "#{self.amount} #{self.nutrient.name}"

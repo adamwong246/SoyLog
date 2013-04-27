@@ -36,8 +36,9 @@
                     / #   p= link_to "New Ingredient", edit_recipe_path(@recipe, {add_ingredient_for: nutrient})
 
                   td= nutrient.fda_rda            
-                  td= @recipe.amount_of(nutrient)
-                  td= number_to_percentage(@recipe.percent_fda_rda_of(nutrient))
+                  td= @recipe.calculated_daily_serving_of(nutrient) 
+                  / #.convert_to(nutrient.fda_rda)
+                  td= @recipe.percent_fda_rda_of(nutrient)
 
               /     - percent_rda = recipe.percent_fda_rda_of(nutrient)              
                   

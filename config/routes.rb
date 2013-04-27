@@ -14,7 +14,11 @@ SoyLog3::Application.routes.draw do
   
   resources :recipes do
     member do
+      get :recipe
+      get :nutrition
+      get :shopping_list
       get :full_formula
+
     end
   end
 

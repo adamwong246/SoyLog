@@ -30,6 +30,12 @@ table.table.table-condensed
       td colspan=padded_columns
       - ingredients.each do |ingredient|
         td = ingredient.servings
+
+    tr
+      th Measured amount
+      td colspan=padded_columns
+        - ingredients.each do |ingredient|
+          td = ingredient.measured_amount
     tr
       th Total cost
       td
@@ -43,12 +49,12 @@ table.table.table-condensed
     tr
       th Cost per serving
       td
-      td = @recipe.cost_per_serving_string
+      td = @recipe.cost_per_serving
       td
       td
 
-      / - ingredients.each do |ingredient|
-      /   td= number_to_currency(ingredient.cost_per_serving)
+      - ingredients.each do |i|
+        td= i.cost_per_daily_serving
         
     tr
       th Combined
@@ -75,10 +81,11 @@ table.table.table-condensed
           td= nutrient.fda_rda
           
           / td= "#{nutrient.component_nutrients.sum{|cn| cn.amount}} #{nutrient.units}"
-          td = @recipe.amount_of(nutrient)
+          td = @recipe.calculated_daily_serving_of(nutrient)
 
           / # - percent_rda = ((nutrient.component_nutrients.sum{|cn| cn.amount} / nutrient.fda_rda) * 100  ).round(2)
-          td= number_to_percentage(recipe.percent_fda_rda_of(nutrient))
+          / td= number_to_percentage(recipe.percent_fda_rda_of(nutrient))
+          td = recipe.percent_fda_rda_of(nutrient)
 
  
           / - percent_diff = (percent_rda-100).abs

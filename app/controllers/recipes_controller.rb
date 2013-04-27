@@ -1,17 +1,22 @@
 class RecipesController < ApplicationController
   load_and_authorize_resource
-  
-  def full_formula
-    
-    
+
+  before_filter :gather_recipe_and_nutrients, only: [:show, :recipe, :full_formula, :nutrition, :shopping_list]
+  def gather_recipe_and_nutrients
     @recipes = Recipe.all
-    nutrient_provided = @recipe.all_nutrients_provided
-    @nutrients = Nutrient.all.group_by { |n| nutrient_provided.include?(n) }
-    
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @recipes }
-    end
+    @nutrients = Nutrient.all.group_by { |n| @recipe.all_nutrients_provided.include?(n) }
+  end
+
+  def nutrition  
+  end
+
+  def recipe  
+  end
+
+  def full_formula
+  end
+
+  def shopping_list
   end
 
   # GET /recipes
@@ -28,9 +33,7 @@ class RecipesController < ApplicationController
 
   # GET /recipes/1
   # GET /recipes/1.json
-  def show
-    @recipe = Recipe.find(params[:id])
-    @nutrients = Nutrient.all.group_by { |n| @recipe.all_nutrients_provided.include?(n) }   #=> {0=>[3, 6], 1=>[1, 4], 2=>[2, 5]}
+  def show   
 
     respond_to do |format|
       format.html # show.html.erb
