@@ -15,7 +15,7 @@ table.table.table-condensed
   tbody
     - @recipe.ingredients.each do |ingredient|
       tr
-        td= link_to ingredient.component.name, ingredient.component
+        th= link_to ingredient.component.name, ingredient.component
         td= link_to truncate(ingredient.component.url), ingredient.component.url
         td= ingredient.cost_per_daily_serving
         td= ingredient.component.price

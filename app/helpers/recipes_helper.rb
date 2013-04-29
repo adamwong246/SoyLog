@@ -1,4 +1,5 @@
 module RecipesHelper
+
   def identify
     "#{self.name}"
   end
@@ -39,10 +40,11 @@ module RecipesHelper
 
     begin
       return all_ingredients_which_supply(nutrient).inject(Unit(0, Unit(nutrient.fda_rda))) {|sum, i| 
-        u_ss = Unit(i.component.serving_size)
-        u_fda = Unit(nutrient.fda_rda)
+        # u_ss = Unit(i.component.serving_size)
+        # u_fda = Unit(nutrient.fda_rda)
+        # puts i
         
-        sum + u_ss.convert_to(u_fda) * i.servings
+        sum + i.servings * (Unit(i.component.component_nutrients.select{|cn| cn.nutrient == nutrient}.first.amount).convert_to(Unit(nutrient.fda_rda)))
 
       }
     rescue

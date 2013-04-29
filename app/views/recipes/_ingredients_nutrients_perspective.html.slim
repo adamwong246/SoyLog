@@ -38,12 +38,12 @@
                   td= nutrient.fda_rda            
                   td= @recipe.calculated_daily_serving_of(nutrient) 
                   / #.convert_to(nutrient.fda_rda)
-                  td= @recipe.percent_fda_rda_of(nutrient)
+                  / td= @recipe.percent_fda_rda_of(nutrient)
 
-              /     - percent_rda = recipe.percent_fda_rda_of(nutrient)              
+                  / # - percent_rda = recipe.percent_fda_rda_of(nutrient)              
                   
-              /     td class=percent_rda_to_status(@recipe.percent_fda_rda_of(nutrient))
-              /       = "#{percent_rda} %"                
+                  td class=percent_rda_to_status(@recipe.percent_fda_rda_of(nutrient))
+                    = "#{@recipe.percent_fda_rda_of(nutrient)} %"                
 
               /     td
               /       - if (can? :edit, @recipe)

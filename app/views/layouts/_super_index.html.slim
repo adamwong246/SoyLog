@@ -1,39 +1,40 @@
 .container
-  .pageheader
-    h1 
-      | Listing 
-      small= params[:controller] 
-      = render :partial => "layouts/actions", :locals => { :object => collection.first, :actions => [:new]} 
+  .well
+    .pageheader
+      h1 
+        | Listing 
+        small= params[:controller] 
+        = render :partial => "layouts/actions", :locals => { :object => collection.first, :actions => [:new]} 
 
 
-    h5= params[:controller].classify.constantize.description
+      h5= params[:controller].classify.constantize.description
 
-  table.table.table-condensed
-    tr      
-      - columns.each do |column|
-        th= column.to_s unless column == :identify
-      td
-
-    - collection.each do |element|
-      tr
+    table.table.table-condensed
+      tr      
         - columns.each do |column|
-          - arr = apply_chain_link_or_print([*column], element)
+          th= column.to_s unless column == :identify
+        td
 
-          -td_class = "info" if column == :identify
+      - collection.each do |element|
+        tr
+          - columns.each do |column|
+            - arr = apply_chain_link_or_print([*column], element)
 
-          td class=td_class
-            - [*arr].each do |element|
-              / h5= element.inspect.inspect
-              - if TrueClass >= element.class
-                i.icon-ok
-              - elsif FalseClass >= element.class
-                i.icon-remove
-              - elsif element.nil?
-                i.icon-remove
-              - elsif [String, Numeric].any?{|c| c >= element.class}
-                = element
-              - else
-                = h_link element
+            -td_class = "info" if column == :identify
 
-                  
-        th= render :partial => "layouts/actions", :locals => { :object => element, :actions => [:flag, :show, :edit, :destroy]}
+            td class=td_class
+              - [*arr].each do |element|
+                / h5= element.inspect.inspect
+                - if TrueClass >= element.class
+                  i.icon-ok
+                - elsif FalseClass >= element.class
+                  i.icon-remove
+                - elsif element.nil?
+                  i.icon-remove
+                - elsif [String, Numeric].any?{|c| c >= element.class}
+                  = element
+                - else
+                  = h_link element
+
+                    
+          th= render :partial => "layouts/actions", :locals => { :object => element, :actions => [:flag, :show, :edit, :destroy]}

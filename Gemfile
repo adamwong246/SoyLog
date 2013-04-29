@@ -1,5 +1,9 @@
 source 'https://rubygems.org'
 
+gem "best_in_place"
+# gem "angular-rails"
+gem 'tesseract-ocr'
+
 gem 'debugger'
 gem 'rails', '3.2.13'
 gem 'ruby-units'

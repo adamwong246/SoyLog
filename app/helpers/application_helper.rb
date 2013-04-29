@@ -1,5 +1,14 @@
 module ApplicationHelper
 
+  def is_uri?(string)
+    uri = URI.parse(string)
+    %w( http https ).include?(uri.scheme)
+  rescue URI::BadURIError
+    false
+  rescue URI::InvalidURIError
+    false
+  end
+
   def button_class_lookup(action)
     case action
     when :index
@@ -38,14 +47,20 @@ module ApplicationHelper
   end
 
   def percent_rda_to_status(percent)
-    percent_diff = (percent-100).abs
-    if (percent_diff < 1)
-      :success
-    elsif percent_diff > 10
-      :error
+
+    if Numeric >= percent.class
+      percent_diff = (percent-100).abs
+      if (percent_diff < 1)
+        :success
+      elsif percent_diff > 10
+        :error
+      else
+        :warning
+      end
     else
-      :warning
+      :info
     end
+
   end
 
   def get_host_without_www(url)

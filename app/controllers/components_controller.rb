@@ -1,4 +1,5 @@
 class ComponentsController < ApplicationController
+respond_to :json
   load_and_authorize_resource
   
   # GET /components
@@ -36,6 +37,10 @@ class ComponentsController < ApplicationController
 
   # GET /components/1/edit
   def edit
+    @component = Component.find(params[:id])
+  end
+
+  def ocr_parse
     @component = Component.find(params[:id])
   end
 

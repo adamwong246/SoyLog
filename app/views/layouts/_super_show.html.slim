@@ -1,6 +1,6 @@
 - assciation_map_array = member.class.reflect_on_all_associations.map{|a| {a.name => a.macro}}
 
-.super-show
+.super-show.well
 
   .page-header
               
@@ -19,20 +19,32 @@
           / # =column.inspect
           = column.to_s unless column == :identify
           - td_class = "info" if column == :identify
+
         td class=td_class
           - arr = [*apply_chain_link_or_print([*column], member)]
 
           - arr.each do |element|
+
             - if TrueClass >= element.class
               i.icon-ok
+
             - elsif FalseClass >= element.class
               i.icon-remove
+
+            - elsif String >= element.class
+
+              - if is_uri?(element)
+                = link_to element, element
+
+              - else
+                = element
+            
             - elsif element.nil?
               i.icon-remove
-            - elsif [String, Numeric].any?{|c| c >= element.class}
-              = element
+
             - else
               = h_link element
+
             br
 
           

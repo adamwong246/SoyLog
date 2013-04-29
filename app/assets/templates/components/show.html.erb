@@ -1,0 +1,50 @@
+<h1>Component</h1>
+
+<p>
+  <b>Name</b><br>
+  {{component.name}}
+</p>
+
+<p>
+  <b>Url</b><br>
+  {{component.url}}
+</p>
+
+<p>
+  <b>Unit</b><br>
+  {{component.unit}}
+</p>
+
+<p>
+  <b>Total amount</b><br>
+  {{component.total_amount}}
+</p>
+
+<p>
+  <b>Price</b><br>
+  {{component.price}}
+</p>
+
+<p>
+  <b>Serving size</b><br>
+  {{component.serving_size}}
+</p>
+
+<p>
+  <b>Nutritional label url</b><br>
+  {{component.nutritional_label_url}}
+</p>
+
+<div class="form-actions">
+  <a href="/components/{{component.id}}/edit"
+    class="btn btn-primary"><i class="icon-edit"></i>
+    Edit Component
+  </a>
+  <button ng-click="destroy()" class="btn btn-danger">
+    <i class="icon-trash"></i> Delete
+  </button>
+  <a href="/components" class="btn">
+    Back to components
+  </a>
+</div>
+

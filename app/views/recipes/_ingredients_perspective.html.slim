@@ -18,7 +18,7 @@ table.table.table-condensed
   tbody
     - @recipe.ingredients.each do |ingredient|
       tr
-        td= link_to ingredient.component.name, ingredient
+        th= link_to ingredient.component.name, ingredient
 
         / # td= link_to "#{ingredient.component.url[0..10]}"
         / # td= "$#{ingredient.component.price}"

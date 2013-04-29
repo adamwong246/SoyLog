@@ -25,10 +25,6 @@ module IngredientsHelper
 
   end
 
-  def purchase_amount_string
-    "#{self.component.total_amount} #{self.component.units}"
-  end
-
   def serving_size_string
     "#{(self.component.total_amount/self.amount).round(2)} #{self.component.units}"
   end
@@ -53,6 +49,10 @@ module IngredientsHelper
   def number_of_servings
     u_total_amount = Unit(self.component.total_amount)
     return u_total_amount / self.measured_amount.convert_to(u_total_amount)
+  end
+
+  def url
+    self.component.url
   end
 
 

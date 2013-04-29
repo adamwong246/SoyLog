@@ -11,29 +11,14 @@ class Component < ActiveRecord::Base
   accepts_nested_attributes_for :component_nutrients, allow_destroy: true
   accepts_nested_attributes_for :nutrients,           allow_destroy: true
 
-  attr_accessible :id, :name, :unit, :url, :total_amount, :price, :serving_size
+  attr_accessible :id, :name, :url, :total_amount, :price, :serving_size, :nutritional_label_url
 
   def identify
-    "#{self.total_amount} #{self.units} of #{self.name}"
+    "#{self.name}, #{self.total_amount}"
   end
 
   def self.description
     "A Component is something you can purchase from a store, or online, such as protein powder."
-  end
-
-  def units
-    case self.unit
-    when 'g'
-      "grams"
-    when 'mg'
-      "milligrams"
-    when 'ug'
-      'micrograms'
-    when 'l'
-      'liters'
-    else
-      self.unit 
-    end
   end
 
   def self.find_all_which_provide(nutrient)

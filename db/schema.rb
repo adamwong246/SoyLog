@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130426175805) do
+ActiveRecord::Schema.define(:version => 20130427215732) do
 
   create_table "body_profile_nutrients", :force => true do |t|
     t.integer  "body_profile_id"
@@ -39,11 +39,12 @@ ActiveRecord::Schema.define(:version => 20130426175805) do
     t.string   "name"
     t.text     "url"
     t.string   "unit"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
     t.string   "total_amount"
     t.string   "price"
     t.string   "serving_size"
+    t.string   "nutritional_label_url"
   end
 
   create_table "flags", :force => true do |t|

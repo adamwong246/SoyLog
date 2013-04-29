@@ -1,7 +1,11 @@
 .container
-  = render :partial => "layouts/super_edit", locals: { columns: [:name, :unit, :url, :total_amount, :price, :serving_size], member: @component} 
+  = render :partial => "layouts/super_edit", locals: { columns: [:name, :url, :nutritional_label_url, :serving_size, :total_amount, :price], member: @component} 
 
-  / = render 'form'
-  / = link_to 'Show', @component
-  / | \
-  / | \#{link_to 'Back', components_path}
+  .row.well ng-controller="ocrCtrl"
+    .span3
+      = image_tag @component.nutritional_label_url
+      <div>{{test}</div>
+    .span3
+      form
+        button type="button" ng-click="setImage(img)" Parse nutional data via OCR
+      

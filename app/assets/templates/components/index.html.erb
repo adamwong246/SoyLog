@@ -1,0 +1,57 @@
+<h1>Components</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+        <th>Name</th>
+        <th>Url</th>
+        <th>Unit</th>
+        <th>Total amount</th>
+        <th>Price</th>
+        <th>Serving size</th>
+        <th>Nutritional label url</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="component in components">
+      <td>
+        <a href="/components/{{component.id}}">
+          {{component.name}}
+        </a>
+      </td>
+        <td>
+          {{component.url}}
+        </td>
+        <td>
+          {{component.unit}}
+        </td>
+        <td>
+          {{component.total_amount}}
+        </td>
+        <td>
+          {{component.price}}
+        </td>
+        <td>
+          {{component.serving_size}}
+        </td>
+        <td>
+          {{component.nutritional_label_url}}
+        </td>
+      <td>
+        <a href="/components/{{component.id}}/edit"
+          class="btn btn-primary"><i class="icon-edit"></i>
+          Edit
+        </a>
+        <button ng-click="destroy()" class="btn btn-danger">
+          <i class="icon-trash"></i> Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>
+  <a href='/components/new' class="btn btn-primary">
+    <i class="icon-plus"></i>New
+  </a>
+</p>

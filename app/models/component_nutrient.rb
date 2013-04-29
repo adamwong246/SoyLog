@@ -15,8 +15,8 @@ class ComponentNutrient < ActiveRecord::Base
     "A ComponentNutrient relates a store-bought Component to the Nutrients found in it. "
   end
 
-  def self.which_joins(component, nutrient)
-    ComponentNutrient.select { |cn| cn.component_id == component.id && cn.nutrient_id == nutrient.id }
+  def self.which_joins(ingredient, nutrient)
+    ComponentNutrient.select { |cn| (cn.component == ingredient.component) && (cn.nutrient == nutrient) }
   end
   
 end

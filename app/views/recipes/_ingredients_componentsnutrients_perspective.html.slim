@@ -19,31 +19,42 @@ table.table.table-condensed
       th URL
       td colspan=padded_columns      
       - ingredients.each do |ingredient|
-        td= link_to get_host_without_www(ingredient.component.url)[0..20], ingredient.component.url
+        td= link_to get_host_without_www(ingredient.url), ingredient.url
+    / tr
+    /   th Price
+    /   td colspan=padded_columns
+    /   - ingredients.each do |ingredient|
+    /     td= ingredient.price
     tr
-      th Cost
-      td colspan=padded_columns
+      th Total cost
+      td
+      td = @recipe.full_cost
+      td
+      td 
       - ingredients.each do |ingredient|
-        td= ingredient.purchase_amount_string
+        td= Unit.new(ingredient.price)
     tr
       th Serving size
       td colspan=padded_columns
       - ingredients.each do |ingredient|
-        td = ingredient.servings
+        / td= best_in_place ingredient, :servings, type: :input
+        td
+          = best_in_place ingredient, :servings, :type => :input
+          = "%"
+    tr
+      th Default Serving size
+      td colspan=padded_columns
+      - ingredients.each do |ingredient|
+        / td= best_in_place ingredient, :servings, type: :input
+        td
+          = ingredient.component.serving_size        
 
     tr
       th Measured amount
       td colspan=padded_columns
         - ingredients.each do |ingredient|
-          td = ingredient.measured_amount
-    tr
-      th Total cost
-      td
-      td = @recipe.full_cost      
-      td
-      td 
-      - ingredients.each do |ingredient|
-        td= Unit.new(ingredient.price)
+          td= ingredient.measured_amount
+
       
 
     tr
@@ -55,15 +66,22 @@ table.table.table-condensed
 
       - ingredients.each do |i|
         td= i.cost_per_daily_serving
+
         
     tr
-      th Combined
+      th ComponentNutrients
       td colspan=padded_columns
       - ingredients.each do |ingredient|
         th
           ul
             - ingredient.component_nutrients.each do |cn| 
-              li= link_to cn.identify_short, cn
+              li
+                = link_to cn.identify_short, cn
+                = " * "
+                = ingredient.servings
+                = " servings = "
+                = ingredient.servings * Unit(cn.amount)
+                = " per day"
 
     / Loop over all Ingredients
     - [true, false].each do |in_recipe|
@@ -75,17 +93,16 @@ table.table.table-condensed
           th
             = link_to nutrient.name, nutrient
 
-            - if can? :edit, @recipe
-              p= link_to "Edit", edit_recipe_path(@recipe, {nutrient: nutrient})
-
           td= nutrient.fda_rda
           
-          / td= "#{nutrient.component_nutrients.sum{|cn| cn.amount}} #{nutrient.units}"
+          /  This operation is expensive, so look it up if possible
           td = @recipe.calculated_daily_serving_of(nutrient)
 
           / # - percent_rda = ((nutrient.component_nutrients.sum{|cn| cn.amount} / nutrient.fda_rda) * 100  ).round(2)
           / td= number_to_percentage(recipe.percent_fda_rda_of(nutrient))
-          td = recipe.percent_fda_rda_of(nutrient)
+          td
+            = "%"
+            = recipe.percent_fda_rda_of(nutrient)
 
  
           / - percent_diff = (percent_rda-100).abs
@@ -104,16 +121,36 @@ table.table.table-condensed
 
           th 
             ul              
-              - @recipe.all_component_nutrients_which_supply(nutrient).each do |cn|
-                li= link_to cn.identify_short, cn
+              - @recipe.all_ingredients_which_supply(nutrient).each do |i|
+                li
+                  - cn = ComponentNutrient.which_joins(i, nutrient).each do |cn|
+                    = link_to cn.identify_short, cn
+                    = " * "
+                    = i.servings
+                    = " servings of "
+                    = link_to cn.component.name, cn.component
+                    = " = "
+                    = i.servings * Unit(cn.amount)
+                  /   - if cn
+                  /     = i.servings * Unit(cn.amount)
+                  /     / i.servings * Unit(i.component.serving_size)
+                  /     = " of "
+                  /     = link_to nutrient.name, nutrient
+                  /     = " from "
+                  /     = link_to i.component.name, i.component
+
 
           - @recipe.ingredients.each do |ingredient|
-            - comp_nuts = ComponentNutrient.which_joins(ingredient.component, nutrient)
+            - comp_nuts = ComponentNutrient.which_joins(ingredient, nutrient)
             
             - if !comp_nuts.empty?
               td.info
-                - comp_nuts.each do |cn|
+                - comp_nuts.each do |cn|                    
                   = link_to cn.identify_short, cn
+                  = " * "
+                  = ingredient.servings
+                  = " = "
+                  = ingredient.servings * Unit(cn.amount)
             - else
               td         
                 / - if can? :edit, @recipe     

@@ -1,0 +1,132 @@
+<form name="newComponent">
+  <fieldset>
+    <legend>
+      New Component
+    </legend>
+      <div class="control-group">
+        <label class="control-label">
+          Name
+        </label>
+        <div class="controls">
+            <input type="text"
+                   name="component[name]"
+                   ng-model="component.name"
+                   class="text_field"
+                   required>
+          <span ng-show="newComponent.name.$error.required"
+                class="help-inline">
+            Required
+          </span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">
+          Url
+        </label>
+        <div class="controls">
+            <input type="text"
+                   name="component[url]"
+                   ng-model="component.url"
+                   class="text_area"
+                   required>
+          <span ng-show="newComponent.url.$error.required"
+                class="help-inline">
+            Required
+          </span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">
+          Unit
+        </label>
+        <div class="controls">
+            <input type="text"
+                   name="component[unit]"
+                   ng-model="component.unit"
+                   class="text_field"
+                   required>
+          <span ng-show="newComponent.unit.$error.required"
+                class="help-inline">
+            Required
+          </span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">
+          Total Amount
+        </label>
+        <div class="controls">
+            <input type="text"
+                   name="component[total_amount]"
+                   ng-model="component.total_amount"
+                   class="text_field"
+                   required>
+          <span ng-show="newComponent.total_amount.$error.required"
+                class="help-inline">
+            Required
+          </span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">
+          Price
+        </label>
+        <div class="controls">
+            <input type="text"
+                   name="component[price]"
+                   ng-model="component.price"
+                   class="text_field"
+                   required>
+          <span ng-show="newComponent.price.$error.required"
+                class="help-inline">
+            Required
+          </span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">
+          Serving Size
+        </label>
+        <div class="controls">
+            <input type="text"
+                   name="component[serving_size]"
+                   ng-model="component.serving_size"
+                   class="text_field"
+                   required>
+          <span ng-show="newComponent.serving_size.$error.required"
+                class="help-inline">
+            Required
+          </span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">
+          Nutritional Label Url
+        </label>
+        <div class="controls">
+            <input type="text"
+                   name="component[nutritional_label_url]"
+                   ng-model="component.nutritional_label_url"
+                   class="text_field"
+                   required>
+          <span ng-show="newComponent.nutritional_label_url.$error.required"
+                class="help-inline">
+            Required
+          </span>
+        </div>
+      </div>
+    <div class="form-actions">
+      <button class="btn btn-success" ng-click="save()"
+        ng-disabled="isClean() || newComponent.$invalid">
+        <i class="icon-save"></i> Save
+      </button>
+      <button ng-click="destroy()"
+              ng-show="component.id"
+              class="btn btn-danger">
+              <i class="icon-trash"></i> Delete
+      </button>
+      <a href="/components" class="btn">Back to components</a>
+    </div>
+  </fieldset>
+</form>
+

@@ -1,0 +1,24 @@
+table.table.table-condensed
+  tr
+    td
+    - columns.each do |c|
+      th= c[c.keys[0]]
+  - rows.each do |r|
+    tr
+      th= r[r.keys[0]]
+
+      - columns.each do |c|        
+        
+        - r_key = r.keys[0]
+        - r_val = r[r.keys[0]]
+        - c_key = c.keys[0]
+        - c_val = c[c.keys[0]]
+
+        - lookup = recipe_lookup(c_key, r_key)
+
+        - if lookup != {} 
+          td
+            p="Lookup(#{c_key}, #{r_key})"
+            p= lookup
+        - else
+          td.error="Lookup(#{c_key}, #{r_key})"
