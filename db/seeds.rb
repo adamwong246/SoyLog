@@ -57,13 +57,9 @@ comp_vit_e                = Component.create!({name: 'Nature Made Vitamin E',   
 ComponentNutrient.create!({amount: '1000 mg',   component: comp_ascorbic_acid,        nutrient: nu_vitamin_c})
 ComponentNutrient.create!({amount: '1 mg',      component: comp_biotin,               nutrient: nu_biotin})
 ComponentNutrient.create!({amount: '500 mg',    component: comp_c_carbonate,          nutrient: nu_calcium})
-
 ComponentNutrient.create!({amount: '94 g',      component: comp_maltodextrin,         nutrient: nu_carbohydrates})
 ComponentNutrient.create!({amount: '100 mg',    component: comp_maltodextrin,         nutrient: nu_sodium})
 ComponentNutrient.create!({amount: '100 mg',    component: comp_maltodextrin,         nutrient: nu_chloride})
-
-
-
 ComponentNutrient.create!({amount: '.25 l',     component: comp_olive_oil,            nutrient: nu_fat})
 ComponentNutrient.create!({amount: '25 g',      component: comp_whey,                 nutrient: nu_protein})
 ComponentNutrient.create!({amount: '590 mg',    component: comp_salt,                 nutrient: nu_chloride})

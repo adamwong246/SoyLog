@@ -3,47 +3,106 @@
 
 .container
   .row
-    - [false, true].each do |in_recipe|
-      .span6
-        - if in_recipe
-          h3.success Components in this Recipe
-        - else
-          h3.error Components NOT in this Recipe
+    .span12
+      table#nutritional_form.table.table-condensed
 
-        table#nutritional_form.table.table-condensed
-          / - if in_recipe
-          /   caption "#{@recipe.name}, nutritional form"
-          / - else
-          /   caption "#{@recipe.name}, nutritional form, missing Components"
-          thead
-            tr
-              td
-              th FDA RDA
-              th Actual
-              th FDA % 
-              td
-       
-              - row_class = 'error' if !in_recipe
-              - nutrients = [*@nutrients[in_recipe]]
+          tr
+            td
+            th FDA RDA
+            th Actual
+            th FDA % 
+            th Ingredient
+            th 
+     
+            / - row_class = 'error' if !in_recipe
+            - nutrients = [*@nutrients[true]] + [*@nutrients[false]]
 
-              - if !nutrients.empty?
-                - nutrients.each do |nutrient|                  
-                  tr class=row_class
-                  th
-                    = link_to nutrient.name, nutrient
+            - if !nutrients.empty?
+              - nutrients.each do |nutrient|                  
+                tr 
+                th
+                  = link_to nutrient.name, nutrient
 
-                    / # - if can? :edit, @recipe
-                    / #   p= link_to "New Ingredient", edit_recipe_path(@recipe, {add_ingredient_for: nutrient})
+                  / # - if can? :edit, @recipe
+                  / #   p= link_to "New Ingredient", edit_recipe_path(@recipe, {add_ingredient_for: nutrient})
 
-                  td= nutrient.fda_rda            
-                  td= @recipe.calculated_daily_serving_of(nutrient) 
-                  / #.convert_to(nutrient.fda_rda)
-                  / td= @recipe.percent_fda_rda_of(nutrient)
+                td= nutrient.fda_rda            
+                td= @calculated_daily_serving_of[nutrient]
+                / #.convert_to(nutrient.fda_rda)
+                / td= @recipe.percent_fda_rda_of(nutrient)
 
-                  / # - percent_rda = recipe.percent_fda_rda_of(nutrient)              
-                  
-                  td class=percent_rda_to_status(@recipe.percent_fda_rda_of(nutrient))
-                    = "#{@recipe.percent_fda_rda_of(nutrient)} %"                
+                / # - percent_rda = recipe.percent_fda_rda_of(nutrient)              
+                
+                td class=percent_rda_to_status(@percent_fda_rda_of[nutrient])
+                  = "#{@percent_fda_rda_of[nutrient]} %"
+
+                td
+                  ul
+                    - [*@ingredients_which_supply[nutrient]].each do |i|
+                        li
+                          a data-toggle="modal" href=".show-ingredient-#{i.id}" role="button"
+                            = i.component.name
+                          
+
+                td
+                  - if [*@ingredients_which_supply[nutrient]].length == 1 && Float >= @optimal_servings[@ingredients_which_supply[nutrient].first].class 
+                    
+                    - ingredient = @ingredients_which_supply[nutrient].first
+                    
+
+                    
+
+                    = nested_form_for ingredient do |ingredients_form|
+                      = ingredients_form.hidden_field :servings, value: @optimal_servings[ingredient]
+                      = ingredients_form.submit("Auto!")
+                td
+                  / = link_to "add"
+                  a.btn data-toggle="modal" href=".add-ingredient-#{nutrient.name}" role="button"
+                    | Add an Ingredient
+
+                  - component_list = Component.all.select{|c| c.nutrients.include?(nutrient)} - [*@component_nutrients_which_supply[nutrient]].map{|cn| cn.component}
+
+                  - if component_list.length > 0
+                    .modal.hide.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" class="add-ingredient-#{nutrient.name}"
+                      .modal-header
+                        h3#myModalLabel Add an Ingredient which supplies #{nutrient.name}   
+                      
+                      = form_for (@new_ingredient) do |ingredients_form|
+                        .modal-body
+                          = ingredients_form.collection_select :component_id, component_list, :id, :name
+                          = ingredients_form.text_field :servings
+                          = ingredients_form.hidden_field :recipe_id, value: @recipe.id
+                        .modal-footer
+                          = ingredients_form.submit "Add", :class => 'button btn btn-primary' 
+
+                  - else
+                    .modal.hide.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" class="add-ingredient-#{nutrient.name}"
+                      .modal-header
+                        h3#myModalLabel.error There are no Components which supply #{nutrient.name} which are not already in your recipe.
+                      .modal-body
+                        p
+                          | You have the following Ingredients which supply #{nutrient.name}
+                        ul
+                          - [*@ingredients_which_supply[nutrient]].each do |i|
+                            li= h_link i
+
+                      .modal-footer
+                          button.btn aria-hidden="true" data-dismiss="modal" Ok
+
+- @recipe.ingredients.each do |i|              
+  .modal.hide.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" class="show-ingredient-#{i.id}"
+    .modal-header
+      h3#myModalLabel Modify the amount of #{i.component.name}
+    
+    = nested_form_for i do |ingredients_form|
+      .modal-body                              
+        = ingredients_form.label :servings
+        = ingredients_form.text_field :servings, value: i.servings                                
+
+      .modal-footer
+        button.btn aria-hidden="true" data-dismiss="modal" cancel
+        / button.btn aria-hidden="true" data-dismiss="modal" Ok
+        = ingredients_form.submit "Set servings", :class => 'button btn btn-primary'
 
               /     td
               /       - if (can? :edit, @recipe)

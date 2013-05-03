@@ -1,5 +1,11 @@
 class UsersController < ApplicationController
   load_and_authorize_resource
+
+  def home
+    # @user = current_user
+
+    redirect_to action: :show, id: current_user.id
+  end
   
   # GET /users
   # GET /users.json
@@ -16,6 +22,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
+    @new_recipe = @user.recipes.create
 
     respond_to do |format|
       format.html # show.html.erb
@@ -37,6 +44,8 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
+
+
   end
 
   # POST /users

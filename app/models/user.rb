@@ -16,12 +16,12 @@ class User < ActiveRecord::Base
     self.name
   end
 
-  def self.description
-    ""
+  def self.identify
+    "A User represents a human being"
   end
 
   def admin?
-    true # self.email == "andyadmin@email.com"
+    self.email == "andyadmin@email.com"
   end
 
   def self.awesome_icon

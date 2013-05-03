@@ -1,8 +1,52 @@
 -if @user == current_user
   .container
     .row      
-      .span6
-        = render :partial => "layouts/super_show", :locals => { columns: [:name, :email, :recipes, :flags], member: @user, actions: [:edit]} 
+      .span6.well
+        / = render :partial => "layouts/super_show", :locals => { columns: [:name, :email, :recipes, :flags], member: @user, actions: [:edit]} 
+        h1            
+          = "User "  
+          small= @user.identify
+        table.table.table-condensed
+          tr
+            th Name
+            td= @user.name
+          tr
+            th Email
+            td
+              = @user.email
+          tr
+            th Recipes
+            td
+              ul
+                - @user.recipes.each do |r|
+                  li= h_link r
+            / td= link_to "Add recipe", ".new-recipe-modal"
+            td
+              a.btn data-toggle="modal" href=".new-recipe-modal" role="button"
+                | Create a new Recipe
+
+            .new-recipe-modal.modal.hide.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1"
+              .modal-header
+                h3#myModalLabel Create a new Recipe
+              
+              = nested_form_for @new_recipe do |recipe_form|
+                .modal-body                              
+                  = recipe_form.label :name
+                  = recipe_form.text_field :name, value: @new_recipe.name                            
+
+                .modal-footer
+                  button.btn aria-hidden="true" data-dismiss="modal" cancel
+                  / button.btn aria-hidden="true" data-dismiss="modal" Ok
+                  = recipe_form.submit "Create Recipe", :class => 'button btn btn-primary'
+          tr
+            td Flags
+            td
+              ul
+                - @user.flags.each do |f|
+                  li= h_link f
+
+
+    / # = render :partial => "layouts/actions", :locals => { :object => member, :actions => actions ||= [:index, :flag, :new, :edit, :destroy]}
       .span6
         h1 This is your home page
     .row

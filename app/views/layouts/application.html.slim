@@ -32,7 +32,7 @@ html lang="en" ng-app="SoyLog"
                         li role="presentation"
                           = link_to 'Admin', rails_admin_path
 
-                    li = link_to 'My Profile', current_user                   
+                    li = link_to 'My Profile', users_home_path                   
                     li= link_to 'Sign out', destroy_user_session_path, :method=>'delete' 
 
                 - else
@@ -56,6 +56,8 @@ html lang="en" ng-app="SoyLog"
 
           ul.nav.pull-right
             li= link_to "About", about_path        
+    
+
     .content ng-view=""        
       - flash.each do |name, msg|
         - if msg.is_a?(String)

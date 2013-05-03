@@ -1,0 +1,42 @@
+= form_for @flag, html: {:class => "form-inline"} do |f|
+  - if @flag.errors.any?
+    #error_explanation
+      h2
+        = pluralize(@flag.errors.count, "error")
+        | prohibited this flag from being saved:
+      ul
+        - @flag.errors.full_messages.each do |msg|
+          li= msg
+  table.table.table-condensed
+    tr
+      td= f.label :spam
+      td= f.check_box :spam
+    tr
+      td= f.label :duplicate
+      td= f.check_box :duplicate
+    tr
+      td= f.label :inapproriate
+      td= f.check_box :inapproriate
+    tr
+      td= f.label :dangerous
+      td= f.check_box :dangerous
+    tr
+      td= f.label :vote
+      td= f.number_field :vote
+    tr
+      td= f.label :comment
+      td= f.text_field :comment
+  / .field
+  /   = f.label :value
+  /   br/
+  /   = f.text_field :value
+  / .field
+  /   = f.label :flagable_id
+  /   br/
+  /   = f.number_field :flagable_id
+  / .field
+  /   = f.label :flagable_type
+  /   br/
+  /   = f.text_field :flagable_type
+  .actions
+    = f.submit

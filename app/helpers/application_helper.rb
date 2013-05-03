@@ -1,5 +1,7 @@
 module ApplicationHelper
 
+  
+
   def is_uri?(string)
     uri = URI.parse(string)
     %w( http https ).include?(uri.scheme)
@@ -10,21 +12,25 @@ module ApplicationHelper
   end
 
   def button_class_lookup(action)
+    btn_size = ''
+
     case action
     when :index
-      'btn  btn-mini'
+      "btn  #{btn_size}"
     when :show
-      'btn btn-success  btn-mini'
+      "btn btn-success  #{btn_size}"
     when :new
-      'btn btn-info  btn-mini'
+      "btn btn-info  #{btn_size}"
     when :edit
-      'btn btn-warning  btn-mini'
+      "btn btn-warning  #{btn_size}"
     when :clone
-      'btn btn-success  btn-mini'
+      "btn btn-success #{btn_size}"
     when :destroy
-      'btn btn-danger  btn-mini'
+      "btn btn-danger  #{btn_size}"
     when :flag
-      'btn btn-primary btn-mini'
+      "btn btn-primary #{btn_size}"
+    when :info
+      "btn btn-inverse #{btn_size}"
     end
   end
   def icon_class_lookup(action)
@@ -43,6 +49,8 @@ module ApplicationHelper
       'icon-trash'
     when :flag
       'icon-flag'
+    when :info
+      'icon-question-sign'
     end
   end
 
@@ -83,9 +91,9 @@ module ApplicationHelper
     
     e = recusive_function_chainer(functions, object)
 
-    puts "e: #{e}"
-    puts "functions: #{functions}"
-    puts "object: #{object}"
+    # puts "e: #{e}"
+    # puts "functions: #{functions}"
+    # puts "object: #{object}"
 
     if functions == [:identify]
       return e
@@ -122,7 +130,7 @@ module ApplicationHelper
   end
 
   def recusive_function_chainer(chain, element)
-    puts "recusive_function_chainer: #{chain.inspect}, #{element}"
+    # puts "recusive_function_chainer: #{chain.inspect}, #{element}"
 
     e = element
 
@@ -144,13 +152,13 @@ module ApplicationHelper
   end
 
   def link_to_add_fields(name, f, association)
-    puts "link_to_add_fields( #{name}, #{f}, #{association.inspect}"
+    # puts "link_to_add_fields( #{name}, #{f}, #{association.inspect}"
 
     new_object = f.object.send(association).klass.new
     id = new_object.object_id
     fields = f.fields_for(association, new_object, child_index: id) do |builder|
       field_to_render = association.to_s.singularize + "_fields"
-      puts "FIELD TO RENDER: #{field_to_render}"
+      # puts "FIELD TO RENDER: #{field_to_render}"
       render(field_to_render, f: builder)
     end
     link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})

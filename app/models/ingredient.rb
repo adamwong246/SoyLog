@@ -11,7 +11,17 @@ class Ingredient < ActiveRecord::Base
   accepts_nested_attributes_for :component, allow_destroy: true
   accepts_nested_attributes_for :recipe, allow_destroy: true
 
-  def self.description
+  def self.identify
     "An Ingredient is the specific amount of a Component to use for a specific Recipe."
   end
+
+  # def clone_with_associations
+  #   new_ingredient = self.dup
+  #   new_ingredient.save
+
+  #   # new_ingredient.component = self.component
+  #   # new_ingredient.save!
+  #   new_ingredient
+  # end
+
 end

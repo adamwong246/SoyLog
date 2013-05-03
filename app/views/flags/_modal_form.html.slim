@@ -1,0 +1,51 @@
+#flag-modal.modal.hide.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1"
+  .modal-header.my-header
+
+    h1
+      | Flagging 
+      small= object.identify
+      i class=icon_class_lookup(:flag)
+  
+
+
+  - flag = object.flags.create
+
+  = form_for flag, html: {:class => "form-inline"} do |f|
+    .modal-body
+      - if flag.errors.any?
+        #error_explanation
+          h2
+            = pluralize(flag.errors.count, "error")
+            | prohibited this flag from being saved:
+          ul
+            - flag.errors.full_messages.each do |msg|
+              li= msg
+
+      h5 Spam: #{object.flags.select{|f| f.spam}.length}
+      h5 Duplicate: #{object.flags.select{|f| f.duplicate}.length}
+      h5 Inapproriate: #{object.flags.select{|f| f.inapproriate}.length}
+      h5 Dangerous: #{object.flags.select{|f| f.dangerous}.length}
+      h5 Vote: #{object.flags.inject(0){|sum, f| sum + f.vote.to_i}}
+
+      table.table.table-condensed
+        tr
+          td= f.label :spam
+          td= f.check_box :spam
+        tr
+          td= f.label :duplicate
+          td= f.check_box :duplicate
+        tr
+          td= f.label :inapproriate
+          td= f.check_box :inapproriate
+        tr
+          td= f.label :dangerous
+          td= f.check_box :dangerous
+        tr
+          td= f.label :vote
+          td= f.number_field :vote
+        tr
+          td= f.label :comment
+          td= f.text_field :comment
+    .modal-footer
+      .actions
+        = f.submit :class => 'button btn btn-primary'

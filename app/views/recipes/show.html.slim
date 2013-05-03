@@ -3,28 +3,38 @@
 
   ul#myTab.nav.nav-tabs
     li.active
-      a data-toggle="tab" href="#ingredients-perspective"
-        | Ingredients
+      a data-toggle="tab" href="#ingredients-nutrients-perspective"
+        | Nutrients
+    li
+      a data-toggle="tab" href="#pro-view"
+        | Pro view
     li
       a data-toggle="tab" href="#ingredients-components-perspective"
         | Components
     li
-      a data-toggle="tab" href="#ingredients-nutrients-perspective"
-        | Nutrients
+      a data-toggle="tab" href="#ingredients-perspective"
+        | Ingredients
+
     li
       a href="/recipes/#{@recipe.id}/full_formula"
         | Full Formula (ComponentsNutrients)
 
   #myTabContent.tab-content
-    #ingredients-perspective.tab-pane.fade.active.in
-      = render :partial => "ingredients_perspective", :locals => {recipe: @recipe}
-    #ingredients-nutrients-perspective.tab-pane.fade
+    #ingredients-nutrients-perspective.tab-pane.fade.active.in
       = render :partial => "ingredients_nutrients_perspective", :locals => {recipe: @recipe}
+  
+
+    #pro-view.tab-pane.fade
+      = render :partial => "pro_view", :locals => {recipe: @recipe}
+
     #ingredients-components-perspective.tab-pane.fade
       = render :partial => "ingredients_components_perspective", :locals => {recipe: @recipe}
+
     #recipe.tab-pane.fade
       = render :partial => "ingredients_componentsnutrients_perspective", :locals => {recipe: @recipe}
 
-
+    
+    #ingredients-perspective.tab-pane.fade
+      = render :partial => "ingredients_perspective", :locals => {recipe: @recipe}
 
 

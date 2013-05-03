@@ -1,116 +1,104 @@
 class RecipesController < ApplicationController
   load_and_authorize_resource
 
+  # def calculated_daily_serving_of(nutrient)
+  #   return @ingredients_which_supply[nutrient].inject(Unit(0, Unit(nutrient.fda_rda))) {|sum, i|         
+  #     sum + i.servings * (Unit(i.component.component_nutrients.select{ |cn| 
+  #       cn.nutrient == nutrient
+  #     }.first.amount).convert_to(Unit(nutrient.fda_rda)))
+  #   }
+  # end
+
+  # # def all_nutrients_provided
+  # #   @recipe.ingredients.map{|ingredient| ingredient.component.component_nutrients.map{|component_nutrient| component_nutrient.nutrient}}.flatten.uniq
+  # # end
+
+
   before_filter :gather_recipe_and_nutrients, only: [:show, :recipe, :full_formula, :full_formula_ugly, :nutrition, :shopping_list]
   def gather_recipe_and_nutrients
+    
     @recipes = Recipe.all
-    @nutrients = Nutrient.all.group_by { |n| @recipe.all_nutrients_provided.include?(n) }
-  end
 
-  helper_method :columns
-  def columns 
-    @columns ||= [
-      {fda_rda: "FDA RDA"},
-      {combined_actual: "Actual"},
-      {fda_perent: "% FDA"},
-      {component_nutrients: "ComponentNutrients"},      
-    ] + @recipe.ingredients.map{|i|
-      {i => i}
-    }
-  end
+    @clone_recipe = Recipe.new({name: "Clone of #{@recipe.name}"})
 
-  helper_method :rows
-  def rows 
-    @rows ||= [
-      {serving: "Serving"},
-
-      {component: "Component"},
-      {url: "URL"},
-      {price: "Price"},
-      {default_serving: "Default serving"},
-      
-      {measured_amount: "Measured amount"}, 
-      {cost_per_serving: "Cost per serving"},
-      {component_nutrients: "ComponentNutrients"},
-    ] + @nutrients[true].map{|n|
-      {n => n}
-    }
-  end
-
-  helper_method :recipe_lookup
-  def recipe_lookup(row, column)
-
-    @recipe_lookup = computed_table
-
-    begin
-      return @recipe_lookup[row][column]
-    rescue
-      "Error! Col: #{column}, Row: #{row}"
-    end
-  end
-
-
-  helper_method :computed_table
-  def computed_table
-    @recipe_lookup ||= generate_table
-  end
-
-  helper_method :generate_table
-  def generate_table
-    toReturn = Hash.new{|hash,key| hash[key] = Hash.new(&toReturn.default_proc)}
-
-    @recipe.ingredients.each {|i| 
-      toReturn[i][:component] = i.component
+    @nutrients = Nutrient.all.group_by { |n| 
+      @recipe.ingredients.map{ |ingredient| 
+        ingredient.component.component_nutrients.map{ |component_nutrient| 
+          component_nutrient.nutrient
+        }
+      }.flatten.uniq.include?(n) 
     }
 
-    @recipe.ingredients.each {|i| 
-      toReturn[i][:url] = i.component.url 
-    }
-    @recipe.ingredients.each {|i| 
-      toReturn[i][:price] = i.component.price 
-    }
-    @recipe.ingredients.each {|i| 
-      toReturn[i][:default_serving] = i.component.serving_size
-    }
-    @recipe.ingredients.each {|i| 
-      toReturn[i][:serving] = i.servings
-    }
-    @recipe.ingredients.each {|i| 
-      toReturn[i][:measured_amount] = i.measured_amount
-    }
-    @recipe.ingredients.each {|i| 
-      toReturn[i][:price] = i.component.price
-    }
-    @recipe.ingredients.each {|i| 
-      toReturn[i][:cost_per_serving] = i.cost_per_daily_serving
-    }
-    @recipe.ingredients.each {|i| 
-      toReturn[i][:component_nutrients] = i.component.component_nutrients
-    }
-
-    @nutrients[true].each {|n|
-      toReturn[:fda_rda][n] = n.fda_rda
-    }
-    @nutrients[true].each {|n|
-      toReturn[:fda_perent][n] = @recipe.percent_fda_rda_of(n)
-    }        
-    @nutrients[true].each {|n|
-      toReturn[:combined_actual][n] = @recipe.calculated_daily_serving_of(n)
-    }
-    @nutrients[true].each {|n|
-      toReturn[:component_nutrients][n] = @recipe.all_component_nutrients_which_supply(n)
-    }
+    @component_nutrient_which_joins = Hash.new{|hash,key| hash[key] = Hash.new(&@component_nutrient_which_joins.default_proc)}
+    @optimal_servings = {}
 
     @recipe.ingredients.each {|i| 
       @nutrients[true].each{|n|
-        toReturn[i][n] = ComponentNutrient.which_joins(i, n)
-      }     
+        @component_nutrient_which_joins[i][n] = ComponentNutrient.includes([:component, :nutrient]).where('component_id' => i.component.id, 'nutrient_id' => n.id)
+
+        if @component_nutrient_which_joins[i][n].length == 1
+          temp_cn = @component_nutrient_which_joins[i][n].first
+
+          
+          begin
+            # @optimal_servings[i] = Unit(nutrient.fda_rda) / (Unit(@component_nutrient_which_joins[ingredient][nutrient].first.amount).convert_to(Unit(nutrient.fda_rda)) * ingredient.servings)
+            # @optimal_servings[i] = (Unit(@component_nutrient_which_joins[ingredient][nutrient].first.amount).convert_to(Unit(nutrient.fda_rda)) * ingredient.servings)
+            @optimal_servings[i] = (Unit(n.fda_rda) / Unit(temp_cn.amount).convert_to(Unit(n.fda_rda))).abs.to_f
+            # @optimal_servings[i] >>= 
+
+          rescue Exception => e
+            @optimal_servings[i] = "fail"
+          end
+        end
+      }       
     }
 
-    toReturn[:combined_actual][:price] = @recipe.full_cost
-    toReturn[:combined_actual][:cost_per_serving] = @recipe.cost_per_serving
+    @component_nutrients_which_supply = Hash.new
+    @ingredients_which_supply = Hash.new
+    @calculated_daily_serving_of = Hash.new
+    @percent_fda_rda_of = {}
 
-    toReturn
+    [*@nutrients[true]].each {|n|
+      
+      @component_nutrients_which_supply[n] = @recipe.ingredients.map{ |i|
+        i.component.component_nutrients.select{ |cn|
+          cn.nutrient == n 
+        }
+      }.flatten
+
+      @ingredients_which_supply[n] = @recipe.ingredients.select{ |i| 
+        i.component.nutrients.include?(n)
+      }.flatten.uniq
+
+      begin
+        @calculated_daily_serving_of[n] = @ingredients_which_supply[n].inject(Unit(0, Unit(n.fda_rda))) {|sum, i| sum + i.servings * (Unit(i.component.component_nutrients.select{ |cn| 
+          cn.nutrient == n
+        }.first.amount).convert_to(Unit(n.fda_rda)))}
+      rescue
+        @calculated_daily_serving_of[n] = "Incompatible units"
+      end
+
+      
+      begin
+        @percent_fda_rda_of[n] = 100 * ( @calculated_daily_serving_of[n] / Unit(n.fda_rda) )
+      rescue
+        @percent_fda_rda_of[n] = "error"
+      end
+
+    }
+
+    @nutrients[false].each {|n|
+      @calculated_daily_serving_of[n] = Unit(0, Unit(n.fda_rda))
+      @percent_fda_rda_of[n] = 0
+    }
+
+    @full_cost = @recipe.ingredients.each.sum{|ingredient| Unit.new(ingredient.component.price)}
+
+    begin
+      @cost_per_serving = @recipe.ingredients.each.sum{|i| i.cost_per_daily_serving}
+    rescue
+      @cost_per_serving = "incalcuable"
+    end
 
   end
 
@@ -128,6 +116,12 @@ class RecipesController < ApplicationController
   def shopping_list
   end
 
+    # GET /recipes/1/edit
+  def clone
+    @recipe = Recipe.find(params[:donor])
+
+  end
+
   # GET /recipes
   # GET /recipes.json
   def index
@@ -143,6 +137,13 @@ class RecipesController < ApplicationController
   # GET /recipes/1
   # GET /recipes/1.json
   def show   
+
+    # @recipe.ingredients.build
+    @new_ingredient = Ingredient.new
+    @new_ingredient.recipe = @recipe
+
+    # @flag = @recipe.flags.create
+
 
     respond_to do |format|
       format.html # show.html.erb
@@ -162,19 +163,28 @@ class RecipesController < ApplicationController
   end
 
   # GET /recipes/1/edit
-  def edit
-    @recipe = Recipe.find(params[:id])
-    if params[:nutrient_id]
-      @nutrient = Nutrient.find(params[:nutrient_id])
-      @component_nutrients = @recipe.all_component_nutrients_which_supply(@nutrient)
-      @percentage = @recipe.percent_fda_rda_of(@nutrient)
-    end
-  end
+  # def edit
+  #   @recipe = Recipe.find(params[:id])
+  #   if params[:nutrient_id]
+  #     @nutrient = Nutrient.find(params[:nutrient_id])
+  #     @component_nutrients = @recipe.all_component_nutrients_which_supply(@nutrient)
+  #     @percentage = @recipe.percent_fda_rda_of(@nutrient)
+  #   end
+  # end
 
   # POST /recipes
   # POST /recipes.json
   def create
-    @recipe = Recipe.new(params[:recipe])
+  
+    if params["donor"]
+      @recipe = Recipe.find(params["donor"]).clone_with_ingredients(params["recipe"])
+      @recipe.user = current_user
+
+    else
+      @recipe = Recipe.new(params["recipe"])
+    end
+
+    @recipe.user = current_user
 
     respond_to do |format|
       if @recipe.save

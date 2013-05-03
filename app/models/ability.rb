@@ -9,13 +9,31 @@ class Ability
     cannot :write, :all
     can :flag, :all
 
+    # read
+    # write
+    ## edit
+    ## create
+
+
     if user.admin?
         can :manage, :all
         can :login, :admin
     else
         can :read, :all 
         can [:full_formula, :clone, :create], Recipe
-        can :write, User, :user_id => user.id
+        
+        can :write, User do |u|
+            u == user
+        end
+
+        can :write, Recipe do |r|
+            r.user == user
+        end
+        can :write, Ingredient do |i|
+            i.recipe.user == user
+        end
+
+        can :clone, Recipe
     end
     #   if user.admin?
     #     can :manage, :all

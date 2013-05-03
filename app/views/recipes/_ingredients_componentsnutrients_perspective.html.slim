@@ -28,7 +28,7 @@ table.table.table-condensed
     tr
       th Total cost
       td
-      td = @recipe.full_cost
+      td = @full_cost
       td
       td 
       - ingredients.each do |ingredient|
@@ -40,7 +40,6 @@ table.table.table-condensed
         / td= best_in_place ingredient, :servings, type: :input
         td
           = best_in_place ingredient, :servings, :type => :input
-          = "%"
     tr
       th Default Serving size
       td colspan=padded_columns
@@ -60,7 +59,7 @@ table.table.table-condensed
     tr
       th Cost per serving
       td
-      td = @recipe.cost_per_serving
+      td = @cost_per_serving
       td
       td
 
@@ -79,9 +78,11 @@ table.table.table-condensed
                 = link_to cn.identify_short, cn
                 = " * "
                 = ingredient.servings
-                = " servings = "
+                = " servings of "
+                = link_to cn.component.name, cn.component
+                = " = "
                 = ingredient.servings * Unit(cn.amount)
-                = " per day"
+                = link_to cn.nutrient.name, cn.nutrient
 
     / Loop over all Ingredients
     - [true, false].each do |in_recipe|
@@ -92,69 +93,47 @@ table.table.table-condensed
         tr class=row_class
           th
             = link_to nutrient.name, nutrient
+            - if !in_recipe
+              p= link_to "Add an Inredient", edit_recipe_path
 
-          td= nutrient.fda_rda
+          td 
+            = nutrient.fda_rda
           
-          /  This operation is expensive, so look it up if possible
-          td = @recipe.calculated_daily_serving_of(nutrient)
+          td = @calculated_daily_serving_of[nutrient]
 
-          / # - percent_rda = ((nutrient.component_nutrients.sum{|cn| cn.amount} / nutrient.fda_rda) * 100  ).round(2)
-          / td= number_to_percentage(recipe.percent_fda_rda_of(nutrient))
-          td
+          td class=percent_rda_to_status(@percent_fda_rda_of[nutrient])
             = "%"
-            = recipe.percent_fda_rda_of(nutrient)
-
- 
-          / - percent_diff = (percent_rda-100).abs
-
-          / - if (percent_diff < 1)
-          /   td.success
-          /     p= percent_rda
-
-          / - elsif percent_diff > 10
-          /   td.error
-          /     p= percent_rda
-
-          / -else
-          /   td.warning
-          /     p= "#{percent_rda} %"
+            = @percent_fda_rda_of[nutrient]
 
           th 
             ul              
-              - @recipe.all_ingredients_which_supply(nutrient).each do |i|
-                li
-                  - cn = ComponentNutrient.which_joins(i, nutrient).each do |cn|
-                    = link_to cn.identify_short, cn
-                    = " * "
-                    = i.servings
-                    = " servings of "
-                    = link_to cn.component.name, cn.component
-                    = " = "
-                    = i.servings * Unit(cn.amount)
-                  /   - if cn
-                  /     = i.servings * Unit(cn.amount)
-                  /     / i.servings * Unit(i.component.serving_size)
-                  /     = " of "
-                  /     = link_to nutrient.name, nutrient
-                  /     = " from "
-                  /     = link_to i.component.name, i.component
-
+              - if @ingredients_which_supply[nutrient]
+                - @ingredients_which_supply[nutrient].each do |i|
+                  li
+                    - @component_nutrient_which_joins[i][nutrient].each do |cn|
+                      = link_to cn.identify_short, cn
+                      = " * "
+                      = i.servings
+                      = " servings of "
+                      = link_to cn.component.name, cn.component
+                      = " = "
+                      = i.servings * Unit(cn.amount)
+                      = link_to cn.nutrient.name, cn.nutrient
 
           - @recipe.ingredients.each do |ingredient|
-            - comp_nuts = ComponentNutrient.which_joins(ingredient, nutrient)
+            / # - comp_nuts = ComponentNutrient_which_joins(ingredient, nutrient)
+            - comp_nuts = @component_nutrient_which_joins[ingredient][nutrient]
             
             - if !comp_nuts.empty?
               td.info
+                ul
                 - comp_nuts.each do |cn|                    
-                  = link_to cn.identify_short, cn
-                  = " * "
-                  = ingredient.servings
-                  = " = "
-                  = ingredient.servings * Unit(cn.amount)
+                  / = link_to cn.identify_short, cn
+                  / = " * "
+                  / = ingredient.servings
+                  / = " = "
+                  = "#{ingredient.servings * Unit(cn.amount)} #{cn.nutrient.name}"
+                  
             - else
               td         
-                / - if can? :edit, @recipe     
-                /   = link_to "Create", new_component_nutrient_path(params: {component_id: ingredient.component.id, nutrient_id: nutrient.id} )
-              
-              
-          
+               

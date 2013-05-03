@@ -7,12 +7,29 @@ class Flag < ActiveRecord::Base
 
   attr_accessible :spam, :duplicate, :inapproriate, :dangerous, :vote, :comment
 
-  def self.description
+  before_validation :set_user
+  def set_user
+    self.user = @current_user
+  end
+
+  def self.identify
     "A Flag lets a User mark some object"
   end
 
-  def types
-    [:spam, :inappropriate, :dangerous, :incorrect, :comment, :vote]
+  # def types
+  #   [:spam, :duplicate, :inappropriate, :dangerous, :comment, :vote]
+  # end
+
+  def short_identify
+    "# #{self.id}"
+  end
+
+  def identify
+    "# #{self.id}#{", spam" if self.spam}#{", duplicate" if self.duplicate}#{", inapproriate" if self.inapproriate}#{", dangerous" if self.dangerous}"
+  end
+
+  def owner
+    self.user
   end
 
 

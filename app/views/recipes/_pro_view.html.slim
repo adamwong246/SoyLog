@@ -1,0 +1,32 @@
+- padded_columns = 8
+table.table.table-condensed
+  / caption "#{@recipe.name}, shopping_list"
+  thead
+
+    tr
+      th Component
+      th Url
+      th Cost per daily serving
+      th Measured amount
+      th Nutrients
+      th
+      / th Cost per serving
+      / th Serving size
+      / th Combined Nutrients
+
+  tbody
+    - @recipe.ingredients.each do |ingredient|
+      tr
+        th= link_to ingredient.component.name, ingredient.component
+        td= link_to truncate(get_host_without_www(ingredient.component.url)), ingredient.component.url
+        td= ingredient.cost_per_daily_serving
+        td= ingredient.measured_amount
+        td
+          ul
+            - ingredient.component_nutrients.each do |cn| 
+              li
+                = ingredient.servings * Unit(cn.amount)
+                = " "
+                = link_to cn.nutrient.name, cn.nutrient
+                = ". "
+                = 

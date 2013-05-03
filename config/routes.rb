@@ -29,7 +29,13 @@ SoyLog3::Application.routes.draw do
       get :full_formula
       get :full_formula_ugly
 
+      get :clone
+
     end
+  end
+
+  authenticated do
+    match "users/home" => "users#home"
   end
 
   resources :users

@@ -8,7 +8,7 @@ class BodyProfileNutrient < ActiveRecord::Base
     self.id
   end
 
-  def self.description
+  def self.identify
     "A BodyProfileNutrient is the daily required amount of a specific Nutrient for a specific BodyProfile"
   end
 end

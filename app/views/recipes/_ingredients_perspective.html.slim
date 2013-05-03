@@ -23,7 +23,7 @@ table.table.table-condensed
         / # td= link_to "#{ingredient.component.url[0..10]}"
         / # td= "$#{ingredient.component.price}"
         / td= ingredient.cost_per_serving_string
-        td= ingredient.servings
+        td= best_in_place ingredient, :servings
         td *
         td= ingredient.component.serving_size
         td= '='

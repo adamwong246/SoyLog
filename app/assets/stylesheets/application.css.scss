@@ -50,9 +50,19 @@ td.info a:hover{
   background-color:white !important; 
 }
 
-i{
+button i {
+  color: white;
+}
+
+i {
   text-shadow: none !important;
   background-image: none !important;
+}
+
+.modal-header i{
+  &.icon-flag{
+    color: $btnPrimaryBackground;
+  }
 }
 button.btn.add{
   float:right;
@@ -64,3 +74,8 @@ body { padding-top: 60px; }
 .best_in_place * {
   color: red;
 }
+
+.my-header i{
+  float:right;
+}
+

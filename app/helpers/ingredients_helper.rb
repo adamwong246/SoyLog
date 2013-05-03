@@ -17,9 +17,9 @@ module IngredientsHelper
   end
 
   def measured_amount
-    puts self.component.inspect
-    puts self.servings.inspect
-    puts self.component.serving_size.inspect
+    # puts self.component.inspect
+    # puts self.servings.inspect
+    # puts self.component.serving_size.inspect
 
     Unit.new(self.component.serving_size)  * self.servings
 

@@ -15,7 +15,7 @@ class Nutrient < ActiveRecord::Base
   accepts_nested_attributes_for :ingredients
   accepts_nested_attributes_for :recipes
 
-  def self.description
+  def self.identify
     "A Nutrient is the FDA recommended amount of a certain substance."
   end
 

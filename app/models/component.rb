@@ -17,7 +17,7 @@ class Component < ActiveRecord::Base
     "#{self.name}, #{self.total_amount}"
   end
 
-  def self.description
+  def self.identify
     "A Component is something you can purchase from a store, or online, such as protein powder."
   end
 

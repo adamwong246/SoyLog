@@ -11,12 +11,14 @@ class ComponentNutrient < ActiveRecord::Base
   accepts_nested_attributes_for :component
   accepts_nested_attributes_for :nutrient
 
-  def self.description
+  def self.identify
     "A ComponentNutrient relates a store-bought Component to the Nutrients found in it. "
   end
 
-  def self.which_joins(ingredient, nutrient)
-    ComponentNutrient.select { |cn| (cn.component == ingredient.component) && (cn.nutrient == nutrient) }
-  end
+  # def self.which_joins(ingredient, nutrient)
+  #   # ComponentNutrient.select { |cn| (cn.component == ingredient.component) && (cn.nutrient == nutrient) }
+  #   ComponentNutrient.includes([:component, :nutrient]).where('component_id' => ingredient.component.id, 
+  #     'nutrient_id' => nutrient.id)
+  # end
   
 end

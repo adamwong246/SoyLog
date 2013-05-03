@@ -4,15 +4,15 @@
       h1 
         | Listing 
         small= params[:controller] 
-        = render :partial => "layouts/actions", :locals => { :object => collection.first, :actions => [:new]} 
+        = render :partial => "layouts/actions", :locals => { :object => collection.first, :actions => [:info, :new]} 
 
 
-      h5= params[:controller].classify.constantize.description
+      / h5= params[:controller].classify.constantize.identify
 
     table.table.table-condensed
       tr      
         - columns.each do |column|
-          th= column.to_s unless column == :identify
+          th= column.to_s unless (column == :identify || column == :short_identify)
         td
 
       - collection.each do |element|
@@ -20,7 +20,7 @@
           - columns.each do |column|
             - arr = apply_chain_link_or_print([*column], element)
 
-            -td_class = "info" if column == :identify
+            -td_class = "info" if (column == :identify || column == :short_identify)
 
             td class=td_class
               - [*arr].each do |element|
@@ -37,4 +37,4 @@
                   = h_link element
 
                     
-          th= render :partial => "layouts/actions", :locals => { :object => element, :actions => [:flag, :show, :edit, :destroy]}
+          th= render :partial => "layouts/actions", :locals => { :object => element, :actions => actions ||= [:flag, :show, :edit, :destroy]}

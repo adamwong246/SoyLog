@@ -1,9 +1,11 @@
 source 'https://rubygems.org'
 
+gem 'deep_cloneable', git: "git@github.com:moiristo/deep_cloneable.git", branch: 'rails2.x-3.0'
+
 gem "best_in_place"
 # gem "angular-rails"
 gem 'tesseract-ocr'
-
+gem 'rails-footnotes', '>= 3.7.9', :group => :development
 gem 'debugger'
 gem 'rails', '3.2.13'
 gem 'ruby-units'
@@ -23,6 +25,9 @@ gem 'slim', "~> 1.3.8"
 
 group :development, :test do
     # gem 'railroady' # generates association diagrams 
+    # gem 'steak'
+    gem 'rspec-rails'
+    gem 'capybara'
 end
 
 # Gems used only for assets and not required
