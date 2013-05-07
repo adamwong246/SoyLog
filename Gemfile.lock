@@ -1,10 +1,3 @@
-GIT
-  remote: git@github.com:moiristo/deep_cloneable.git
-  revision: f23a035c49c6acf07ea42b1cefe2a5042d02bc5e
-  branch: rails2.x-3.0
-  specs:
-    deep_cloneable (1.2.4)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -275,7 +268,6 @@ DEPENDENCIES
   compass-rails
   database_cleaner
   debugger
-  deep_cloneable!
   devise
   factory_girl_rails
   font-awesome-sass-rails (~> 3.0.2.2)

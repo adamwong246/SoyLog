@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'deep_cloneable', git: "git@github.com:moiristo/deep_cloneable.git", branch: 'rails2.x-3.0'
 gem "best_in_place"
 gem 'tesseract-ocr'
 gem 'rails-footnotes', '>= 3.7.9', :group => :development
