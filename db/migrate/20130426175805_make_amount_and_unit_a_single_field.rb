@@ -1,6 +1,6 @@
 class MakeAmountAndUnitASingleField < ActiveRecord::Migration
   def up
-    remove_column :components,  :units
+    remove_column :components,  :unit
     change_column :components,  :serving_size, :string
     change_column :components,  :total_amount, :string
     change_column :components,  :price,        :string

@@ -13,7 +13,7 @@ class Component < ActiveRecord::Base
   attr_accessible :user_id, :id, :name, :url, :total_amount, :price, :serving_size, :nutritional_label_url, :component_nutrients_attributes
 
   validates_presence_of :component_nutrients, :name, :url, :total_amount, :price, :serving_size
-  validates_format_of :url, :nutritional_label_url, :with => URI::regexp(%w(http https))
+  validates_format_of :url, :nutritional_label_url, :with => URI::regexp(%w(http https)), :allow_blank => true
   validate :has_valid_units
   validate :has_unique_nutrients
   
