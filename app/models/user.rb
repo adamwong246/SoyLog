@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   has_many :flags, as: :flagable
 
   has_many :recipes, autosave: true
-  has_many :components
+  has_many :components, autosave: true
 
   attr_accessible :email, :password, :password_confirmation, :remember_me, :id, :name
 
