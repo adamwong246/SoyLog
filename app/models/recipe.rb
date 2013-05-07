@@ -5,7 +5,7 @@ class Recipe < ActiveRecord::Base
   belongs_to :user,      autosave: true
   has_many :ingredients, autosave: true
 
-  attr_accessible :id, :name, :user_id, :ingredients
+  attr_accessible :id, :name, :user_id, :ingredients, :description
 
   accepts_nested_attributes_for :ingredients, allow_destroy: true
   accepts_nested_attributes_for :user,        allow_destroy: true
@@ -13,7 +13,7 @@ class Recipe < ActiveRecord::Base
   after_initialize :init
 
   def self.identify
-    "A Recipe describes the Ingredients needed to make a specific SoyLent mix."
+    "A Recipe is a list of Ingredients, in certain amounts, needed to make a specific Soylent mix."
   end
 
   def init

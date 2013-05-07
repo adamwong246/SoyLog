@@ -1,11 +1,13 @@
-.container
-  = render :partial => "layouts/super_edit", locals: { columns: [:name, :url, :nutritional_label_url, :serving_size, :total_amount, :price], member: @component} 
+.container.well
+  h1 Edit Component
+  = render partial: "form"
+  / = render :partial => "layouts/super_edit", locals: { columns: [:name, :url, :nutritional_label_url, :serving_size, :total_amount, :price], member: @component} 
 
-  .row.well ng-controller="ocrCtrl"
-    .span3
-      = image_tag @component.nutritional_label_url
-      <div>{{test}</div>
-    .span3
-      form
-        button type="button" ng-click="setImage(img)" Parse nutional data via OCR
-      
+  / .row.well ng-controller="ocrCtrl"
+  /   .span3
+  /     = image_tag @component.nutritional_label_url
+  /     <div>{{test}</div>
+  /   .span3
+  /     form
+  /       button type="button" ng-click="setImage(img)" Parse nutional data via OCR
+  /     

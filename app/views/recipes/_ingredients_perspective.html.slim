@@ -1,33 +1,33 @@
 - padded_columns = 8
 table.table.table-condensed
-  / caption "#{@recipe.name}, shopping_list"
   thead
-
     tr
       th Ingredient
-      / th Url
-      / th Price
-      / th Cost per serving
       th Daily Serving
       th
       th Daily Servings size
       th
-      th Measured amount
-      / th Provides Nutrients
+      th Measured amount per day
+      th * 100
 
   tbody
     - @recipe.ingredients.each do |ingredient|
       tr
         th= link_to ingredient.component.name, ingredient
-
-        / # td= link_to "#{ingredient.component.url[0..10]}"
-        / # td= "$#{ingredient.component.price}"
-        / td= ingredient.cost_per_serving_string
         td= best_in_place ingredient, :servings
         td *
         td= ingredient.component.serving_size
         td= '='
         td= ingredient.measured_amount
+        td= ingredient.measured_amount * 100
+
+
+
+
+
+
+
+
         / td= ingredient_fda_percentage ingredient.servings/ingredient.measured_amount
         
         / - combined_component_nutrients = ingredient.component_nutrients.map{|cn| link_to "#{cn.amount.to_s}  #{cn.nutrient.units} of #{cn.nutrient.name}", cn}

@@ -18,5 +18,10 @@ module Features
       fill_in 'Password confirmation', with: password
       click_button 'Sign in'
     end
+
+    def create_nutrient
+      create(:nutrient)
+    end
+
   end
 end

@@ -1,6 +1,8 @@
 module ApplicationHelper
 
-  
+  def icon_size 
+    'icon-2x'  
+  end
 
   def is_uri?(string)
     uri = URI.parse(string)

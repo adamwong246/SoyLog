@@ -22,7 +22,8 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
-    @new_recipe = @user.recipes.create
+    @recipe = @user.recipes.new
+    
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,6 +35,7 @@ class UsersController < ApplicationController
   # GET /users/new.json
   def new
     @user = User.new
+
 
     respond_to do |format|
       format.html # new.html.erb

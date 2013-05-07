@@ -4,7 +4,7 @@
       h1 
         | Listing 
         small= params[:controller] 
-        = render :partial => "layouts/actions", :locals => { :object => collection.first, :actions => [:info, :new]} 
+        = render :partial => "layouts/actions", :locals => { klass: params[:controller], :object => collection.first, :actions => [:info, :new]} 
 
 
       / h5= params[:controller].classify.constantize.identify

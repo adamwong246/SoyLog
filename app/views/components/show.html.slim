@@ -1,4 +1,4 @@
 .container
-  = render :partial => "layouts/super_show", locals: {columns: [:identify, :name, :url, :serving_size, :price, :component_nutrients, :nutritional_label_url], member: @component } 
+  = render :partial => "layouts/super_show", locals: {columns: [:identify, :user, :creator, :name, :url, :total_amount, :serving_size, :price, :component_nutrients, :nutritional_label_url], member: @component } 
 
   = image_tag @component.nutritional_label_url

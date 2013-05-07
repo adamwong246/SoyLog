@@ -26,7 +26,7 @@ html lang="en" ng-app="SoyLog"
             li.dropdown
               a.dropdown-toggle data-toggle="dropdown" 
                 - if user_signed_in?
-                  = "Signed in as #{current_user.name}"
+                  = "Signed in as #{current_user.identify}"
                   ul.dropdown-menu aria-labelledby="drop1" role="menu" 
                     - if can? :login, :admin
                         li role="presentation"
@@ -51,8 +51,8 @@ html lang="en" ng-app="SoyLog"
                   li=link_to "Nutrients",           nutrients_path
                   li=link_to "Flags",               flags_path
                   
-          form.navbar-search.pull-left
-            input.search-query type="text" placeholder="Search"
+          / form.navbar-search.pull-left
+          /   input.search-query type="text" placeholder="Search"
 
           ul.nav.pull-right
             li= link_to "About", about_path        
@@ -69,3 +69,5 @@ html lang="en" ng-app="SoyLog"
 
     footer
       p Adam Wong 2013
+
+      

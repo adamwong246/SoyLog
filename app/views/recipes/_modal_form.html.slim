@@ -1,0 +1,30 @@
+.recipe-modal-form.modal.hide.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1"
+  .modal-header.my-header
+
+    h1
+      | Edit 
+      small= @recipe.identify
+      i class=icon_class_lookup(:edit)
+
+
+  = form_for @recipe do |f|
+    .modal-body
+      - if @recipe.errors.any?
+        #error_explanation
+          h2
+            = pluralize(recipe.errors.count, "error")
+            | prohibited this Recipe from being saved:
+          ul
+            - @recipe.errors.full_messages.each do |msg|
+              li= msg
+
+      .field
+        = f.label :name
+        = f.text_field :name
+      .field
+        = f.label :description
+        = f.text_area :description
+        
+    .modal-footer
+      .actions
+        = f.submit :class => 'button btn btn-primary'

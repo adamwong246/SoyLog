@@ -54,7 +54,7 @@
 
                     = nested_form_for ingredient do |ingredients_form|
                       = ingredients_form.hidden_field :servings, value: @optimal_servings[ingredient]
-                      = ingredients_form.submit("Auto!")
+                      = ingredients_form.submit "Auto!", :class => 'button btn btn-success' 
                 td
                   / = link_to "add"
                   a.btn data-toggle="modal" href=".add-ingredient-#{nutrient.name}" role="button"
@@ -70,7 +70,8 @@
                       = form_for (@new_ingredient) do |ingredients_form|
                         .modal-body
                           = ingredients_form.collection_select :component_id, component_list, :id, :name
-                          = ingredients_form.text_field :servings
+                          = ingredients_form.label :servings
+                          = ingredients_form.text_field :servings, value: 1
                           = ingredients_form.hidden_field :recipe_id, value: @recipe.id
                         .modal-footer
                           = ingredients_form.submit "Add", :class => 'button btn btn-primary' 
@@ -78,31 +79,40 @@
                   - else
                     .modal.hide.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" class="add-ingredient-#{nutrient.name}"
                       .modal-header
-                        h3#myModalLabel.error There are no Components which supply #{nutrient.name} which are not already in your recipe.
+                        h3#myModalLabel.error There are no Components which supply #{nutrient.name} and which are not already in your recipe.
                       .modal-body
-                        p
-                          | You have the following Ingredients which supply #{nutrient.name}
-                        ul
-                          - [*@ingredients_which_supply[nutrient]].each do |i|
-                            li= h_link i
+
+                        - if @ingredients_which_supply[nutrient]
+                          p
+                            | You have the following Ingredients which supply #{nutrient.name}
+                          ul
+                            - [*@ingredients_which_supply[nutrient]].each do |i|
+                              li= h_link i
+                        - else
+                          p.error You have no Ingredients which supply #{nutrient.name}
+
+                        | Maybe you should add a new Component to the database?
+
 
                       .modal-footer
                           button.btn aria-hidden="true" data-dismiss="modal" Ok
 
 - @recipe.ingredients.each do |i|              
-  .modal.hide.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" class="show-ingredient-#{i.id}"
-    .modal-header
-      h3#myModalLabel Modify the amount of #{i.component.name}
-    
-    = nested_form_for i do |ingredients_form|
-      .modal-body                              
-        = ingredients_form.label :servings
-        = ingredients_form.text_field :servings, value: i.servings                                
+    .modal.hide.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" class="show-ingredient-#{i.id}"
+      .modal-header
+        h3#myModalLabel 
+          | Modify the amount of 
+          = h_link i.component
+      
+      = nested_form_for i do |ingredients_form|
+        .modal-body                              
+          = ingredients_form.label :servings
+          = ingredients_form.text_field :servings, value: i.servings                                
 
-      .modal-footer
-        button.btn aria-hidden="true" data-dismiss="modal" cancel
-        / button.btn aria-hidden="true" data-dismiss="modal" Ok
-        = ingredients_form.submit "Set servings", :class => 'button btn btn-primary'
+        .modal-footer
+          button.btn aria-hidden="true" data-dismiss="modal" cancel
+          / button.btn aria-hidden="true" data-dismiss="modal" Ok
+          = ingredients_form.submit "Set servings", :class => 'button btn btn-primary'
 
               /     td
               /       - if (can? :edit, @recipe)

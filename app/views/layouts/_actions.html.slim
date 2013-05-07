@@ -1,5 +1,3 @@
-- icon_size = 'icon-2x'
-
 btn-toolbar 
   .btn-group.pull-left     
     - if actions.include? :index 
@@ -39,8 +37,7 @@ btn-toolbar
 
     - if actions.include? :new 
 
-      = link_to :controller => params[:controller], :action => :new, class: 'hinted', rel:'popover', 'data-content' => "Add a new #{object.class}", 'data-placement' => "bottom" do
-        / = icon_button_lookup(:create)
+      = link_to url_for(:controller => params[:controller], :action => :new), id: "new-#{params[:controller].singularize}" do
         button class=button_class_lookup(:new)
           i class=icon_class_lookup(:new)
 
@@ -86,28 +83,28 @@ btn-toolbar
 
     / , class: 'hinted', rel:'popover', 'data-content' => "Edit this #{params["controller"]}", 'data-placement' => "bottom"
     - if actions.include? :edit
-      - if can? :write, object
+      - if can? :edit, object
         = link_to [:edit, object] do 
           /= icon_button_lookup(:edit)
           button class=button_class_lookup(:edit)
             i class=icon_class_lookup(:edit)  
     
-    - if actions.include? :destroy and can? :write, params["controller"]
+    - if actions.include? :destroy and can? :edit, params["controller"]
       = link_to object, method: :delete, data: {confirm: 'Are you sure?'} do
         /= icon_button_lookup(:destroy)
         button class=button_class_lookup(:destroy)
           i class=icon_class_lookup(:destroy)
 
 
+- if object
+  #info-modal.modal.hide.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1"
+    .modal-header
+      h1
+        | Info 
+        small= object.class
+    .modal-body
+      h3= object.class.identify
 
-#info-modal.modal.hide.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1"
-  .modal-header
-    h1
-      | Info 
-      small= object.class
-  .modal-body
-    h3= object.class.identify
 
 
-
-   
+     

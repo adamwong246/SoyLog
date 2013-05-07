@@ -1,6 +1,7 @@
 class ComponentsController < ApplicationController
-respond_to :json
   load_and_authorize_resource
+  respond_to :json
+  
   
   # GET /components
   # GET /components.json
@@ -27,7 +28,7 @@ respond_to :json
   # GET /components/new
   # GET /components/new.json
   def new
-    @component = Component.new
+    @component = current_user.components.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -67,7 +68,7 @@ respond_to :json
 
     respond_to do |format|
       if @component.update_attributes(params[:component])
-        format.html { redirect_to :back, notice: 'Component was successfully updated.' }
+        format.html { redirect_to @component, notice: 'Component was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
