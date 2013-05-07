@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem "best_in_place"
-gem 'tesseract-ocr'
+# gem 'tesseract-ocr'
 gem 'rails-footnotes', '>= 3.7.9', :group => :development
 gem 'debugger'
 gem 'rails', '3.2.13'
