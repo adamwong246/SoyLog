@@ -35,11 +35,11 @@ btn-toolbar
         /     / button.btn aria-hidden="true" data-dismiss="modal" Ok
         /     = clone_recipe_form.submit "Clone", :class => 'button btn btn-primary'
 
-    - if actions.include? :new 
-
-      = link_to url_for(:controller => params[:controller], :action => :new), id: "new-#{params[:controller].singularize}" do
-        button class=button_class_lookup(:new)
-          i class=icon_class_lookup(:new)
+    - if actions.include? :new
+      - if can? :new, object 
+        = link_to url_for(:controller => params[:controller], :action => :new), id: "new-#{params[:controller].singularize}" do
+          button class=button_class_lookup(:new)
+            i class=icon_class_lookup(:new)
 
     - if actions.include? :clone 
       - if can? :clone, object

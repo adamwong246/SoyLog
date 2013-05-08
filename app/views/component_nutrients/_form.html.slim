@@ -1,14 +1,7 @@
 / # = params
 
 = form_for(@component_nutrient) do |f|
-  - if @component_nutrient.errors.any?
-    #error_explanation
-      h2
-        = pluralize(@component_nutrient.errors.count, "error")
-        | prohibited this component_nutrient from being saved:
-      ul
-        - @component_nutrient.errors.full_messages.each do |msg|
-          li= msg
+  = render partial: "layouts/super_form_errors", locals: {member: @component_nutrient}
 
   .field
     = f.label "#{:nutrient_id}:"

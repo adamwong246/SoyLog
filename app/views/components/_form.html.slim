@@ -1,51 +1,45 @@
 = nested_form_for @component do |f|
-    - if @component.errors.any?
-      #error_explanation.row
-        h2
-          = pluralize(@component.errors.count, "error")
-          | prohibited this component from being saved:
-        ul
-          - @component.errors.full_messages.each do |msg|
-            li= msg
 
-    .row
-      .span4
-        = f.hidden_field :user_id
-        .field
-          = f.label :name
-          = f.text_field :name
-        .field
-          = f.label :url
-          = f.text_field :url, :placeholder => 'http://www.something.com/whatever.html'
-        .field
-          = f.label :total_amount
-          = f.text_field :total_amount, :placeholder => '1 kg'
-        .field
-          = f.label :price
-          = f.text_field :price, :placeholder => '10.99 $'
-        .field
-          = f.label :serving_size
-          = f.text_field :serving_size, :placeholder => '0.5 g'
-        .field
-          = f.label :nutritional_label_url
-          = f.text_field :nutritional_label_url, :placeholder => 'http://www.something.com/whatever.jpg'
-      #component_nutrients_nested_forms.span7.wel
-        h3 ComponentNutrients
+  = render partial: "layouts/super_form_errors", locals: {member: @component}
 
-        = f.fields_for :component_nutrients do |cn_form|
-          .well
-            .field
-              = cn_form.label :amount
-              = cn_form.text_field :amount, :placeholder => '5 mg'
-            .field.nutrient
-              = cn_form.label :nutrient
-              = cn_form.collection_select :nutrient_id, Nutrient.all, :id, :name
+  .row
+    .span4
+      = f.hidden_field :user_id
+      .field
+        = f.label :name
+        = f.text_field :name
+      .field
+        = f.label :url
+        = f.text_field :url, :placeholder => 'http://www.something.com/whatever.html'
+      .field
+        = f.label :total_amount
+        = f.text_field :total_amount, :placeholder => '1 kg'
+      .field
+        = f.label :price
+        = f.text_field :price, :placeholder => '10.99 $'
+      .field
+        = f.label :serving_size
+        = f.text_field :serving_size, :placeholder => '0.5 g'
+      .field
+        = f.label :nutritional_label_url
+        = f.text_field :nutritional_label_url, :placeholder => 'http://www.something.com/whatever.jpg'
+    #component_nutrients_nested_forms.span7.wel
+      h3 ComponentNutrients
 
-            = cn_form.link_to_remove "Remove this component_nutrient"
+      = f.fields_for :component_nutrients do |cn_form|
+        .well
+          .field
+            = cn_form.label :amount
+            = cn_form.text_field :amount, :placeholder => '5 mg'
+          .field.nutrient
+            = cn_form.label :nutrient
+            = cn_form.collection_select :nutrient_id, Nutrient.all, :id, :name
 
-        = f.link_to_add "Add a component_nutrient", :component_nutrients
+          = cn_form.link_to_remove "Remove this component_nutrient"
 
-    .row
-      .span12
-        .actions
-          = f.submit
+      = f.link_to_add "Add a component_nutrient", :component_nutrients
+
+  .row
+    .span12
+      .actions
+        = f.submit

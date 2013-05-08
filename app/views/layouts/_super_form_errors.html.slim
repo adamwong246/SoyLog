@@ -1,8 +1,8 @@
 - if member.errors.any?
-  #error_explanation
+  #error_explanation.error.well
     h2
       = pluralize(member.errors.count, "error")
-      | prohibited this body_profile_nutrient from being saved:
+      |  prohibited this #{member.class} from being saved:
     ul
       - member.errors.full_messages.each do |msg|
         li= msg

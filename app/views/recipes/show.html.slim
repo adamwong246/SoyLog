@@ -1,3 +1,6 @@
+- content_for(:title) do
+  = @recipe.identify
+
 .container
   / # = render :partial => "layouts/super_show", :locals => { columns: [:user, :name], member: @recipe, actions: [:index, :flag, :create, :clone, :edit]} 
   

@@ -19,10 +19,40 @@
 @import "bootstrap";
 
 
-// a:hover{
-//    background-color: lightgray !important;
-//    color:black !important;
-// }
+html,
+      body {
+        height: 100%;
+        // margin-top: 30px;
+        /* The html and body elements cannot have any padding or margin. */
+      }
+
+      /* Wrapper for page content to push down footer */
+      #wrap {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        /* Negative indent footer by it's height */
+        margin: 0 auto -60px;
+      }
+
+      /* Set the fixed height of the footer here */
+      #push,
+      #footer {
+        height: 40px;
+      }
+      #footer {
+        background-color: #f5f5f5;
+      }
+
+      /* Lastly, apply responsive CSS fixes as necessary */
+      @media (max-width: 767px) {
+        #footer {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
 
 .info{
   color: $infoText !important;
@@ -68,7 +98,7 @@ button.btn.add{
   float:right;
 }
 
-body { padding-top: 60px; }
+// body { padding-top: 60px; }
 .center {text-align: center;}
 
 .best_in_place * {
