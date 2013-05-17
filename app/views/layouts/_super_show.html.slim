@@ -7,7 +7,7 @@
     h1            
       = "#{member.class} "  
       small= member.identify
-    = render :partial => "layouts/actions", :locals => { :object => member, :actions => actions ||= [:info, :index, :flag, :new, :edit, :destroy]}
+    = render :partial => "layouts/actions", locals: { object: member, actions: actions ||= [:info, :index, :flag, :new, :edit, :destroy], new_action: new_action ||= nil}
 
   / h5= member.class.description
 

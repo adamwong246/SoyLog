@@ -14,8 +14,6 @@ btn-toolbar
           i class=icon_class_lookup(:info)
           
     - if actions.include? :flag and (can? :flag, params["controller"])
-      
-      / = link_to controller: :flags, :action => :new, class: 'hinted', rel:'popover', 'data-content' => "Test", 'data-placement' => "bottom" do
       a data-toggle="modal" href="#flag-modal" role="button"
         button class=button_class_lookup(:flag)
           i class=icon_class_lookup(:flag)
@@ -37,9 +35,16 @@ btn-toolbar
 
     - if actions.include? :new
       - if can? :new, object 
-        = link_to url_for(:controller => params[:controller], :action => :new), id: "new-#{params[:controller].singularize}" do
-          button class=button_class_lookup(:new)
-            i class=icon_class_lookup(:new)
+
+        - if new_action == :modal
+          = render partial: "#{params[:controller]}/modal_form", locals: {object: object}
+          a data-toggle="modal" href=".#{params[:controller].singularize}-modal-form" role="button"
+            button class=button_class_lookup(:new)
+              i class=icon_class_lookup(:new)
+        - else
+          = link_to url_for(:controller => params[:controller], :action => :new), id: "new-#{params[:controller].singularize}" do
+            button class=button_class_lookup(:new)
+              i class=icon_class_lookup(:new)
 
     - if actions.include? :clone 
       - if can? :clone, object
@@ -48,32 +53,7 @@ btn-toolbar
             button class=button_class_lookup(:clone)
               i class=icon_class_lookup(:clone)
 
-          #clone-modal.modal.hide.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1"
-            .modal-header.my-header
-
-              h1#myModalLabel 
-                | Cloning 
-                small= @recipe.name
-                i class=icon_class_lookup(:clone)
-
-
-            = form_for @clone_recipe, :url => {:action => 'create', :controller => 'recipes', params:{:donor => @recipe.id}}, html: {:class => "form-inline"} do |clone_recipe_form|
-              .modal-body                              
-                = clone_recipe_form.label "I'll call my latest creation..."
-                = clone_recipe_form.text_field :name
-
-                / # = clone_recipe_form.hidden_field :donor, value: @recipe.id                              
-
-              .modal-footer
-                button.btn aria-hidden="true" data-dismiss="modal" cancel
-                / button.btn aria-hidden="true" data-dismiss="modal" Ok
-                = clone_recipe_form.submit "Clone", :class => 'button btn btn-primary'
-
-        
-
-     
-                
-    
+          = render partial: "#{params[:controller]/clone_modal_form}"
 
     - if actions.include? :show 
       = link_to object, class: 'hinted' do
@@ -84,10 +64,18 @@ btn-toolbar
     / , class: 'hinted', rel:'popover', 'data-content' => "Edit this #{params["controller"]}", 'data-placement' => "bottom"
     - if actions.include? :edit
       - if can? :edit, object
-        = link_to [:edit, object] do 
-          /= icon_button_lookup(:edit)
-          button class=button_class_lookup(:edit)
-            i class=icon_class_lookup(:edit)  
+        - if edit_action == :modal
+          = render partial: "#{params[:controller]}/modal_form", locals: {object: object}
+
+          a data-toggle="modal" href="##{object.id}-#{params[:controller].singularize}-modal-form" role="button"
+            button class=button_class_lookup(:edit)
+              i class=icon_class_lookup(:edit)  
+
+        - else
+          = link_to [:edit, object] do 
+            /= icon_button_lookup(:edit)
+            button class=button_class_lookup(:edit)
+              i class=icon_class_lookup(:edit)  
     
     - if actions.include? :destroy and can? :edit, params["controller"]
       = link_to object, method: :delete, data: {confirm: 'Are you sure?'} do

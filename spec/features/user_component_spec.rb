@@ -34,6 +34,26 @@ feature 'User adds new Component' do
     expect(page).to have_content("Component was successfully created.")
   end
 
+  scenario 'Sign in, create a new, edit, and destroy Component through show page', js: true do
+    pending "this needs to be implemented"
+  end
+
+  scenario 'Sign in, create a new, edit, and destroy Component through index page', js: true do
+    pending "this needs to be implemented"
+  end
+  
+  scenario 'Do not sign in, cannot create, edit or destroy Component through show page', js: true do
+    pending "this needs to be implemented"
+  end
+
+  scenario 'Do not sign in, cannot create, edit or destroy Component through index page', js: true do
+    pending "this needs to be implemented"
+  end
+
+  scenario 'Sign in, create a Component, Sign out and back in as different User, cannot edit or destroy Component', js: true do
+    pending "this needs to be implemented"
+  end
+
   scenario 'Sign in, create a new Component without attributes, fails', js: true do
     
     sign_up_with 'andyadmin@email.com', 'password'
@@ -116,5 +136,7 @@ feature 'User adds new Component' do
 
     expect(page).to have_content("Can't have duplicate Nutrients")
   end
+
+
 
 end

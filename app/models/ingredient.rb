@@ -15,6 +15,14 @@ class Ingredient < ActiveRecord::Base
     "An Ingredient is the specific amount of a Component to use for a specific Recipe."
   end
 
+  def creator
+    self.recipe.user
+  end
+
+  def short_identify
+    "#{self.recipe.short_identify}, #{self.component.short_identify}"
+  end
+
   # def clone_with_associations
   #   new_ingredient = self.dup
   #   new_ingredient.save

@@ -1,0 +1,20 @@
+#clone-modal.modal.hide.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1"
+  .modal-header.my-header
+
+    h1#myModalLabel 
+      | Cloning 
+      small= @recipe.name
+      i class=icon_class_lookup(:clone)
+
+
+  = form_for @clone_recipe, :url => {:action => 'create', :controller => 'recipes', params:{:donor => @recipe.id}}, html: {:class => "form-inline"} do |clone_recipe_form|
+    .modal-body                              
+      = clone_recipe_form.label "I'll call my latest creation..."
+      = clone_recipe_form.text_field :name
+
+      / # = clone_recipe_form.hidden_field :donor, value: @recipe.id                              
+
+    .modal-footer
+      button.btn aria-hidden="true" data-dismiss="modal" cancel
+      / button.btn aria-hidden="true" data-dismiss="modal" Ok
+      = clone_recipe_form.submit "Clone", :class => 'button btn btn-primary'

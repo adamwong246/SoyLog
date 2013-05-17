@@ -19,4 +19,7 @@ class Nutrient < ActiveRecord::Base
     "A Nutrient is the FDA recommended amount of a certain substance."
   end
 
+  def short_identify
+    self.name
+  end
 end

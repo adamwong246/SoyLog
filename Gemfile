@@ -30,6 +30,10 @@ group :development do
   # gem 'rb-fsevent', '~> 0.9.1' # Guard dependency
 end
 
+group :test do
+  gem 'capybara-screenshot'
+end
+
 group :development, :test do
     gem 'rspec-rails'
     gem 'capybara-webkit'

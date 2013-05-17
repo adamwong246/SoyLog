@@ -42,9 +42,9 @@ comp_maltodextrin         = eustace.components.new({name: 'Maltodextrin',       
 comp_olive_oil            = eustace.components.new({name: 'Extra Light Olive Oil',                total_amount: '68 fl oz',    serving_size: '1 fl oz',  price: '13.45 USD', url: "http://www.www.amazon.com/Bertolli-Extra-Light-Olive-Oil/dp/B008ELNF0Y_1_4?ie=UTF8&qid=1365725469&sr=8-4&keywords=bertolli+extra+light+olive+oil"})
 comp_whey                 = eustace.components.new({name: 'Whey Protein Isolate',                 total_amount: '2 lbs',       serving_size: '28.25 g',  price: '27.84 USD', url: "http://www.nutrabio.com/Products/whey_protein_isolate.htm#.UXq-LyvwJqI"})
 comp_salt                 = eustace.components.new({name: 'Iodized Salt',                         total_amount: '26 oz',       serving_size: '1.5 g',    price: '1.98 USD',  url: "http://www.www.amazon.com/Hain-Pure-Foods-Salt-Iodized/dp/B000MDACSK/ref=sr_1_cc_1?s=aps&ie=UTF8&qid=1365725608&sr=1-1-catcorr&keywords=hain+iodized+salt" })
-comp_calcium_pantothenate = eustace.components.new({name: 'Calcium Pantothenate',                 total_amount: '250 g',       serving_size: '550 mg',   price: '13.50 USD', url: 'http://www.purebulk.com/pantothenic-acid-powder-vitamin-b5-calcium-pantothenate.html'})
-comp_p_citrate            = eustace.components.new({name: 'Potassium Citrate',                    total_amount: '250 g',       serving_size: '275 mg',   price: '10 USD',    url: 'http://www.purebulk.com/potassium-citrate-powder.html' })
-comp_c_gluconate          = eustace.components.new({name: 'Copper Gluconate Anhydrous 1%',        total_amount: '500 g',       serving_size: '160 mg',   price: '18.00 USD', url: 'http://www.purebulk.com/copper-gluconate-anhydrous-1.html'})
+comp_calcium_pantothenate = andy.components.new({name: 'Calcium Pantothenate',                 total_amount: '250 g',       serving_size: '550 mg',   price: '13.50 USD', url: 'http://www.purebulk.com/pantothenic-acid-powder-vitamin-b5-calcium-pantothenate.html'})
+comp_p_citrate            = andy.components.new({name: 'Potassium Citrate',                    total_amount: '250 g',       serving_size: '275 mg',   price: '10 USD',    url: 'http://www.purebulk.com/potassium-citrate-powder.html' })
+comp_c_gluconate          = andy.components.new({name: 'Copper Gluconate Anhydrous 1%',        total_amount: '500 g',       serving_size: '160 mg',   price: '18.00 USD', url: 'http://www.purebulk.com/copper-gluconate-anhydrous-1.html'})
 # comp_vit_e                = eustace.components.new({name: 'Nature Made Vitamin E',                total_amount: '225 softgel', serving_size: '160 mg',   price: '18.00 USD', url: 'http://www.purebulk.com/copper-gluconate-anhydrous-1.html'})
 # comp_cholecalciferol      = eustace.components.new({name: 'Nature Made Vitamin D3',               total_amount: '560 tablet',  serving_size: '1 tablet', price: '116.06 USD',url: 'http://www.www.amazon.com/Nature-Made-Vitamin-1000-Tablets/dp/B004UH5ICY/ref=sr_1_6?ie=UTF8&qid=1364955557&sr=8-6&keywords=natures+made+d3'})
 # comp_gtf                  = eustace.components.new({name: 'Chromium (GTF) Nicotinate Glycinate',  total_amount: '120 capsule', serving_size: '1 capsule',price: '5.55 USD',  url: 'http://www.www.nutrabio.com/Products/chromium-gtf.htm'})
@@ -77,9 +77,12 @@ recipe.ingredients.new({servings: 1,    component: comp_salt})
 recipe.ingredients.new({servings: 1,    component: comp_whey})
 recipe.ingredients.new({servings: 1,    component: comp_c_gluconate})
 
-# recipe.save!
+
+eustace.flags.new({})
 eustace.save!
-# Flag.create!({spam: true})
+andy.save!
+
+Flag.create!({spam: true, flaggble_type: :recipe, flaggble_id: recipe.id })
 
 
 

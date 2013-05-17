@@ -1,2 +1,2 @@
 .container
-  = render :partial => "layouts/super_show", locals: { columns: [:identify, :component, :nutrient, :amount], member: @component_nutrient }                                              
+  = render :partial => "layouts/super_show", locals: { columns: [:identify, :component, :nutrient, :amount, :creator], member: @component_nutrient, edit_action: :modal }

@@ -1,8 +1,9 @@
 - if member.errors.any?
   #error_explanation.error.well
-    h2
+    h4
       = pluralize(member.errors.count, "error")
       |  prohibited this #{member.class} from being saved:
     ul
       - member.errors.full_messages.each do |msg|
         li= msg
+    = member.errors.inspect

@@ -127,6 +127,7 @@ class RecipesController < ApplicationController
   def index
 
     @recipes = Recipe.all
+    @recipe = current_user.recipes.new if can? :new, Recipe
 
     respond_to do |format|
       format.html # index.html.erb

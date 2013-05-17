@@ -20,7 +20,13 @@ class Recipe < ActiveRecord::Base
     self.name ||= "my awesome recipe"
   end
 
+  def short_identify
+    self.identify
+  end
 
+  def creator
+    self.user
+  end
 
   def clone_with_ingredients(params = {})
     new_recipe = Recipe.new(params)

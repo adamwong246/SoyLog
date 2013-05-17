@@ -18,7 +18,7 @@ module ApplicationHelper
 
     case action
     when :index
-      "btn  #{btn_size}"
+      "btn btn-inverse #{btn_size}"
     when :show
       "btn btn-success  #{btn_size}"
     when :new
@@ -86,6 +86,10 @@ module ApplicationHelper
 
   def h_link(object)
     return link_to object.identify, object
+  end
+
+  def short_h_link(object)
+    return link_to object.short_identify, object
   end
   
   def apply_chain_link_or_print(functions, object)

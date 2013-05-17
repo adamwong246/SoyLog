@@ -20,12 +20,6 @@
     - else      
         = f.collection_select(:component_id, Component.all, :id, :identify)
 
-
-  / .field
-  /   = f.label :component_id
-  / .field
-  /   = f.collection_select(:component_id, Component.all, :id, :identify)
-
   .field
     = f.label :amount
     br/

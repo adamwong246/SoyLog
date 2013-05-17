@@ -2,28 +2,27 @@
   = @recipe.identify
 
 .container
-  / # = render :partial => "layouts/super_show", :locals => { columns: [:user, :name], member: @recipe, actions: [:index, :flag, :create, :clone, :edit]} 
-  
-  = render partial: "flags/modal_form", locals: {object: @recipe}
-  = render partial: "recipes/modal_form", locals: {recipe: @recipe}
-
   .well
     h1            
       = @recipe.identify  
       small
         = " by "
         = h_link @recipe.user
-    / = render :partial => "layouts/actions", :locals => { :object => @recipe, :actions => actions ||= [:info, :index, :flag, :new, :edit, :destroy]}
+  
     btn-toolbar 
       .btn-group.pull-right
         
-        a data-toggle="modal" href="#flag-modal" role="button"
-          button class=button_class_lookup(:flag)
-            i class=icon_class_lookup(:flag)
+        - if can? :flag, @recipe
+          = render partial: "flags/modal_form", locals: {object: @recipe}
+          a data-toggle="modal" href="#flag-modal" role="button"
+            button class=button_class_lookup(:flag)
+              i class=icon_class_lookup(:flag)
 
-        a data-toggle="modal" href=".recipe-modal-form" role="button"
-          button class=button_class_lookup(:edit)
-            i class=icon_class_lookup(:edit)
+        - if can? :edit, @recipe
+          = render partial: "recipes/modal_form", locals: {recipe: @recipe}
+          a data-toggle="modal" href=".recipe-modal-form" role="button"
+            button class=button_class_lookup(:edit)
+              i class=icon_class_lookup(:edit)
 
       
       

@@ -11,15 +11,17 @@
   - flag = object.flags.create
 
   = form_for flag, html: {:class => "form-inline"} do |f|
+
     .modal-body
-      - if flag.errors.any?
-        #error_explanation
-          h2
-            = pluralize(flag.errors.count, "error")
-            | prohibited this flag from being saved:
-          ul
-            - flag.errors.full_messages.each do |msg|
-              li= msg
+      = render partial: "layouts/super_form_errors", locals: {member: flag}
+      / - if flag.errors.any?
+      /   #error_explanation
+      /     h2
+      /       = pluralize(flag.errors.count, "error")
+      /       | prohibited this flag from being saved:
+      /     ul
+      /       - flag.errors.full_messages.each do |msg|
+      /         li= msg
 
       h5 Spam: #{object.flags.select{|f| f.spam}.length}
       h5 Duplicate: #{object.flags.select{|f| f.duplicate}.length}

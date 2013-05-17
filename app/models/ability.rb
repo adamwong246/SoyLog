@@ -8,29 +8,20 @@ class Ability
       can [:index, :show], :all
 
     else
+      can :flag, :all
+      
       if user.admin?
-          can :manage, :all
-          can :login, :admin
+        can :manage, :all
+        can :login, :admin
       else
-          can :read, :all 
-          can [:full_formula, :clone, :create], Recipe
-          
-          can [:edit, :update], User do |u|
-              u == user
-          end
-
-          can [:edit, :update, :destroy], [Component, Recipe] do |r|
-              r.user.id == user.id
-          end
-          can [:edit, :update], Ingredient do |i|
-              i.recipe.user == user
-          end
-
-          can :clone, Recipe
-
-          can :home, User
-          can :show, Recipe
-          can [:create, :edit], [Ingredient, Component]
+        can :read, :all 
+        can [:edit, :update, :home], User do |u|
+            u == user
+        end          
+        can [:full_formula, :clone, :create, :show], Recipe
+        can [:edit, :update, :destroy], [Component, Recipe, Ingredient, ComponentNutrient, Flag] do |r|
+            r.creator == user
+        end
       end
     end
     

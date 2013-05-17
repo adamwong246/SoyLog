@@ -1,1 +1,1 @@
-= render :partial => "layouts/super_index", :locals => { columns: [:short_identify, :flagable, :owner, :spam, :duplicate, :inapproriate, :dangerous, :vote, :comment], collection: @flags, actions: [:show, :edit, :destroy]}
+= render :partial => "layouts/super_index", :locals => { columns: [:identify, :flagable, :creator, :spam, :duplicate, :inapproriate, :dangerous, :vote, :comment], collection: @flags, actions: [:show, :edit, :destroy], member_actions: [:show, :edit, :destroy]}
