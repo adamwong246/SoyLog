@@ -23,6 +23,10 @@ class Ingredient < ActiveRecord::Base
     "#{self.recipe.short_identify}, #{self.component.short_identify}"
   end
 
+  def name
+    self.component.name
+  end
+
   # def clone_with_associations
   #   new_ingredient = self.dup
   #   new_ingredient.save

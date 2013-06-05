@@ -100,6 +100,22 @@ class RecipesController < ApplicationController
       @cost_per_serving = "incalcuable"
     end
 
+    @supplies = current_user.supplies if current_user
+    @user = current_user
+
+    @supplies_by_name = {}
+    @recipe.ingredients.each { |i|
+
+      @supplies_by_name[i.name] = {
+        supply: @supplies.select{|s| s.name == i.name}.first,
+        days_of_supplies: @supplies.select{|s| s.name == i.name}.first.amount /   
+      }
+    }
+
+    @days_of_supplies = @supplies_by_name.inject(0){|sum, i| sum + 1}
+
+
+
   end
 
   def nutrition  

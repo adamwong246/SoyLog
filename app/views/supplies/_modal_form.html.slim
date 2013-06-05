@@ -1,0 +1,30 @@
+-supply = object
+
+.supply-modal.modal.hide.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="#{supply.id}-supply-modal-form"
+  .modal-header.my-header
+
+    h1
+      | Edit 
+      small= Supply 
+
+  = form_for parent_chain + [supply] do |f|
+    .modal-body
+      = render partial: "layouts/super_form_errors", locals: {member: supply}
+
+      .field
+        = f.label "Component"
+        = f.collection_select :id, Component.all, :id, :identify, selected: supply.component.id
+
+      .field
+        = f.label "Amount"
+        br/
+        = f.text_field :amount
+        
+    .modal-footer
+      .actions
+        = f.submit :class => 'button btn btn-primary'
+
+  
+
+
+  

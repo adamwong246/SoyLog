@@ -77,12 +77,12 @@ recipe.ingredients.new({servings: 1,    component: comp_salt})
 recipe.ingredients.new({servings: 1,    component: comp_whey})
 recipe.ingredients.new({servings: 1,    component: comp_c_gluconate})
 
-
-eustace.flags.new({})
+eustace.supplies.new({amount: '5 lbs', component: comp_maltodextrin})
+# eustace.flags.new({})
 eustace.save!
 andy.save!
 
-Flag.create!({spam: true, flaggble_type: :recipe, flaggble_id: recipe.id })
+# Flag.create!({spam: true, flaggble_type: :recipe, flaggble_id: recipe.id })
 
 
 

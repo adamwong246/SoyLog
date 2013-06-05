@@ -7,9 +7,10 @@ development:
   adapter: postgresql
   encoding: unicode
   database: soylog_development
-  pool: 5
-  username: adamwong
-  password: devpass
+  pool: 
+  host: localhost
+  # username: adamwong
+  # password: devpass
 
 test:
   adapter: postgresql

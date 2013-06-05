@@ -38,7 +38,9 @@ SoyLog3::Application.routes.draw do
     match "users/home" => "users#home"
   end
 
-  resources :users
+  resources :users do
+    resources :supplies, except: [:show]
+  end
 
   match '/about' => 'high_voltage/pages#show', id: 'about', as: :about
   root :to => 'high_voltage/pages#show', :id => 'home'

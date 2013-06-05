@@ -65,14 +65,14 @@ btn-toolbar
     - if actions.include? :edit
       - if can? :edit, object
         - if edit_action == :modal
-          = render partial: "#{params[:controller]}/modal_form", locals: {object: object}
+          = render partial: "#{params[:controller]}/modal_form", locals: {object: object, parent_chain: parent_chain ||= []}
 
           a data-toggle="modal" href="##{object.id}-#{params[:controller].singularize}-modal-form" role="button"
             button class=button_class_lookup(:edit)
               i class=icon_class_lookup(:edit)  
 
         - else
-          = link_to [:edit, object] do 
+          = link_to [:edit] + (parent_chain || []) + [object]  do 
             /= icon_button_lookup(:edit)
             button class=button_class_lookup(:edit)
               i class=icon_class_lookup(:edit)  

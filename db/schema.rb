@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130510054845) do
+ActiveRecord::Schema.define(:version => 20130525055528) do
 
   create_table "body_profile_nutrients", :force => true do |t|
     t.integer  "body_profile_id"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20130510054845) do
     t.string   "nutritional_label_url"
     t.integer  "user_id"
     t.text     "note"
+    t.integer  "supply_id"
   end
 
   create_table "flags", :force => true do |t|
@@ -98,6 +99,11 @@ ActiveRecord::Schema.define(:version => 20130510054845) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.text     "description"
+  end
+
+  create_table "supplies", :force => true do |t|
+    t.string  "amount"
+    t.integer "user_id"
   end
 
   create_table "users", :force => true do |t|

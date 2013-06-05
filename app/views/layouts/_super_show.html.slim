@@ -7,7 +7,7 @@
     h1            
       = "#{member.class} "  
       small= member.identify
-    = render :partial => "layouts/actions", locals: { object: member, actions: actions ||= [:info, :index, :flag, :new, :edit, :destroy], new_action: new_action ||= nil}
+    = render :partial => "layouts/actions", locals: { object: member, actions: actions ||= [:info, :index, :flag, :new, :edit, :destroy], new_action: new_action ||= nil, edit_action: edit_action}
 
   / h5= member.class.description
 
@@ -53,8 +53,3 @@
           
           - hash = assciation_map_array.select{|hash| hash.keys[0] == column }.first
 
-          - if hash && (can? :edit, member)
-            - if hash[column] == :has_many              
-                = link_to [:edit, member], id: "new-#{column.to_s.singularize}-link", class: "hinted ", rel:'popover', 'data-content' => "Add a #{column.to_s.singularize} to this #{member.class.to_s}", 'data-placement' => "right" do
-                  button class=button_class_lookup(:new)
-                    i class=icon_class_lookup(:new)

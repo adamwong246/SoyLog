@@ -15,11 +15,11 @@ class Ability
         can :login, :admin
       else
         can :read, :all 
-        can [:edit, :update, :home], User do |u|
+        can [:edit, :update, :home, :supplies], User do |u|
             u == user
         end          
         can [:full_formula, :clone, :create, :show], Recipe
-        can [:edit, :update, :destroy], [Component, Recipe, Ingredient, ComponentNutrient, Flag] do |r|
+        can [:edit, :update, :destroy], [Component, Recipe, Ingredient, ComponentNutrient, Supply, Flag] do |r|
             r.creator == user
         end
       end

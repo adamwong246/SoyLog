@@ -8,7 +8,7 @@ table.table.table-condensed
       th Daily Servings size
       th
       th Measured amount per day
-      th * 100
+      th My Supply
 
   tbody
     - @recipe.ingredients.each do |ingredient|
@@ -19,48 +19,11 @@ table.table.table-condensed
         td= ingredient.component.serving_size
         td= '='
         td= ingredient.measured_amount
-        td= ingredient.measured_amount * 100
-
-
-
-
-
-
-
-
-        / td= ingredient_fda_percentage ingredient.servings/ingredient.measured_amount
         
-        / - combined_component_nutrients = ingredient.component_nutrients.map{|cn| link_to "#{cn.amount.to_s}  #{cn.nutrient.units} of #{cn.nutrient.name}", cn}
-        / - if combined_component_nutrients.empty?
-        /   td.error Error! ComponentNutrients should not be empty!
-        / - else 
-        /   td
-        /     - combined_component_nutrients.each do |cn|
-        /       = cn
-    /           br
-    /       td
-    /         - if (can? :edit, @recipe)
-    /           = link_to [:edit, @recipe], class: 'hinted', rel:'popover', 'data-content' => "Edit the amount of #{ingredient.component.name}", 'data-placement' => "right" do
-    /               button class=button_class_lookup(:edit)
-    /                 i class=icon_class_lookup(:edit)
-    /       td
-    /         - if (can? :destroy, @recipe)
-    /           = link_to '/', class: 'hinted', rel:'popover', 'data-content' => "Remove #{ingredient.component.name}", 'data-placement' => "right" do
-    /               button class=button_class_lookup(:destroy)
-    /                 i class=icon_class_lookup(:destroy)
-                   
-    / tr      
-    /   td
-    /     - if can? :edit, @recipe
-    /       = link_to edit_recipe_path, class: 'hinted', rel:'popover', 'data-content' => "Add an Ingredient", 'data-placement' => "top" do
-    /         button class=button_class_lookup(:new)
-    /           i class=icon_class_lookup(:new)
-    /   td
-    /   td= "$ #{@recipe.ingredients.sum{|ingredient| ingredient.component.price }}"
-    /   td= "$ #{@recipe.ingredients.sum{|ingredient| (ingredient.component.price/(ingredient.component.total_amount/ingredient.amount)) }.round(2)}"
-    /   td colspan=1
-    /   td
-    /     - if can? :edit, @recipe
-    /       = link_to edit_recipe_path, class: 'hinted', rel:'popover', 'data-content' => "Add an ComponentNutrient", 'data-placement' => "top" do
-    /         button class=button_class_lookup(:new)
-    /           i class=icon_class_lookup(:new)
+        - if @supplies_by_name[ingredient.name][:supply]
+            td = link_to @supplies_by_name[ingredient.name][:supply].identify, [@user, @supplies_by_name[ingredient.name][:supply]]
+.well
+  p
+    | Based on your supplies, you can make 
+    b= @days_of_supplies
+    |  days of #{@recipe.name}

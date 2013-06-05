@@ -3,8 +3,8 @@
     .pageheader
       h1 
         | Listing 
-        small= params[:controller] 
-        = render :partial => "layouts/actions", :locals => { klass: params[:controller], :object => collection.first, :actions => collection_actions ||= [:info, :new], new_action: new_action ||= nil, edit_action: edit_action ||= nil} 
+        small= subtitle ||= params[:controller] ||= ""
+        = render :partial => "layouts/actions", :locals => { klass: params[:controller], :object => collection.first, :actions => collection_actions ||= [:info, :new], new_action: new_action ||= nil, edit_action: edit_action ||= nil, parent_chain: parent_chain ||= []} 
 
 
       / h5= params[:controller].classify.constantize.identify
@@ -37,4 +37,4 @@
                   = short_h_link element
 
                     
-          th= render :partial => "layouts/actions", :locals => { :object => element, :actions => member_actions ||= [:flag, :edit, :destroy], new_action: new_action ||= nil, edit_action: edit_action ||= nil}
+          th= render :partial => "layouts/actions", :locals => { :object => element, :actions => member_actions ||= [:flag, :edit, :destroy], new_action: new_action ||= nil, edit_action: edit_action ||= nil, parent_chain: parent_chain || []}
